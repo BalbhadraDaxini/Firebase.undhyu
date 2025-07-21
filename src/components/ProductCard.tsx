@@ -11,10 +11,10 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   return (
-      <Card className="group flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-xl">
+      <Card className="group flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-xl border-none shadow-none rounded-lg">
         <CardHeader className="relative p-0">
           <Link href={`/product/${product.id}`} className="block">
-            <div className="relative h-96 w-full overflow-hidden">
+            <div className="relative h-64 sm:h-80 md:h-96 w-full overflow-hidden rounded-md">
               <Image
                 src={product.image}
                 alt={product.name}
@@ -25,21 +25,15 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
           </Link>
         </CardHeader>
-        <CardContent className="flex flex-1 flex-col p-4">
+        <CardContent className="flex flex-1 flex-col p-4 pb-2 px-1">
            <Link href={`/product/${product.id}`} className="block">
-              <CardTitle className="mb-2 text-lg font-headline font-semibold leading-tight group-hover:text-primary">
+              <CardTitle className="mb-1 text-sm sm:text-base font-body font-semibold leading-tight group-hover:text-primary">
                 {product.name}
               </CardTitle>
            </Link>
         </CardContent>
-        <CardFooter className="flex items-center justify-between p-4 pt-0">
-            <p className="text-xl font-semibold text-primary">${product.price.toFixed(2)}</p>
-            <Button variant="outline" size="icon" asChild>
-                <Link href={`/product/${product.id}`}>
-                    <ShoppingCart className="h-5 w-5" />
-                    <span className="sr-only">Add to Cart</span>
-                </Link>
-            </Button>
+        <CardFooter className="flex items-center justify-between p-1 pt-0">
+            <p className="text-base sm:text-lg font-semibold text-primary">${product.price.toFixed(2)}</p>
         </CardFooter>
       </Card>
   );

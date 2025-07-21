@@ -1,9 +1,15 @@
+
+"use client"
+
 import { products } from '@/lib/mock-data';
 import { Product } from '@/lib/types';
 import FilterControls from '@/components/FilterControls';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import ProductCard from '@/components/ProductCard';
 import Hero from '@/components/Hero';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Filter } from 'lucide-react';
 
 export default function Home({
   searchParams,
@@ -45,7 +51,7 @@ export default function Home({
       <Hero />
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
-          <aside className="lg:col-span-1">
+          <aside className="hidden lg:block lg:col-span-1">
             <Card>
               <CardHeader>
                 <CardTitle>Filters</CardTitle>
@@ -57,14 +63,34 @@ export default function Home({
           </aside>
 
           <main className="lg:col-span-3">
-            <h2 className="mb-6 text-3xl font-headline font-semibold">All Products</h2>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+             <div className="flex justify-between items-center mb-6">
+                <h2 className="text-3xl font-headline font-semibold">All Products</h2>
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <Button variant="outline" className="lg:hidden">
+                      <Filter className="mr-2 h-4 w-4" />
+                      Filter
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent>
+                    <Card className="border-none shadow-none">
+                      <CardHeader>
+                        <CardTitle>Filters</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <FilterControls availableColors={allColors} availableSizes={allSizes} />
+                      </CardContent>
+                    </Card>
+                  </SheetContent>
+                </Sheet>
+              </div>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 xl:grid-cols-3">
               {filteredProducts.map(product => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
             {filteredProducts.length === 0 && (
-              <div className="flex h-64 items-center justify-center">
+              <div className="flex h-64 items-center justify-center col-span-full">
                 <p className="text-muted-foreground">No products found matching your criteria.</p>
               </div>
             )}
