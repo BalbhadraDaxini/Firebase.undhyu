@@ -66,7 +66,7 @@ export default function Hero() {
                 data-ai-hint={slide.aiHint}
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
-              <div className="container relative z-10 mx-auto flex h-full flex-col items-start justify-center text-white">
+              <div className="container relative z-10 mx-auto flex h-full flex-col items-start justify-center px-4 text-white">
                 <div className="max-w-xl">
                   <h1 className="font-headline text-4xl font-bold md:text-6xl lg:text-7xl">
                     {slide.title}
