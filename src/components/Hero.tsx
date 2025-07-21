@@ -1,30 +1,88 @@
+"use client"
+
+import * as React from "react"
 import Image from 'next/image';
 import Link from 'next/link';
+import Autoplay from "embla-carousel-autoplay"
+
 import { Button } from './ui/button';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+
+const heroSlides = [
+  {
+    image: 'https://placehold.co/1600x900.png',
+    alt: 'Model wearing a beautiful saree',
+    title: 'Exquisite Sarees Collection',
+    description: 'Discover the perfect blend of tradition and modernity in our latest saree collection.',
+    link: '/sarees',
+    aiHint: 'saree fashion',
+  },
+  {
+    image: 'https://placehold.co/1600x900.png',
+    alt: 'Woman in an elegant lehenga',
+    title: 'Lehengas for Every Occasion',
+    description: 'From bridal wear to festive outfits, find the lehenga that tells your story.',
+    link: '/lehengas',
+    aiHint: 'lehenga fashion',
+  },
+  {
+    image: 'https://placehold.co/1600x900.png',
+    alt: 'Stylish suits for modern women',
+    title: 'Contemporary Suit Sets',
+    description: 'Chic and comfortable suits that make a statement wherever you go.',
+    link: '/suits',
+    aiHint: 'indian suit',
+  },
+];
 
 export default function Hero() {
+  const plugin = React.useRef(
+    Autoplay({ delay: 5000, stopOnInteraction: true })
+  )
+
   return (
-    <div className="relative h-[60vh] min-h-[400px] w-full bg-secondary">
-      <Image
-        src="https://placehold.co/1600x900.png"
-        alt="Elegant fashion display"
-        fill
-        className="object-cover"
-        priority
-        data-ai-hint="fashion store"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-      <div className="container relative z-10 mx-auto flex h-full flex-col items-start justify-end px-4 pb-12 text-white">
-        <h1 className="font-headline text-4xl font-bold md:text-6xl">
-          Timeless Elegance, Modern Style
-        </h1>
-        <p className="mt-4 max-w-xl text-lg">
-          Discover our curated collection of exquisite traditional and contemporary wear.
-        </p>
-        <Button asChild size="lg" className="mt-6 bg-primary text-primary-foreground hover:bg-primary/90">
-          <Link href="/sarees">Shop New Arrivals</Link>
-        </Button>
-      </div>
-    </div>
+    <Carousel
+      plugins={[plugin.current]}
+      className="w-full"
+      onMouseEnter={plugin.current.stop}
+      onMouseLeave={plugin.current.reset}
+    >
+      <CarouselContent>
+        {heroSlides.map((slide, index) => (
+          <CarouselItem key={index}>
+            <div className="relative h-[70vh] min-h-[450px] w-full">
+              <Image
+                src={slide.image}
+                alt={slide.alt}
+                fill
+                className="object-cover"
+                priority={index === 0}
+                data-ai-hint={slide.aiHint}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+              <div className="container relative z-10 mx-auto flex h-full flex-col items-center justify-center text-center text-white">
+                <h1 className="font-headline text-4xl font-bold md:text-6xl lg:text-7xl">
+                  {slide.title}
+                </h1>
+                <p className="mt-4 max-w-2xl text-lg md:text-xl">
+                  {slide.description}
+                </p>
+                <Button asChild size="lg" className="mt-8 bg-primary text-primary-foreground hover:bg-primary/90">
+                  <Link href={slide.link}>Shop Now</Link>
+                </Button>
+              </div>
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-20 hidden text-white md:flex" />
+      <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-20 hidden text-white md:flex" />
+    </Carousel>
   );
 }
