@@ -21,7 +21,7 @@ const lato = Lato({
 
 
 export const metadata: Metadata = {
-  title: 'Shopify Connector',
+  title: 'Undhyu',
   description: 'A modern e-commerce storefront for your Shopify products.',
 };
 

@@ -21,7 +21,10 @@ export default function Header() {
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2">
             <Package2 className="h-6 w-6 text-primary" />
-            <span className="font-headline text-lg font-semibold">Shopify Connector</span>
+            <span className="font-headline text-lg font-semibold">
+              <span className="text-foreground">Undhyu</span>
+              <span className="text-primary">.</span>
+            </span>
           </Link>
           <nav className="hidden items-center gap-4 md:flex">
             {categories.map(category => (
@@ -67,7 +70,10 @@ export default function Header() {
                 <div className="flex flex-col gap-4 p-4">
                     <Link href="/" className="flex items-center gap-2 mb-4">
                         <Package2 className="h-6 w-6 text-primary" />
-                        <span className="font-headline text-lg font-semibold">Shopify Connector</span>
+                        <span className="font-headline text-lg font-semibold">
+                          <span className="text-foreground">Undhyu</span>
+                          <span className="text-primary">.</span>
+                        </span>
                     </Link>
                     <nav className="flex flex-col gap-3">
                         {categories.map(category => (
