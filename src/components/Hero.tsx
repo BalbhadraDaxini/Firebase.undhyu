@@ -16,7 +16,7 @@ import {
 
 const heroSlides = [
   {
-    image: 'https://images.unsplash.com/photo-1610173827042-9903a84c6b54?q=80&w=1974&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1610047879156-17b33d3d2c10?q=80&w=1974&auto=format&fit=crop',
     alt: 'Model wearing a beautiful saree',
     title: 'Exquisite Sarees Collection',
     description: 'Discover the perfect blend of tradition and modernity in our latest saree collection.',
