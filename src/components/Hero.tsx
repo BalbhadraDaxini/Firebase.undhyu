@@ -18,7 +18,7 @@ const heroSlides = [
   {
     image: 'https://images.unsplash.com/photo-1610047879156-17b33d3d2c10?q=80&w=1974&auto=format&fit=crop',
     alt: 'Model wearing a beautiful saree',
-    title: 'Exquisite Sarees Collection',
+    title: 'Exquisite Sarees',
     description: 'Discover the perfect blend of tradition and modernity in our latest saree collection.',
     link: '/sarees',
     aiHint: 'saree fashion',
@@ -56,7 +56,7 @@ export default function Hero() {
       <CarouselContent>
         {heroSlides.map((slide, index) => (
           <CarouselItem key={index}>
-            <div className="relative h-[70vh] min-h-[450px] w-full">
+            <div className="relative h-[70vh] min-h-[500px] w-full">
               <Image
                 src={slide.image}
                 alt={slide.alt}
@@ -65,17 +65,19 @@ export default function Hero() {
                 priority={index === 0}
                 data-ai-hint={slide.aiHint}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-              <div className="container relative z-10 mx-auto flex h-full flex-col items-center justify-center text-center text-white">
-                <h1 className="font-headline text-4xl font-bold md:text-6xl lg:text-7xl">
-                  {slide.title}
-                </h1>
-                <p className="mt-4 max-w-2xl text-lg md:text-xl">
-                  {slide.description}
-                </p>
-                <Button asChild size="lg" className="mt-8 bg-primary text-primary-foreground hover:bg-primary/90">
-                  <Link href={slide.link}>Shop Now</Link>
-                </Button>
+              <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
+              <div className="container relative z-10 mx-auto flex h-full flex-col items-start justify-center text-white">
+                <div className="max-w-xl">
+                  <h1 className="font-headline text-4xl font-bold md:text-6xl lg:text-7xl">
+                    {slide.title}
+                  </h1>
+                  <p className="mt-4 max-w-2xl text-lg md:text-xl">
+                    {slide.description}
+                  </p>
+                  <Button asChild size="lg" className="mt-8 bg-white text-black hover:bg-gray-200">
+                    <Link href={slide.link}>Shop Now</Link>
+                  </Button>
+                </div>
               </div>
             </div>
           </CarouselItem>
