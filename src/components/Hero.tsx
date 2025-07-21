@@ -1,8 +1,7 @@
+
 "use client"
 
 import * as React from "react"
-import Image from 'next/image';
-import Link from 'next/link';
 import Autoplay from "embla-carousel-autoplay"
 
 import { Button } from './ui/button';
@@ -13,10 +12,11 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import Link from "next/link";
 
 const heroSlides = [
   {
-    image: 'https://images.unsplash.com/photo-1610047879156-17b33d3d2c10?q=80&w=1974&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1610047879156-17b33d3d2c10',
     alt: 'Model wearing a beautiful saree',
     title: 'Exquisite Sarees',
     description: 'Discover the perfect blend of tradition and modernity in our latest saree collection.',
@@ -24,7 +24,7 @@ const heroSlides = [
     aiHint: 'saree fashion',
   },
   {
-    image: 'https://images.unsplash.com/photo-1621335829837-7740e536142e?q=80&w=1964&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1621335829837-7740e536142e',
     alt: 'Woman in an elegant lehenga',
     title: 'Lehengas for Every Occasion',
     description: 'From bridal wear to festive outfits, find the lehenga that tells your story.',
@@ -32,7 +32,7 @@ const heroSlides = [
     aiHint: 'lehenga fashion',
   },
   {
-    image: 'https://images.unsplash.com/photo-1617924734399-966a3a99252a?q=80&w=1964&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1617924734399-966a3a99252a',
     alt: 'Stylish suits for modern women',
     title: 'Contemporary Suit Sets',
     description: 'Chic and comfortable suits that make a statement wherever you go.',
@@ -57,16 +57,14 @@ export default function Hero() {
         {heroSlides.map((slide, index) => (
           <CarouselItem key={index}>
             <div className="relative h-[70vh] min-h-[500px] w-full">
-              <Image
+              <img
                 src={slide.image}
                 alt={slide.alt}
-                fill
-                className="object-cover"
-                priority={index === 0}
+                className="object-cover w-full h-full"
                 data-ai-hint={slide.aiHint}
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
-              <div className="container relative z-10 mx-auto flex h-full flex-col items-start justify-center px-4 text-white">
+              <div className="container mx-auto relative z-10 flex h-full flex-col items-start justify-center px-4 text-white">
                 <div className="max-w-xl">
                   <h1 className="font-headline text-4xl font-bold md:text-6xl lg:text-7xl">
                     {slide.title}
