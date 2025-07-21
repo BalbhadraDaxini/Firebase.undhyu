@@ -24,7 +24,7 @@ const heroSlides = [
     aiHint: 'saree fashion',
   },
   {
-    image: 'https://images.unsplash.com/photo-1631384218324-b1b702ab92a3?q=80&w=1974&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1621335829837-7740e536142e?q=80&w=1964&auto=format&fit=crop',
     alt: 'Woman in an elegant lehenga',
     title: 'Lehengas for Every Occasion',
     description: 'From bridal wear to festive outfits, find the lehenga that tells your story.',
@@ -32,7 +32,7 @@ const heroSlides = [
     aiHint: 'lehenga fashion',
   },
   {
-    image: 'https://images.unsplash.com/photo-1594191029858-809c95a43878?q=80&w=1964&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1617924734399-966a3a99252a?q=80&w=1964&auto=format&fit=crop',
     alt: 'Stylish suits for modern women',
     title: 'Contemporary Suit Sets',
     description: 'Chic and comfortable suits that make a statement wherever you go.',
