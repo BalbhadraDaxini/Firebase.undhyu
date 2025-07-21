@@ -1,7 +1,8 @@
+
 "use client";
 
 import Link from 'next/link';
-import { Package2, Search, ShoppingCart, Menu } from 'lucide-react';
+import { Search, ShoppingCart, Menu, Package2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
@@ -20,7 +21,7 @@ export default function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2">
-            <Package2 className="h-6 w-6 text-primary" />
+            
             <span className="font-headline text-lg font-semibold">
               <span className="text-foreground">Undhyu</span>
               <span className="text-primary">.</span>
@@ -69,7 +70,7 @@ export default function Header() {
             <SheetContent side="left">
                 <div className="flex flex-col gap-4 p-4">
                     <Link href="/" className="flex items-center gap-2 mb-4">
-                        <Package2 className="h-6 w-6 text-primary" />
+                        
                         <span className="font-headline text-lg font-semibold">
                           <span className="text-foreground">Undhyu</span>
                           <span className="text-primary">.</span>
