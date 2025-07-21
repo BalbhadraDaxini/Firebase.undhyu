@@ -8,7 +8,6 @@ import { Separator } from './ui/separator';
 import Image from 'next/image';
 import { Minus, Plus, Trash2 } from 'lucide-react';
 import Link from 'next/link';
-import { DialogContent } from './ui/dialog';
 
 interface CartSheetProps {
     onOpenChange: (open: boolean) => void;
@@ -18,7 +17,7 @@ export default function CartSheet({ onOpenChange }: CartSheetProps) {
   const { cartItems, removeFromCart, updateQuantity, totalPrice, cartCount } = useCart();
 
   return (
-    <DialogContent className="flex w-full flex-col p-0 sm:max-w-lg max-h-[90vh]">
+    <SheetContent className="flex w-full flex-col p-0 sm:max-w-lg max-h-[90vh]">
       <SheetHeader className="p-6 pb-0">
         <SheetTitle>Shopping Cart ({cartCount})</SheetTitle>
       </SheetHeader>
@@ -79,6 +78,6 @@ export default function CartSheet({ onOpenChange }: CartSheetProps) {
           </Button>
         </div>
       )}
-    </DialogContent>
+    </SheetContent>
   );
 }
