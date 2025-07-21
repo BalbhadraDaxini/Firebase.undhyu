@@ -53,7 +53,7 @@ export default function CategoryPageClient({ category, filteredProducts, allColo
               </SheetContent>
             </Sheet>
           </div>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
             {filteredProducts.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
