@@ -36,7 +36,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-16">
-        <div className="overflow-hidden rounded-lg shadow-lg">
+        <div className="overflow-hidden rounded-lg">
           <div className="relative h-[600px] w-full">
             <Image
               src={product.image}
@@ -105,7 +105,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 </div>
             </div>
             
-            <Button onClick={handleAddToCart} size="lg" className="w-full md:w-auto" style={{backgroundColor: "hsl(var(--accent))", color: "hsl(var(--accent-foreground))"}}>Add to Cart</Button>
+            <Button onClick={handleAddToCart} size="lg" className="w-full bg-primary text-primary-foreground hover:bg-primary/90 md:w-auto">Add to Cart</Button>
           </div>
 
           <DescriptionGenerator productTitle={product.name} productAttributes={product.attributes} />
