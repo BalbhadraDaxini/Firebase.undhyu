@@ -1,15 +1,32 @@
-import { products } from '@/lib/mock-data';
+import { products, categories } from '@/lib/mock-data';
 import { Product } from '@/lib/types';
 import FilterControls from '@/components/FilterControls';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import ProductCard from '@/components/ProductCard';
+import { notFound } from 'next/navigation';
 
-export default function Home({
+export function generateStaticParams() {
+  return categories.map(category => ({
+    category: category.slug,
+  }));
+}
+
+export default function CategoryPage({
+  params,
   searchParams,
 }: {
+  params: { category: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  let filteredProducts: Product[] = [...products];
+  const category = categories.find(c => c.slug === params.category);
+  
+  if (!category) {
+    notFound();
+  }
+
+  const categoryProducts = products.filter(p => p.category === params.category);
+
+  let filteredProducts: Product[] = [...categoryProducts];
 
   const sort = searchParams.sort as string;
   const color = searchParams.color as string;
@@ -32,12 +49,11 @@ export default function Home({
   } else if (sort === 'price-desc') {
     filteredProducts.sort((a, b) => b.price - a.price);
   } else if (sort === 'newest') {
-    // Assuming higher ID is newer
     filteredProducts.sort((a, b) => Number(b.id) - Number(a.id));
   }
   
-  const allColors = [...new Set(products.flatMap(p => p.variants.colors))];
-  const allSizes = [...new Set(products.flatMap(p => p.variants.sizes))];
+  const allColors = [...new Set(categoryProducts.flatMap(p => p.variants.colors))];
+  const allSizes = [...new Set(categoryProducts.flatMap(p => p.variants.sizes))];
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -54,7 +70,7 @@ export default function Home({
         </aside>
 
         <main className="lg:col-span-3">
-          <h1 className="mb-6 text-3xl font-headline font-semibold">All Products</h1>
+          <h1 className="mb-6 text-3xl font-headline font-semibold">{category.name}</h1>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {filteredProducts.map(product => (
               <ProductCard key={product.id} product={product} />

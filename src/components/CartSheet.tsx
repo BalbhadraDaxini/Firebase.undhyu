@@ -1,0 +1,83 @@
+"use client";
+
+import { SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
+import { useCart } from '@/context/CartContext';
+import { Button } from './ui/button';
+import { ScrollArea } from './ui/scroll-area';
+import { Separator } from './ui/separator';
+import Image from 'next/image';
+import { Minus, Plus, Trash2 } from 'lucide-react';
+import Link from 'next/link';
+
+interface CartSheetProps {
+    onOpenChange: (open: boolean) => void;
+}
+
+export default function CartSheet({ onOpenChange }: CartSheetProps) {
+  const { cartItems, removeFromCart, updateQuantity, totalPrice, cartCount } = useCart();
+
+  return (
+    <SheetContent className="flex w-full flex-col pr-0 sm:max-w-lg">
+      <SheetHeader className="px-6">
+        <SheetTitle>Shopping Cart ({cartCount})</SheetTitle>
+      </SheetHeader>
+      <Separator />
+      {cartItems.length > 0 ? (
+        <>
+          <ScrollArea className="flex-1">
+            <div className="flex flex-col gap-4 p-6">
+            {cartItems.map(item => (
+              <div key={item.id} className="flex items-start gap-4">
+                <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-md">
+                    <Image src={item.image} alt={item.name} fill className="object-cover" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold">{item.name}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {item.size && `Size: ${item.size}`} {item.color && item.size && ` / `} {item.color && `Color: ${item.color}`}
+                  </p>
+                  <p className="mt-1 font-semibold text-primary">${item.price.toFixed(2)}</p>
+                  <div className="mt-2 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                        <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
+                            <Minus className="h-4 w-4" />
+                        </Button>
+                        <span className="w-6 text-center">{item.quantity}</span>
+                        <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => updateQuantity(item.id, item.quantity + 1)}>
+                            <Plus className="h-4 w-4" />
+                        </Button>
+                    </div>
+                    <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.id)}>
+                        <Trash2 className="h-4 w-4 text-muted-foreground"/>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ))}
+            </div>
+          </ScrollArea>
+          <SheetFooter className="bg-secondary p-6">
+            <div className="flex w-full flex-col gap-4">
+                <div className="flex justify-between text-lg font-semibold">
+                    <span>Subtotal</span>
+                    <span>${totalPrice.toFixed(2)}</span>
+                </div>
+                <p className="text-sm text-muted-foreground">Shipping and taxes calculated at checkout.</p>
+                <Button asChild size="lg" className="w-full" style={{backgroundColor: "hsl(var(--accent))", color: "hsl(var(--accent-foreground))"}} onClick={() => onOpenChange(false)}>
+                    <Link href="/checkout">Proceed to Checkout</Link>
+                </Button>
+            </div>
+          </SheetFooter>
+        </>
+      ) : (
+        <div className="flex flex-1 flex-col items-center justify-center gap-4 p-6">
+          <h3 className="text-lg font-semibold">Your cart is empty</h3>
+          <p className="text-center text-muted-foreground">Looks like you haven't added anything to your cart yet.</p>
+          <Button asChild onClick={() => onOpenChange(false)}>
+            <Link href="/">Start Shopping</Link>
+          </Button>
+        </div>
+      )}
+    </SheetContent>
+  );
+}
