@@ -8,6 +8,7 @@ import { useCart } from '@/context/CartContext';
 import { categories } from '@/lib/mock-data';
 import { useState } from 'react';
 import { Sheet, SheetTrigger, SheetContent, SheetClose } from '../ui/sheet';
+import { Dialog, DialogTrigger } from '../ui/dialog';
 import CartSheet from '../CartSheet';
 
 export default function Header() {
@@ -41,8 +42,8 @@ export default function Header() {
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input placeholder="Search products..." className="pl-9" />
           </div>
-          <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
-            <SheetTrigger asChild>
+          <Dialog open={isCartOpen} onOpenChange={setIsCartOpen}>
+            <DialogTrigger asChild>
               <Button variant="outline" size="icon" className="relative">
                 <ShoppingCart className="h-5 w-5" />
                 {cartCount > 0 && (
@@ -52,9 +53,9 @@ export default function Header() {
                 )}
                  <span className="sr-only">Open Cart</span>
               </Button>
-            </SheetTrigger>
+            </DialogTrigger>
             <CartSheet onOpenChange={setIsCartOpen} />
-          </Sheet>
+          </Dialog>
 
           <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
             <SheetTrigger asChild>

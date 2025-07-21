@@ -8,6 +8,7 @@ import { Separator } from './ui/separator';
 import Image from 'next/image';
 import { Minus, Plus, Trash2 } from 'lucide-react';
 import Link from 'next/link';
+import { DialogContent } from './ui/dialog';
 
 interface CartSheetProps {
     onOpenChange: (open: boolean) => void;
@@ -17,15 +18,15 @@ export default function CartSheet({ onOpenChange }: CartSheetProps) {
   const { cartItems, removeFromCart, updateQuantity, totalPrice, cartCount } = useCart();
 
   return (
-    <SheetContent className="flex w-full flex-col pr-0 sm:max-w-lg">
-      <SheetHeader className="px-6">
+    <DialogContent className="flex w-full flex-col p-0 sm:max-w-lg max-h-[90vh]">
+      <SheetHeader className="p-6 pb-0">
         <SheetTitle>Shopping Cart ({cartCount})</SheetTitle>
       </SheetHeader>
-      <Separator />
+      
       {cartItems.length > 0 ? (
         <>
-          <ScrollArea className="flex-1">
-            <div className="flex flex-col gap-4 p-6">
+          <ScrollArea className="flex-1 px-6">
+            <div className="flex flex-col gap-4 py-6">
             {cartItems.map(item => (
               <div key={item.id} className="flex items-start gap-4">
                 <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-md">
@@ -56,7 +57,7 @@ export default function CartSheet({ onOpenChange }: CartSheetProps) {
             ))}
             </div>
           </ScrollArea>
-          <SheetFooter className="bg-secondary p-6">
+          <SheetFooter className="bg-secondary p-6 mt-auto">
             <div className="flex w-full flex-col gap-4">
                 <div className="flex justify-between text-lg font-semibold">
                     <span>Subtotal</span>
@@ -78,6 +79,6 @@ export default function CartSheet({ onOpenChange }: CartSheetProps) {
           </Button>
         </div>
       )}
-    </SheetContent>
+    </DialogContent>
   );
 }
