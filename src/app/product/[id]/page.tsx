@@ -16,6 +16,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   const product = products.find(p => p.id === params.id);
   const { addToCart } = useCart();
   const { toast } = useToast();
+  const router = useRouter();
   const [quantity, setQuantity] = useState(1);
 
   if (!product) {
@@ -28,6 +29,11 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         title: "Added to cart!",
         description: `${product.name} has been added to your shopping cart.`,
     })
+  };
+
+  const handleBuyNow = () => {
+    addToCart(product, quantity);
+    router.push('/checkout');
   };
 
   return (
@@ -74,7 +80,10 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 </div>
             </div>
             
-            <Button onClick={handleAddToCart} size="lg" className="w-full bg-primary text-primary-foreground hover:bg-primary/90 md:w-auto">Add to Cart</Button>
+            <div className="flex flex-col gap-4 md:flex-row">
+              <Button onClick={handleAddToCart} size="lg" className="w-full bg-primary text-primary-foreground hover:bg-primary/90 md:w-auto">Add to Cart</Button>
+              <Button onClick={handleBuyNow} size="lg" variant="outline" className="w-full md:w-auto">Buy Now</Button>
+            </div>
           </div>
         </div>
       </div>
