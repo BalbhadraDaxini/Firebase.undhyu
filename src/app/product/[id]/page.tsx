@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { useState } from 'react';
 import { Star, Minus, Plus } from 'lucide-react';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import DescriptionGenerator from '@/components/DescriptionGenerator';
@@ -19,14 +18,13 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   const { addToCart } = useCart();
   const { toast } = useToast();
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState<string | undefined>(product?.variants.sizes[0]);
 
   if (!product) {
     notFound();
   }
 
   const handleAddToCart = () => {
-    addToCart(product, quantity, undefined, selectedSize);
+    addToCart(product, quantity);
     toast({
         title: "Added to cart!",
         description: `${product.name} has been added to your shopping cart.`,
@@ -64,20 +62,6 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           <Separator className="my-8" />
           
           <div className="space-y-6">
-            {product.variants.sizes.length > 0 && (
-                <div>
-                    <Label className="text-base font-medium">Size: <span className="font-normal text-muted-foreground">{selectedSize}</span></Label>
-                    <RadioGroup value={selectedSize} onValueChange={setSelectedSize} className="mt-2 flex flex-wrap gap-2">
-                        {product.variants.sizes.map(size => (
-                            <RadioGroupItem key={size} value={size} id={`size-${size}`} className="sr-only" />
-                        ))}
-                        {product.variants.sizes.map(size => (
-                           <Label key={size} htmlFor={`size-${size}`} className={`cursor-pointer rounded-md border-2 px-4 py-2 transition-colors ${selectedSize === size ? 'border-accent' : 'border-border'}`}>{size}</Label>
-                        ))}
-                    </RadioGroup>
-                </div>
-            )}
-
             <div className="flex items-center gap-4">
                 <Label className="text-base font-medium">Quantity</Label>
                 <div className="flex items-center gap-2 rounded-md border">
