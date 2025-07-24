@@ -11,41 +11,15 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Filter } from 'lucide-react';
 
-export default function Home({
-  searchParams,
+function HomePageContent({
+  filteredProducts,
+  allColors,
+  allSizes,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  filteredProducts: Product[];
+  allColors: string[];
+  allSizes: string[];
 }) {
-  let filteredProducts: Product[] = [...products];
-
-  const sort = searchParams.sort as string;
-  const color = searchParams.color as string;
-  const size = searchParams.size as string;
-  const price = searchParams.price as string;
-
-  if (color) {
-    filteredProducts = filteredProducts.filter(p => p.variants.colors.map(c => c.toLowerCase()).includes(color.toLowerCase()));
-  }
-  if (size) {
-    filteredProducts = filteredProducts.filter(p => p.variants.sizes.map(s => s.toLowerCase()).includes(size.toLowerCase()));
-  }
-  if (price) {
-    const [min, max] = price.split('-').map(Number);
-    filteredProducts = filteredProducts.filter(p => p.price >= min && p.price <= max);
-  }
-
-  if (sort === 'price-asc') {
-    filteredProducts.sort((a, b) => a.price - b.price);
-  } else if (sort === 'price-desc') {
-    filteredProducts.sort((a, b) => b.price - a.price);
-  } else if (sort === 'newest') {
-    // Assuming higher ID is newer
-    filteredProducts.sort((a, b) => Number(b.id) - Number(a.id));
-  }
-  
-  const allColors = [...new Set(products.flatMap(p => p.variants.colors))];
-  const allSizes = [...new Set(products.flatMap(p => p.variants.sizes))];
-
   return (
     <>
       <Hero />
@@ -99,4 +73,43 @@ export default function Home({
       </div>
     </>
   );
+}
+
+
+export default function Home({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  let filteredProducts: Product[] = [...products];
+
+  const sort = searchParams.sort as string;
+  const color = searchParams.color as string;
+  const size = searchParams.size as string;
+  const price = searchParams.price as string;
+
+  if (color) {
+    filteredProducts = filteredProducts.filter(p => p.variants.colors.map(c => c.toLowerCase()).includes(color.toLowerCase()));
+  }
+  if (size) {
+    filteredProducts = filteredProducts.filter(p => p.variants.sizes.map(s => s.toLowerCase()).includes(size.toLowerCase()));
+  }
+  if (price) {
+    const [min, max] = price.split('-').map(Number);
+    filteredProducts = filteredProducts.filter(p => p.price >= min && p.price <= max);
+  }
+
+  if (sort === 'price-asc') {
+    filteredProducts.sort((a, b) => a.price - b.price);
+  } else if (sort === 'price-desc') {
+    filteredProducts.sort((a, b) => b.price - a.price);
+  } else if (sort === 'newest') {
+    // Assuming higher ID is newer
+    filteredProducts.sort((a, b) => Number(b.id) - Number(a.id));
+  }
+  
+  const allColors = [...new Set(products.flatMap(p => p.variants.colors))];
+  const allSizes = [...new Set(products.flatMap(p => p.variants.sizes))];
+
+  return <HomePageContent filteredProducts={filteredProducts} allColors={allColors} allSizes={allSizes} />;
 }
