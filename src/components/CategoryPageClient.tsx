@@ -20,7 +20,7 @@ export default function CategoryPageClient({ category, filteredProducts, allColo
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
-        <aside className="hidden lg:block lg:col-span-1 sticky top-20">
+        <aside className="hidden lg:block lg:col-span-1 self-start sticky top-20">
           <Card>
             <CardHeader>
               <CardTitle>Filters</CardTitle>
