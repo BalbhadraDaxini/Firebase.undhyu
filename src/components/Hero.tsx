@@ -74,29 +74,33 @@ export default function Hero() {
     <Carousel
       plugins={[plugin.current]}
       className="w-full"
+       opts={{
+        align: "start",
+        loop: true,
+      }}
       onMouseEnter={plugin.current.stop}
       onMouseLeave={plugin.current.reset}
     >
-      <CarouselContent>
+      <CarouselContent className="-ml-2 md:-ml-4">
         {heroSlides.map((slide, index) => (
-          <CarouselItem key={index}>
-            <div className="relative h-[70vh] min-h-[500px] w-full">
+          <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+            <div className="relative h-[70vh] min-h-[500px] w-full group">
               <img
                 src={slide.image}
                 alt={slide.alt}
-                className="object-contain w-full h-full"
+                className="object-cover w-full h-full"
                 data-ai-hint={slide.aiHint}
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
-              <div className="container mx-auto relative z-10 flex h-full flex-col items-start justify-center px-4 text-white">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+              <div className="container mx-auto relative z-10 flex h-full flex-col items-start justify-end p-6 text-white">
                 <div className="max-w-xl">
-                  <h1 className="font-headline text-4xl font-bold md:text-6xl lg:text-7xl">
+                  <h1 className="font-headline text-3xl font-bold md:text-4xl">
                     {slide.title}
                   </h1>
-                  <p className="mt-4 max-w-2xl text-lg md:text-xl">
+                  <p className="mt-2 max-w-2xl text-base md:text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     {slide.description}
                   </p>
-                  <Button asChild size="lg" className="mt-8 bg-white text-black hover:bg-black hover:text-white border border-transparent hover:border-white transition-colors">
+                  <Button asChild size="lg" className="mt-4 bg-white text-black hover:bg-black hover:text-white border border-transparent hover:border-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <Link href={slide.link}>Shop Now</Link>
                   </Button>
                 </div>
