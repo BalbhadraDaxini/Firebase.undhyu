@@ -8,10 +8,9 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   return (
-    <div className="group relative">
-      <Link href={`/product/${product.id}`} className="block">
-        <div className="overflow-hidden rounded-md">
-          <div className="relative h-64 w-full sm:h-80 md:h-96">
+    <Link href={`/product/${product.id}`} className="group block">
+        <div className="overflow-hidden rounded-md bg-card">
+          <div className="relative aspect-[4/5] w-full">
             <Image
               src={product.image}
               alt={product.name}
@@ -22,15 +21,12 @@ export default function ProductCard({ product }: ProductCardProps) {
             />
           </div>
         </div>
-        <div className="mt-4 flex justify-between">
-          <div>
-            <h3 className="text-sm font-medium text-foreground group-hover:underline group-hover:underline-offset-4">
+        <div className="mt-2 text-center">
+            <h3 className="text-sm font-medium text-foreground">
                 {product.name}
             </h3>
-          </div>
-          <p className="text-sm font-semibold text-foreground">Rs. {product.price.toFixed(2)}</p>
+            <p className="mt-1 text-sm font-semibold text-foreground">Rs. {product.price.toFixed(2)}</p>
         </div>
-      </Link>
-    </div>
+    </Link>
   );
 }
