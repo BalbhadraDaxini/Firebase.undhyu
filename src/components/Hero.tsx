@@ -16,27 +16,27 @@ import Link from "next/link";
 
 const heroSlides = [
   {
-    image: 'https://images.unsplash.com/photo-1610047879156-17b33d3d2c10',
+    image: 'https://placehold.co/1600x900.png',
     alt: 'Model wearing a beautiful saree',
     title: 'Exquisite Sarees',
     description: 'Discover the perfect blend of tradition and modernity in our latest saree collection.',
-    link: '/sarees',
+    link: '#product-grid',
     aiHint: 'saree fashion',
   },
   {
-    image: 'https://images.unsplash.com/photo-1733322987267-f691d5be2bc6',
+    image: 'https://placehold.co/1600x900.png',
     alt: 'Woman in an elegant lehenga',
     title: 'Lehengas for Every Occasion',
     description: 'From bridal wear to festive outfits, find the lehenga that tells your story.',
-    link: '/lehengas',
+    link: '#product-grid',
     aiHint: 'lehenga fashion',
   },
   {
-    image: 'https://images.unsplash.com/photo-1648538604499-d1f6bee958ab',
+    image: 'https://placehold.co/1600x900.png',
     alt: 'Stylish suits for modern women',
     title: 'Contemporary Suit Sets',
     description: 'Chic and comfortable suits that make a statement wherever you go.',
-    link: '/suits',
+    link: '#product-grid',
     aiHint: 'indian suit',
   },
 ];
@@ -72,7 +72,7 @@ export default function Hero() {
                   <p className="mt-4 max-w-2xl text-lg md:text-xl">
                     {slide.description}
                   </p>
-                  <Button asChild size="lg" className="mt-8 bg-white text-black hover:bg-gray-200">
+                  <Button asChild size="lg" className="mt-8 bg-white text-black hover:bg-black hover:text-white border border-transparent hover:border-white transition-colors">
                     <Link href={slide.link}>Shop Now</Link>
                   </Button>
                 </div>
