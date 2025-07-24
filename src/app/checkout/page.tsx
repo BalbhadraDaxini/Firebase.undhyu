@@ -156,7 +156,7 @@ export default function CheckoutPage() {
                 </CardContent>
               </Card>
 
-              <Button type="submit" size="lg" className="w-full" style={{backgroundColor: "hsl(var(--accent))", color: "hsl(var(--accent-foreground))"}}>
+              <Button type="submit" size="lg" className="w-full bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300">
                 Place Order
               </Button>
             </form>

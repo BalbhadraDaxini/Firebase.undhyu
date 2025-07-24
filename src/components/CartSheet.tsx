@@ -63,7 +63,7 @@ export default function CartSheet({ onOpenChange }: CartSheetProps) {
                     <span>Rs. {totalPrice.toFixed(2)}</span>
                 </div>
                 <p className="text-sm text-muted-foreground">Shipping and taxes calculated at checkout.</p>
-                <Button asChild size="lg" className="w-full" style={{backgroundColor: "hsl(var(--accent))", color: "hsl(var(--accent-foreground))"}} onClick={() => onOpenChange(false)}>
+                <Button asChild size="lg" className="w-full bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300" onClick={() => onOpenChange(false)}>
                     <Link href="/checkout">Proceed to Checkout</Link>
                 </Button>
             </div>
@@ -73,7 +73,7 @@ export default function CartSheet({ onOpenChange }: CartSheetProps) {
         <div className="flex flex-1 flex-col items-center justify-center gap-4 p-6">
           <h3 className="text-lg font-semibold">Your cart is empty</h3>
           <p className="text-center text-muted-foreground">Looks like you haven't added anything to your cart yet.</p>
-          <Button asChild onClick={() => onOpenChange(false)}>
+          <Button asChild size="lg" className="bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300" onClick={() => onOpenChange(false)}>
             <Link href="/">Start Shopping</Link>
           </Button>
         </div>

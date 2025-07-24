@@ -23,7 +23,7 @@ export default function ConfirmationPage() {
             Your Order ID is: <span className="font-semibold text-primary">#{(Math.random() * 1000000).toFixed(0)}</span>
           </p>
           <p className="text-muted-foreground">You can track your order status in your account page.</p>
-          <Button asChild className="mt-4">
+          <Button asChild size="lg" className="mt-4 bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300">
             <Link href="/">Continue Shopping</Link>
           </Button>
         </CardContent>

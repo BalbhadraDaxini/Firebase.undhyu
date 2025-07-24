@@ -81,8 +81,8 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             </div>
             
             <div className="flex flex-col gap-4 md:flex-row">
-              <Button onClick={handleAddToCart} size="lg" className="w-full bg-primary text-primary-foreground hover:bg-primary/90 md:w-auto">Add to Cart</Button>
-              <Button onClick={handleBuyNow} size="lg" variant="outline" className="w-full md:w-auto">Buy Now</Button>
+              <Button onClick={handleAddToCart} size="lg" className="w-full md:w-auto bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300">Add to Cart</Button>
+              <Button onClick={handleBuyNow} size="lg" className="w-full md:w-auto bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300">Buy Now</Button>
             </div>
           </div>
         </div>
