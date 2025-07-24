@@ -28,7 +28,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 {product.name}
             </h3>
           </div>
-          <p className="text-sm font-semibold text-foreground">${product.price.toFixed(2)}</p>
+          <p className="text-sm font-semibold text-foreground">Rs. {product.price.toFixed(2)}</p>
         </div>
       </Link>
     </div>

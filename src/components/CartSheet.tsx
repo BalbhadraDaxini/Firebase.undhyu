@@ -36,7 +36,7 @@ export default function CartSheet({ onOpenChange }: CartSheetProps) {
                   <p className="text-sm text-muted-foreground">
                     {item.size && `Size: ${item.size}`} {item.color && item.size && ` / `} {item.color && `Color: ${item.color}`}
                   </p>
-                  <p className="mt-1 font-semibold text-primary">${item.price.toFixed(2)}</p>
+                  <p className="mt-1 font-semibold text-primary">Rs. {item.price.toFixed(2)}</p>
                   <div className="mt-2 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
@@ -60,7 +60,7 @@ export default function CartSheet({ onOpenChange }: CartSheetProps) {
             <div className="flex w-full flex-col gap-4">
                 <div className="flex justify-between text-lg font-semibold">
                     <span>Subtotal</span>
-                    <span>${totalPrice.toFixed(2)}</span>
+                    <span>Rs. {totalPrice.toFixed(2)}</span>
                 </div>
                 <p className="text-sm text-muted-foreground">Shipping and taxes calculated at checkout.</p>
                 <Button asChild size="lg" className="w-full" style={{backgroundColor: "hsl(var(--accent))", color: "hsl(var(--accent-foreground))"}} onClick={() => onOpenChange(false)}>
