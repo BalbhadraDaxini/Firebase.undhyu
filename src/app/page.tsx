@@ -59,8 +59,7 @@ function HomePageContent({
            {isSticky && <div className="hidden lg:block lg:col-span-1"></div>}
 
           <main className="lg:col-span-3">
-             <div className="flex justify-between items-center mb-6">
-                <h2 className="text-3xl font-headline font-semibold">All Products</h2>
+             <div className="flex justify-end items-center mb-6">
                 <Sheet>
                   <SheetTrigger asChild>
                     <Button variant="outline" className="lg:hidden">
