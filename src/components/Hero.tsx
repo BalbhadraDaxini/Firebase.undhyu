@@ -82,7 +82,7 @@ export default function Hero() {
             <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-20 hidden text-white md:flex" />
         </Carousel>
         <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:top-1/2 md:left-[10%] md:-translate-x-0 md:-translate-y-1/2 z-10 text-white text-center md:text-left px-4">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-white text-center px-4">
             <h1 className="font-headline text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">
                 Timeless Indian Ethnic Wear
             </h1>
