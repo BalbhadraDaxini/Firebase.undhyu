@@ -31,7 +31,7 @@ export default function Header() {
           {categories.map(category => (
             <Link
               key={category.slug}
-              href={`/${category.slug}`}
+              href={`/#${category.slug}`}
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               {category.name}
@@ -74,7 +74,7 @@ export default function Header() {
                         {categories.map(category => (
                         <SheetClose asChild key={category.slug}>
                             <Link
-                                href={`/${category.slug}`}
+                                href={`/#${category.slug}`}
                                 className="text-lg font-medium text-muted-foreground transition-colors hover:text-foreground"
                             >
                                 {category.name}

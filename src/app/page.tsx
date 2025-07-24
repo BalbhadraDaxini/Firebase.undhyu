@@ -2,7 +2,7 @@
 
 "use client"
 
-import { products } from '@/lib/mock-data';
+import { products, categories } from '@/lib/mock-data';
 import { Product } from '@/lib/types';
 import FilterControls from '@/components/FilterControls';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,6 +14,7 @@ import { Filter } from 'lucide-react';
 import { useRef } from 'react';
 import useStickyOnScroll from '@/hooks/useStickyOnScroll';
 import { cn } from '@/lib/utils';
+import { Separator } from '@/components/ui/separator';
 
 function HomePageContent({
   filteredProducts,
@@ -26,6 +27,11 @@ function HomePageContent({
 }) {
   const observerRef = useRef(null);
   const isSticky = useStickyOnScroll(observerRef);
+  
+  const productsByCategory = categories.map(category => ({
+    ...category,
+    products: filteredProducts.filter(p => p.category === category.slug)
+  }));
 
   return (
     <>
@@ -82,6 +88,20 @@ function HomePageContent({
                 <p className="text-muted-foreground">No products found matching your criteria.</p>
               </div>
             )}
+
+            {productsByCategory.map(category => (
+              category.products.length > 0 && (
+                <section key={category.slug} id={category.slug} className="pt-16">
+                  <h2 className="text-3xl font-headline font-semibold mb-6">{category.name}</h2>
+                  <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                    {category.products.map(product => (
+                      <ProductCard key={product.id} product={product} />
+                    ))}
+                  </div>
+                </section>
+              )
+            ))}
+
           </main>
         </div>
       </div>

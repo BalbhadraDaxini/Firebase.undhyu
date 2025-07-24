@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { categories } from '@/lib/mock-data';
 
 export default function Footer() {
   return (
@@ -8,10 +9,13 @@ export default function Footer() {
           <div>
             <h3 className="font-headline font-semibold">Shop</h3>
             <ul className="mt-4 space-y-2 text-sm">
-              <li><Link href="/sarees" className="text-muted-foreground hover:text-foreground">Sarees</Link></li>
-              <li><Link href="/lehengas" className="text-muted-foreground hover:text-foreground">Lehengas</Link></li>
-              <li><Link href="/suits" className="text-muted-foreground hover:text-foreground">Suits</Link></li>
-              <li><Link href="/gowns" className="text-muted-foreground hover:text-foreground">Gowns</Link></li>
+              {categories.map(category => (
+                <li key={category.slug}>
+                  <Link href={`/#${category.slug}`} className="text-muted-foreground hover:text-foreground">
+                    {category.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
