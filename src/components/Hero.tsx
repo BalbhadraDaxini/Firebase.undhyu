@@ -84,7 +84,7 @@ export default function Hero() {
               <img
                 src={slide.image}
                 alt={slide.alt}
-                className="object-cover w-full h-full"
+                className="object-contain w-full h-full"
                 data-ai-hint={slide.aiHint}
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
