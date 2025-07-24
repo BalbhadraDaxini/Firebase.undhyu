@@ -21,7 +21,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             />
           </div>
         </div>
-        <div className="mt-2 text-center">
+        <div className="mt-2 text-left">
             <h3 className="text-sm font-medium text-foreground">
                 {product.name}
             </h3>
