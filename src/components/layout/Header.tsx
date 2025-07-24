@@ -2,8 +2,7 @@
 "use client";
 
 import Link from 'next/link';
-import { Search, ShoppingCart, Menu, Package2 } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { ShoppingCart, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { categories } from '@/lib/mock-data';
@@ -17,7 +16,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2">
@@ -41,10 +40,6 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-2 md:gap-4">
-          <div className="relative hidden w-40 sm:block md:w-64">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input placeholder="Search products..." className="pl-9" />
-          </div>
           <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon" className="relative">
