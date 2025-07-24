@@ -10,7 +10,6 @@ import { useState } from 'react';
 import { Star, Minus, Plus } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import DescriptionGenerator from '@/components/DescriptionGenerator';
 import { Separator } from '@/components/ui/separator';
 
 export default function ProductPage({ params }: { params: { id: string } }) {
@@ -77,8 +76,6 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             
             <Button onClick={handleAddToCart} size="lg" className="w-full bg-primary text-primary-foreground hover:bg-primary/90 md:w-auto">Add to Cart</Button>
           </div>
-
-          <DescriptionGenerator productTitle={product.name} productAttributes={product.attributes} />
         </div>
       </div>
     </div>
