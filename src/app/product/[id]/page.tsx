@@ -1,3 +1,4 @@
+
 "use client";
 
 import { products } from '@/lib/mock-data';
@@ -18,7 +19,6 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   const { addToCart } = useCart();
   const { toast } = useToast();
   const [quantity, setQuantity] = useState(1);
-  const [selectedColor, setSelectedColor] = useState<string | undefined>(product?.variants.colors[0]);
   const [selectedSize, setSelectedSize] = useState<string | undefined>(product?.variants.sizes[0]);
 
   if (!product) {
@@ -26,7 +26,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   }
 
   const handleAddToCart = () => {
-    addToCart(product, quantity, selectedColor, selectedSize);
+    addToCart(product, quantity, undefined, selectedSize);
     toast({
         title: "Added to cart!",
         description: `${product.name} has been added to your shopping cart.`,
@@ -64,20 +64,6 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           <Separator className="my-8" />
           
           <div className="space-y-6">
-            {product.variants.colors.length > 0 && (
-                <div>
-                    <Label className="text-base font-medium">Color: <span className="font-normal text-muted-foreground">{selectedColor}</span></Label>
-                    <RadioGroup value={selectedColor} onValueChange={setSelectedColor} className="mt-2 flex flex-wrap gap-2">
-                        {product.variants.colors.map(color => (
-                            <RadioGroupItem key={color} value={color} id={`color-${color}`} className="sr-only" />
-                        ))}
-                         {product.variants.colors.map(color => (
-                           <Label key={color} htmlFor={`color-${color}`} className={`cursor-pointer rounded-md border-2 px-4 py-2 transition-colors ${selectedColor === color ? 'border-accent' : 'border-border'}`}>{color}</Label>
-                        ))}
-                    </RadioGroup>
-                </div>
-            )}
-
             {product.variants.sizes.length > 0 && (
                 <div>
                     <Label className="text-base font-medium">Size: <span className="font-normal text-muted-foreground">{selectedSize}</span></Label>
