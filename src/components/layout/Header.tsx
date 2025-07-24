@@ -18,28 +18,28 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <div className="flex items-center gap-6">
+        <div className="flex items-center">
           <Link href="/" className="flex items-center gap-2">
-            
             <span className="font-headline text-lg font-semibold">
               <span className="text-foreground">Undhyu</span>
               <span className="text-primary">.</span>
             </span>
           </Link>
-          <nav className="hidden items-center gap-4 md:flex">
-            {categories.map(category => (
-              <Link
-                key={category.slug}
-                href={`/${category.slug}`}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {category.name}
-              </Link>
-            ))}
-          </nav>
         </div>
 
-        <div className="flex items-center gap-2 md:gap-4">
+        <nav className="hidden items-center gap-6 md:flex">
+          {categories.map(category => (
+            <Link
+              key={category.slug}
+              href={`/${category.slug}`}
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {category.name}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="flex items-center justify-end gap-2 md:gap-4">
           <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon" className="relative">
@@ -65,7 +65,6 @@ export default function Header() {
             <SheetContent side="left">
                 <div className="flex flex-col gap-4 p-4">
                     <Link href="/" className="flex items-center gap-2 mb-4">
-                        
                         <span className="font-headline text-lg font-semibold">
                           <span className="text-foreground">Undhyu</span>
                           <span className="text-primary">.</span>
