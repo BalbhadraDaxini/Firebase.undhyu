@@ -86,7 +86,7 @@ export default function Hero() {
             <h1 className="font-headline text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">
                 Timeless Indian Ethnic Wear
             </h1>
-            <Button asChild size="lg" className="bg-black text-white hover:bg-white hover:text-black font-bold text-lg px-8 py-6 rounded-none transition-colors duration-300">
+            <Button asChild size="lg" className="bg-white text-black hover:bg-black hover:text-white font-bold text-lg px-8 py-6 rounded-none transition-colors duration-300">
                 <Link href="#product-grid">Shop Now</Link>
             </Button>
         </div>
