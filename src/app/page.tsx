@@ -10,6 +10,9 @@ import Hero from '@/components/Hero';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Filter } from 'lucide-react';
+import { useRef } from 'react';
+import useStickyOnScroll from '@/hooks/useStickyOnScroll';
+import { cn } from '@/lib/utils';
 
 function HomePageContent({
   filteredProducts,
@@ -20,12 +23,21 @@ function HomePageContent({
   allColors: string[];
   allSizes: string[];
 }) {
+  const observerRef = useRef(null);
+  const isSticky = useStickyOnScroll(observerRef);
+
   return (
     <>
       <Hero />
+      <div ref={observerRef}></div>
       <div id="product-grid" className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
-          <aside className="hidden lg:block lg:col-span-1 self-start sticky top-20">
+          <aside
+            className={cn(
+              'hidden lg:block lg:col-span-1 self-start transition-all duration-300',
+              isSticky ? 'fixed top-20 w-[16rem]' : 'relative'
+            )}
+          >
             <Card>
               <CardHeader>
                 <CardTitle>Filters</CardTitle>
@@ -35,6 +47,7 @@ function HomePageContent({
               </CardContent>
             </Card>
           </aside>
+           {isSticky && <div className="hidden lg:block lg:col-span-1"></div>}
 
           <main className="lg:col-span-3">
              <div className="flex justify-between items-center mb-6">
