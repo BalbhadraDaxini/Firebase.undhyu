@@ -49,6 +49,9 @@ export default function CategoryPage({
     filteredProducts.sort((a, b) => b.price - a.price);
   } else if (sort === 'newest') {
     filteredProducts.sort((a, b) => Number(b.id) - Number(a.id));
+  } else {
+    // Relevance sort can be the default order or based on some metric
+    // For now, we'll just use the default order.
   }
   
   const allColors = [...new Set(categoryProducts.flatMap(p => p.variants.colors))];

@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 import { Checkbox } from './ui/checkbox';
@@ -18,6 +18,18 @@ export default function FilterControls({ availableColors, availableSizes }: Filt
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
+
+    const [priceRange, setPriceRange] = useState([0, 500]);
+
+    useEffect(() => {
+        const priceParam = searchParams.get('price');
+        if (priceParam) {
+            const [min, max] = priceParam.split('-').map(Number);
+            setPriceRange([min, max]);
+        } else {
+            setPriceRange([0, 500]);
+        }
+    }, [searchParams]);
 
     const createQueryString = useCallback(
         (name: string, value: string) => {
@@ -38,26 +50,60 @@ export default function FilterControls({ availableColors, availableSizes }: Filt
     
     const handleFilterChange = (type: 'color' | 'size', value: string) => {
         const currentFilter = searchParams.get(type);
-        const newValue = currentFilter === value ? '' : value;
+        const newValue = currentFilter?.toLowerCase() === value.toLowerCase() ? '' : value;
         router.push(pathname + '?' + createQueryString(type, newValue));
+    }
+    
+    const handlePriceChange = (value: number[]) => {
+        setPriceRange(value);
+    };
+
+    const applyPriceFilter = () => {
+        router.push(pathname + '?' + createQueryString('price', `${priceRange[0]}-${priceRange[1]}`));
+    }
+    
+    const clearPriceFilter = () => {
+        setPriceRange([0, 500]);
+        router.push(pathname + '?' + createQueryString('price', ''));
     }
 
     return (
         <div className="space-y-6">
             <div>
                 <Label>Sort by</Label>
-                <Select onValueChange={handleSortChange} defaultValue={searchParams.get('sort') ?? ''}>
+                <Select onValueChange={handleSortChange} defaultValue={searchParams.get('sort') ?? 'relevance'}>
                     <SelectTrigger>
                         <SelectValue placeholder="Relevance" />
                     </SelectTrigger>
                     <SelectContent>
+                        <SelectItem value="relevance">Relevance</SelectItem>
                         <SelectItem value="newest">Newest</SelectItem>
                         <SelectItem value="price-asc">Price: Low to High</SelectItem>
                         <SelectItem value="price-desc">Price: High to Low</SelectItem>
                     </SelectContent>
                 </Select>
             </div>
-            <Accordion type="multiple" defaultValue={['color', 'size']} className="w-full">
+            <Accordion type="multiple" defaultValue={['price', 'color', 'size']} className="w-full">
+                 <AccordionItem value="price">
+                    <AccordionTrigger>Price</AccordionTrigger>
+                    <AccordionContent className="space-y-4">
+                        <Slider
+                            defaultValue={[0, 500]}
+                            value={priceRange}
+                            onValueChange={handlePriceChange}
+                            max={500}
+                            step={10}
+                        />
+                        <div className="flex justify-between text-sm">
+                            <span>Rs. {priceRange[0]}</span>
+                            <span>Rs. {priceRange[1]}</span>
+                        </div>
+                        <div className="flex gap-2">
+                           <Button onClick={applyPriceFilter} size="sm" className="w-full">Apply</Button>
+                           <Button onClick={clearPriceFilter} size="sm" variant="outline" className="w-full">Clear</Button>
+                        </div>
+                    </AccordionContent>
+                </AccordionItem>
                 <AccordionItem value="color">
                     <AccordionTrigger>Color</AccordionTrigger>
                     <AccordionContent className="space-y-2">

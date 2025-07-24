@@ -1,4 +1,5 @@
 
+
 "use client"
 
 import { products } from '@/lib/mock-data';
@@ -119,6 +120,9 @@ export default function Home({
   } else if (sort === 'newest') {
     // Assuming higher ID is newer
     filteredProducts.sort((a, b) => Number(b.id) - Number(a.id));
+  } else {
+    // Relevance sort can be the default order or based on some metric
+    // For now, we'll just use the default order.
   }
   
   const allColors = [...new Set(products.flatMap(p => p.variants.colors))];
