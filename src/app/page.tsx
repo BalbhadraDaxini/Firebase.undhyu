@@ -28,10 +28,12 @@ function HomePageContent({
   const observerRef = useRef(null);
   const isSticky = useStickyOnScroll(observerRef);
   
-  const productsByCategory = categories.map(category => ({
+  const productsByCategory = categories.filter(c => c.slug !== 'new-arrivals').map(category => ({
     ...category,
     products: filteredProducts.filter(p => p.category === category.slug)
   }));
+  
+  const newArrivals = filteredProducts.slice(0, 8);
 
   return (
     <>
@@ -78,11 +80,18 @@ function HomePageContent({
                   </SheetContent>
                 </Sheet>
               </div>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-              {filteredProducts.map(product => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
+
+            <section id="new-arrivals" className="mb-16">
+              <h2 className="text-3xl font-headline font-semibold mb-6">New Arrivals</h2>
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                {newArrivals.map(product => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            </section>
+            
+            <Separator className="my-12"/>
+
             {filteredProducts.length === 0 && (
               <div className="flex h-64 items-center justify-center col-span-full">
                 <p className="text-muted-foreground">No products found matching your criteria.</p>
@@ -117,7 +126,7 @@ export default function Home({
 }) {
   let filteredProducts: Product[] = [...products];
 
-  const sort = searchParams.sort as string;
+  const sort = searchParams.sort as string || 'newest';
   const color = searchParams.color as string;
   const size = searchParams.size as string;
   const price = searchParams.price as string;
@@ -141,8 +150,8 @@ export default function Home({
     // Assuming higher ID is newer
     filteredProducts.sort((a, b) => Number(b.id) - Number(a.id));
   } else {
-    // Relevance sort can be the default order or based on some metric
-    // For now, we'll just use the default order.
+    // Default to newest if sort is relevance or not set
+    filteredProducts.sort((a, b) => Number(b.id) - Number(a.id));
   }
   
   const allColors = [...new Set(products.flatMap(p => p.variants.colors))];

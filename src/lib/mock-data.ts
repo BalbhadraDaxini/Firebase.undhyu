@@ -1,6 +1,7 @@
 import type { Product, Category } from './types';
 
 export const categories: Category[] = [
+  { name: 'New Arrivals', slug: 'new-arrivals' },
   { name: 'Sarees', slug: 'sarees' },
   { name: 'Lehengas', slug: 'lehengas' },
   { name: 'Suits', slug: 'suits' },
