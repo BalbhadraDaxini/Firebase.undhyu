@@ -81,9 +81,9 @@ export default function Hero() {
       onMouseEnter={plugin.current.stop}
       onMouseLeave={plugin.current.reset}
     >
-      <CarouselContent>
+      <CarouselContent className="-ml-0">
         {heroSlides.map((slide, index) => (
-          <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+          <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-0">
             <div className="relative h-[70vh] min-h-[500px] w-full group">
               <img
                 src={slide.image}
