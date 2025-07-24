@@ -19,8 +19,8 @@ interface CategoryPageClientProps {
 export default function CategoryPageClient({ category, filteredProducts, allColors, allSizes }: CategoryPageClientProps) {
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-4 items-start">
-        <aside className="hidden lg:block lg:col-span-1 self-start sticky top-20">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
+        <aside className="hidden lg:block lg:col-span-1 sticky top-20">
           <Card>
             <CardHeader>
               <CardTitle>Filters</CardTitle>
