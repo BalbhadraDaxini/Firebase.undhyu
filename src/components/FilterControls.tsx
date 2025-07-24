@@ -1,3 +1,4 @@
+
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -58,8 +59,8 @@ export default function FilterControls({ availableColors, availableSizes }: Filt
         setPriceRange(value);
     };
 
-    const applyPriceFilter = () => {
-        router.push(pathname + '?' + createQueryString('price', `${priceRange[0]}-${priceRange[1]}`));
+    const handlePriceCommit = (value: number[]) => {
+        router.push(pathname + '?' + createQueryString('price', `${value[0]}-${value[1]}`));
     }
     
     const clearPriceFilter = () => {
@@ -86,21 +87,17 @@ export default function FilterControls({ availableColors, availableSizes }: Filt
             <Accordion type="multiple" defaultValue={['price', 'color', 'size']} className="w-full">
                  <AccordionItem value="price">
                     <AccordionTrigger>Price</AccordionTrigger>
-                    <AccordionContent className="space-y-4">
+                    <AccordionContent className="space-y-4 pt-4">
                         <Slider
-                            defaultValue={[0, 500]}
                             value={priceRange}
                             onValueChange={handlePriceChange}
+                            onValueCommit={handlePriceCommit}
                             max={500}
                             step={10}
                         />
                         <div className="flex justify-between text-sm">
                             <span>Rs. {priceRange[0]}</span>
                             <span>Rs. {priceRange[1]}</span>
-                        </div>
-                        <div className="flex gap-2">
-                           <Button onClick={applyPriceFilter} size="sm" className="w-full">Apply</Button>
-                           <Button onClick={clearPriceFilter} size="sm" variant="outline" className="w-full">Clear</Button>
                         </div>
                     </AccordionContent>
                 </AccordionItem>
