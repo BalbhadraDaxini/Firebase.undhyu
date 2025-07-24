@@ -16,7 +16,7 @@ import Link from "next/link";
 
 const heroSlides = [
   {
-    image: 'https://placehold.co/1600x900.png',
+    image: 'https://images.unsplash.com/photo-1692992193981-d3d92fabd9cb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8d29tZW4lRTIlODAlOTFpbiVFMiU4MCU5MXNhcmVlfGVufDB8fDB8fHww',
     alt: 'Model wearing a beautiful saree',
     title: 'Exquisite Sarees',
     description: 'Discover the perfect blend of tradition and modernity in our latest saree collection.',
@@ -24,7 +24,7 @@ const heroSlides = [
     aiHint: 'saree fashion',
   },
   {
-    image: 'https://placehold.co/1600x900.png',
+    image: 'https://images.unsplash.com/photo-1610189025857-f42fe6e8dd91?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2FyZWV8ZW58MHx8MHx8fDA%3D',
     alt: 'Woman in an elegant lehenga',
     title: 'Lehengas for Every Occasion',
     description: 'From bridal wear to festive outfits, find the lehenga that tells your story.',
@@ -32,12 +32,36 @@ const heroSlides = [
     aiHint: 'lehenga fashion',
   },
   {
-    image: 'https://placehold.co/1600x900.png',
+    image: 'https://images.unsplash.com/photo-1610189012906-4c0aa9b9781e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNhcmVlfGVufDB8fDB8fHww',
     alt: 'Stylish suits for modern women',
     title: 'Contemporary Suit Sets',
     description: 'Chic and comfortable suits that make a statement wherever you go.',
     link: '#product-grid',
     aiHint: 'indian suit',
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1610030469668-8e9f641aaf27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHNhcmVlfGVufDB8fDB8fHww',
+    alt: 'Stylish suits for modern women',
+    title: 'Graceful Gowns',
+    description: 'Explore our collection of elegant gowns for any special event.',
+    link: '#product-grid',
+    aiHint: 'gowns fashion',
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1745313452052-0e4e341f326c?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    alt: 'Stylish suits for modern women',
+    title: 'Casual Kurtis',
+    description: 'Discover comfortable and stylish kurtis for your everyday look.',
+    link: '#product-grid',
+    aiHint: 'kurti fashion',
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1667665970124-2273c6ef3489?q=80&w=930&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    alt: 'Stylish suits for modern women',
+    title: 'Vibrant Collections',
+    description: 'Explore our vibrant collection of traditional and modern wear.',
+    link: '#product-grid',
+    aiHint: 'fashion collection',
   },
 ];
 
