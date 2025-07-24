@@ -101,7 +101,7 @@ export default function Hero() {
                     {slide.description}
                   </p>
                   <Button asChild size="lg" className="mt-4 bg-white text-black hover:bg-black hover:text-white border border-transparent hover:border-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Link href={slide.link}>Shop Now</Link>
+                    <Link href="#product-grid">Shop Now</Link>
                   </Button>
                 </div>
               </div>
