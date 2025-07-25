@@ -2,7 +2,7 @@ import { GraphQLClient, gql } from 'graphql-request';
 import { Product } from './types';
 
 const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_API_TOKEN!;
-const endpoint = `https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/api/2023-10/graphql.json`;
+const endpoint = `https://${process.env.SHOPIFY_STORE_DOMAIN}/api/2023-10/graphql.json`;
 
 const client = new GraphQLClient(endpoint, {
   headers: {
