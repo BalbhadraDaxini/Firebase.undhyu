@@ -82,15 +82,14 @@ const PRODUCT_QUERY = gql`
   }
 `;
 
-const CHECKOUT_CREATE_MUTATION = gql`
-  mutation checkoutCreate($input: CheckoutCreateInput!) {
-    checkoutCreate(input: $input) {
-      checkout {
+const CART_CREATE_MUTATION = gql`
+  mutation cartCreate($input: CartInput!) {
+    cartCreate(input: $input) {
+      cart {
         id
-        webUrl
+        checkoutUrl
       }
-      checkoutUserErrors {
-        code
+      userErrors {
         field
         message
       }
@@ -110,23 +109,26 @@ export async function getProduct(handle: string): Promise<Product | null> {
 
 export async function createCheckout(lineItems: { variantId: string; quantity: number }[]): Promise<string | null> {
   const input = {
-    lineItems,
+    lines: lineItems.map(item => ({
+        merchandiseId: item.variantId,
+        quantity: item.quantity,
+    })),
   };
 
   try {
-    const { checkoutCreate } = await client.request<{ 
-      checkoutCreate: { 
-        checkout: { webUrl: string } | null, 
-        checkoutUserErrors: { message: string }[] 
-      } 
-    }>(CHECKOUT_CREATE_MUTATION, { input });
+    const { cartCreate } = await client.request<{
+      cartCreate: {
+        cart: { checkoutUrl: string } | null,
+        userErrors: { message: string }[]
+      }
+    }>(CART_CREATE_MUTATION, { input });
 
-    if (checkoutCreate.checkoutUserErrors.length > 0) {
-      console.error('Checkout creation errors:', checkoutCreate.checkoutUserErrors);
-      throw new Error(checkoutCreate.checkoutUserErrors.map(e => e.message).join('\n'));
+    if (cartCreate.userErrors.length > 0) {
+      console.error('Cart creation errors:', cartCreate.userErrors);
+      throw new Error(cartCreate.userErrors.map(e => e.message).join('\n'));
     }
 
-    return checkoutCreate.checkout?.webUrl ?? null;
+    return cartCreate.cart?.checkoutUrl ?? null;
   } catch (error) {
     console.error('Error creating checkout:', error);
     return null;
