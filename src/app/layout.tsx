@@ -31,8 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={cn('min-h-screen bg-background font-body antialiased', playfairDisplay.variable, lato.variable)}>
+    <html lang="en">
+      <body className={cn('min-h-screen bg-background font-body antialiased', playfairDisplay.variable, lato.variable)} suppressHydrationWarning>
         <CartProvider>
           <div className="relative flex min-h-screen flex-col">
             <Header />
