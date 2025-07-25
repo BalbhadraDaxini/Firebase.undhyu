@@ -98,7 +98,12 @@ const CART_CREATE_MUTATION = gql`
 `;
 
 export async function getProducts(options: {}): Promise<Product[]> {
-  const { products } = await client.request<{ products: { edges: { node: Product }[] } }>(PRODUCTS_QUERY);
+  // Use Next.js revalidation to fetch fresh product data every hour
+  const { products } = await client.request<{ products: { edges: { node: Product }[] } }>(
+    PRODUCTS_QUERY, 
+    {},
+    { next: { revalidate: 3600 } }
+  );
   return products.edges.map(edge => edge.node);
 }
 
