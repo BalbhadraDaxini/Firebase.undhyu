@@ -8,6 +8,10 @@ import { Separator } from './ui/separator';
 import Image from 'next/image';
 import { Minus, Plus, Trash2 } from 'lucide-react';
 import Link from 'next/link';
+import { createCheckout } from '@/lib/shopify';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
 
 interface CartSheetProps {
     onOpenChange: (open: boolean) => void;
@@ -15,6 +19,31 @@ interface CartSheetProps {
 
 export default function CartSheet({ onOpenChange }: CartSheetProps) {
   const { cartItems, removeFromCart, updateQuantity, totalPrice, cartCount } = useCart();
+  const router = useRouter();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const { toast } = useToast();
+
+  const handleCheckout = async () => {
+    setIsProcessing(true);
+    const lineItems = cartItems.map(item => ({
+      variantId: item.variantId,
+      quantity: item.quantity,
+    }));
+
+    const checkoutUrl = await createCheckout(lineItems);
+
+    if (checkoutUrl) {
+      router.push(checkoutUrl);
+    } else {
+       toast({
+          title: "Error",
+          description: "Could not proceed to checkout. Please try again.",
+          variant: "destructive"
+      });
+      setIsProcessing(false);
+    }
+  };
+
 
   return (
     <SheetContent className="flex w-full flex-col p-0 sm:max-w-lg max-h-[90vh]">
@@ -63,8 +92,8 @@ export default function CartSheet({ onOpenChange }: CartSheetProps) {
                     <span>Rs. {totalPrice.toFixed(2)}</span>
                 </div>
                 <p className="text-sm text-muted-foreground">Shipping and taxes calculated at checkout.</p>
-                <Button asChild size="lg" className="w-full bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300" onClick={() => onOpenChange(false)}>
-                    <Link href="/checkout">Proceed to Checkout</Link>
+                <Button size="lg" className="w-full bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300" onClick={handleCheckout} disabled={isProcessing}>
+                    {isProcessing ? 'Processing...' : 'Proceed to Checkout'}
                 </Button>
             </div>
           </SheetFooter>

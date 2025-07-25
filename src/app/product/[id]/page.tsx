@@ -1,7 +1,7 @@
 
 "use client";
 
-import { getProduct } from '@/lib/shopify';
+import { createCheckout, getProduct } from '@/lib/shopify';
 import { notFound, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -17,6 +17,7 @@ import type { Product as ProductType } from '@/lib/types';
 export default function ProductPage({ params }: { params: { id: string } }) {
   const [product, setProduct] = useState<ProductType | null>(null);
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
   
   const { addToCart } = useCart();
   const { toast } = useToast();
@@ -43,7 +44,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   const handleAddToCart = () => {
     if (product && selectedVariant) {
         addToCart({
-            id: product.id,
+            id: selectedVariant.id,
             name: product.title,
             price: parseFloat(selectedVariant.price.amount),
             image: product.featuredImage.url,
@@ -58,18 +59,20 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     }
   };
 
-  const handleBuyNow = () => {
+  const handleBuyNow = async () => {
      if (product && selectedVariant) {
-        addToCart({
-            id: product.id,
-            name: product.title,
-            price: parseFloat(selectedVariant.price.amount),
-            image: product.featuredImage.url,
-            quantity,
-            variantId: selectedVariant.id,
-            variantTitle: selectedVariant.title
-        });
-        router.push('/checkout');
+        setIsProcessing(true);
+        const checkoutUrl = await createCheckout([{ variantId: selectedVariant.id, quantity }]);
+        if (checkoutUrl) {
+            router.push(checkoutUrl);
+        } else {
+            toast({
+                title: "Error",
+                description: "Could not proceed to checkout. Please try again.",
+                variant: "destructive"
+            });
+            setIsProcessing(false);
+        }
     }
   };
 
@@ -108,19 +111,21 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             <div className="flex items-center gap-4">
                 <Label className="text-base font-medium">Quantity</Label>
                 <div className="flex items-center gap-2 rounded-md border">
-                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setQuantity(q => Math.max(1, q - 1))}>
+                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setQuantity(q => Math.max(1, q - 1))} disabled={isProcessing}>
                         <Minus className="h-4 w-4" />
                     </Button>
                     <span className="w-8 text-center">{quantity}</span>
-                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setQuantity(q => q + 1)}>
+                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setQuantity(q => q + 1)} disabled={isProcessing}>
                         <Plus className="h-4 w-4" />
                     </Button>
                 </div>
             </div>
             
             <div className="flex flex-col gap-4 md:flex-row">
-              <Button onClick={handleAddToCart} size="lg" className="w-full md:w-auto bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300">Add to Cart</Button>
-              <Button onClick={handleBuyNow} size="lg" className="w-full md:w-auto bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300">Buy Now</Button>
+              <Button onClick={handleAddToCart} size="lg" className="w-full md:w-auto bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300" disabled={isProcessing}>Add to Cart</Button>
+              <Button onClick={handleBuyNow} size="lg" className="w-full md:w-auto bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300" disabled={isProcessing}>
+                {isProcessing ? 'Processing...' : 'Buy Now'}
+              </Button>
             </div>
           </div>
         </div>
@@ -128,4 +133,3 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     </div>
   );
 }
-
