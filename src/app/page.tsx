@@ -1,8 +1,5 @@
 
-
-"use client"
-
-import { products, categories } from '@/lib/mock-data';
+import { getProducts } from '@/lib/shopify';
 import { Product } from '@/lib/types';
 import FilterControls from '@/components/FilterControls';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,26 +8,47 @@ import Hero from '@/components/Hero';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Filter } from 'lucide-react';
-import { useRef } from 'react';
-import useStickyOnScroll from '@/hooks/useStickyOnScroll';
-import { cn } from '@/lib/utils';
+import { Suspense } from 'react';
 import { Separator } from '@/components/ui/separator';
 
-function HomePageContent({
-  filteredProducts,
-  allColors,
-  allSizes,
+async function HomePageContent({
+  searchParams,
 }: {
-  filteredProducts: Product[];
-  allColors: string[];
-  allSizes: string[];
+  searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const observerRef = useRef(null);
-  const isSticky = useStickyOnScroll(observerRef);
+  const products = await getProducts({});
   
-  const productsByCategory = categories.filter(c => c.slug !== 'new-arrivals').map(category => ({
+  let filteredProducts: Product[] = [...products];
+
+  const sort = searchParams.sort as string || 'newest';
+  const color = searchParams.color as string;
+  const size = searchParams.size as string;
+  const price = searchParams.price as string;
+
+  if (price) {
+    const [min, max] = price.split('-').map(Number);
+    filteredProducts = filteredProducts.filter(p => {
+        const productPrice = parseFloat(p.priceRange.minVariantPrice.amount);
+        return productPrice >= min && productPrice <= max;
+    });
+  }
+
+  if (sort === 'price-asc') {
+    filteredProducts.sort((a, b) => parseFloat(a.priceRange.minVariantPrice.amount) - parseFloat(b.priceRange.minVariantPrice.amount));
+  } else if (sort === 'price-desc') {
+    filteredProducts.sort((a, b) => parseFloat(b.priceRange.minVariantPrice.amount) - parseFloat(a.priceRange.minVariantPrice.amount));
+  } else {
+    // Default sort is handled by Shopify (newest)
+  }
+  
+  const allColors: string[] = [];
+  const allSizes: string[] = [];
+
+  const categories = [{name: 'All', slug: 'all'}];
+  
+  const productsByCategory = categories.map(category => ({
     ...category,
-    products: filteredProducts.filter(p => p.category === category.slug)
+    products: filteredProducts
   }));
   
   const newArrivals = filteredProducts.slice(0, 8);
@@ -38,15 +56,9 @@ function HomePageContent({
   return (
     <>
       <Hero />
-      <div ref={observerRef}></div>
       <div id="product-grid" className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
-          <aside
-            className={cn(
-              'hidden lg:block lg:col-span-1 self-start transition-all duration-300',
-              isSticky ? 'fixed top-20 w-[16rem]' : 'relative'
-            )}
-          >
+          <aside className='hidden lg:block lg:col-span-1 self-start sticky top-20'>
             <Card>
               <CardHeader>
                 <CardTitle>Filters</CardTitle>
@@ -56,8 +68,7 @@ function HomePageContent({
               </CardContent>
             </Card>
           </aside>
-           {isSticky && <div className="hidden lg:block lg:col-span-1"></div>}
-
+          
           <main className="lg:col-span-3">
              <div className="flex justify-end items-center mb-6">
                 <Sheet>
@@ -96,7 +107,7 @@ function HomePageContent({
                 <p className="text-muted-foreground">No products found matching your criteria.</p>
               </div>
             )}
-
+            
             {productsByCategory.map(category => (
               category.products.length > 0 && (
                 <section key={category.slug} id={category.slug} className="pt-16">
@@ -123,38 +134,9 @@ export default function Home({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  let filteredProducts: Product[] = [...products];
-
-  const sort = searchParams.sort as string || 'newest';
-  const color = searchParams.color as string;
-  const size = searchParams.size as string;
-  const price = searchParams.price as string;
-
-  if (color) {
-    filteredProducts = filteredProducts.filter(p => p.variants.colors.map(c => c.toLowerCase()).includes(color.toLowerCase()));
-  }
-  if (size) {
-    filteredProducts = filteredProducts.filter(p => p.variants.sizes.map(s => s.toLowerCase()).includes(size.toLowerCase()));
-  }
-  if (price) {
-    const [min, max] = price.split('-').map(Number);
-    filteredProducts = filteredProducts.filter(p => p.price >= min && p.price <= max);
-  }
-
-  if (sort === 'price-asc') {
-    filteredProducts.sort((a, b) => a.price - b.price);
-  } else if (sort === 'price-desc') {
-    filteredProducts.sort((a, b) => b.price - a.price);
-  } else if (sort === 'newest') {
-    // Assuming higher ID is newer
-    filteredProducts.sort((a, b) => Number(b.id) - Number(a.id));
-  } else {
-    // Default to newest if sort is relevance or not set
-    filteredProducts.sort((a, b) => Number(b.id) - Number(a.id));
-  }
-  
-  const allColors = [...new Set(products.flatMap(p => p.variants.colors))];
-  const allSizes = [...new Set(products.flatMap(p => p.variants.sizes))];
-
-  return <HomePageContent filteredProducts={filteredProducts} allColors={allColors} allSizes={allSizes} />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomePageContent searchParams={searchParams} />
+    </Suspense>
+  );
 }

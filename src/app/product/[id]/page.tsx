@@ -1,39 +1,76 @@
 
 "use client";
 
-import { products } from '@/lib/mock-data';
+import { getProduct } from '@/lib/shopify';
 import { notFound, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Star, Minus, Plus } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
+import type { Product as ProductType } from '@/lib/types';
+
 
 export default function ProductPage({ params }: { params: { id: string } }) {
-  const product = products.find(p => p.id === params.id);
+  const [product, setProduct] = useState<ProductType | null>(null);
+  const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null);
+  
   const { addToCart } = useCart();
   const { toast } = useToast();
   const router = useRouter();
   const [quantity, setQuantity] = useState(1);
 
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const fetchedProduct = await getProduct(params.id);
+      setProduct(fetchedProduct);
+      if (fetchedProduct?.variants.edges.length) {
+        setSelectedVariantId(fetchedProduct.variants.edges[0].node.id);
+      }
+    };
+    fetchProduct();
+  }, [params.id]);
+
   if (!product) {
-    notFound();
+    return <div>Loading...</div>; // Or a skeleton loader
   }
+  
+  const selectedVariant = product.variants.edges.find(edge => edge.node.id === selectedVariantId)?.node;
 
   const handleAddToCart = () => {
-    addToCart(product, quantity);
-    toast({
-        title: "Added to cart!",
-        description: `${product.name} has been added to your shopping cart.`,
-    })
+    if (product && selectedVariant) {
+        addToCart({
+            id: product.id,
+            name: product.title,
+            price: parseFloat(selectedVariant.price.amount),
+            image: product.featuredImage.url,
+            quantity,
+            variantId: selectedVariant.id,
+            variantTitle: selectedVariant.title
+        });
+        toast({
+            title: "Added to cart!",
+            description: `${product.title} has been added to your shopping cart.`,
+        })
+    }
   };
 
   const handleBuyNow = () => {
-    addToCart(product, quantity);
-    router.push('/checkout');
+     if (product && selectedVariant) {
+        addToCart({
+            id: product.id,
+            name: product.title,
+            price: parseFloat(selectedVariant.price.amount),
+            image: product.featuredImage.url,
+            quantity,
+            variantId: selectedVariant.id,
+            variantTitle: selectedVariant.title
+        });
+        router.push('/checkout');
+    }
   };
 
   return (
@@ -42,25 +79,26 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         <div className="overflow-hidden rounded-lg">
           <div className="relative h-[600px] w-full">
             <Image
-              src={product.image}
-              alt={product.name}
+              src={product.featuredImage.url}
+              alt={product.featuredImage.altText || product.title}
               fill
               className="object-cover"
-              data-ai-hint={`${product.category} fashion`}
             />
           </div>
         </div>
 
         <div>
-          <h1 className="text-3xl font-bold tracking-tight font-headline lg:text-4xl">{product.name}</h1>
-          <p className="mt-2 text-3xl font-semibold text-primary">Rs. {product.price.toFixed(2)}</p>
+          <h1 className="text-3xl font-bold tracking-tight font-headline lg:text-4xl">{product.title}</h1>
+          <p className="mt-2 text-3xl font-semibold text-primary">
+            {selectedVariant?.price.currencyCode} {parseFloat(selectedVariant?.price.amount || product.priceRange.minVariantPrice.amount).toFixed(2)}
+          </p>
           <div className="mt-4 flex items-center">
             <div className="flex items-center">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className={`h-5 w-5 ${i < Math.round(product.reviews.rating) ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" />
+                <Star key={i} className={`h-5 w-5 ${i < 4 ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" />
               ))}
             </div>
-            <p className="ml-2 text-sm text-muted-foreground">{product.reviews.rating.toFixed(1)} ({product.reviews.count} reviews)</p>
+            <p className="ml-2 text-sm text-muted-foreground">(No reviews yet)</p>
           </div>
           <p className="mt-6 text-base text-muted-foreground">{product.description}</p>
           
@@ -90,3 +128,4 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     </div>
   );
 }
+

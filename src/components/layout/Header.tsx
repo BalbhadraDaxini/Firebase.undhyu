@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { ShoppingCart, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
-import { categories } from '@/lib/mock-data';
 import { useState } from 'react';
 import { Sheet, SheetTrigger, SheetContent, SheetClose } from '../ui/sheet';
 import CartSheet from '../CartSheet';
@@ -14,6 +13,15 @@ export default function Header() {
   const { cartCount } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const categories = [
+    { name: 'New Arrivals', slug: 'new-arrivals' },
+    { name: 'Sarees', slug: 'sarees' },
+    { name: 'Lehengas', slug: 'lehengas' },
+    { name: 'Suits', slug: 'suits' },
+    { name: 'Gowns', slug: 'gowns' },
+    { name: 'Kurtis', slug: 'kurtis' },
+  ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">

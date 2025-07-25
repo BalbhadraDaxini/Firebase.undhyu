@@ -1,7 +1,15 @@
 import Link from 'next/link';
-import { categories } from '@/lib/mock-data';
 
 export default function Footer() {
+  const categories = [
+    { name: 'New Arrivals', slug: 'new-arrivals' },
+    { name: 'Sarees', slug: 'sarees' },
+    { name: 'Lehengas', slug: 'lehengas' },
+    { name: 'Suits', slug: 'suits' },
+    { name: 'Gowns', slug: 'gowns' },
+    { name: 'Kurtis', slug: 'kurtis' },
+  ];
+
   return (
     <footer className="mt-auto border-t bg-card">
       <div className="container mx-auto px-4 py-8">

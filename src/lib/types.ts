@@ -1,23 +1,33 @@
-export type ProductVariant = {
-  colors: string[];
-  sizes: string[];
+export type ShopifyProductVariant = {
+  id: string;
+  title: string;
+  price: {
+    amount: string;
+    currencyCode: string;
+  };
 };
-
-export type ProductReview = {
-  rating: number;
-  count: number;
-}
 
 export type Product = {
   id: string;
-  name: string;
-  price: number;
-  image: string;
-  category: string;
+  handle: string;
+  title: string;
   description: string;
-  attributes: string;
-  variants: ProductVariant;
-  reviews: ProductReview;
+  featuredImage: {
+    url: string;
+    altText: string;
+  };
+  priceRange: {
+    minVariantPrice: {
+      amount: string;
+      currencyCode: string;
+    };
+  };
+  variants: {
+    edges: {
+      node: ShopifyProductVariant;
+    }[];
+  };
+  tags: string[];
 };
 
 export type CartItem = {
@@ -26,8 +36,8 @@ export type CartItem = {
   price: number;
   image: string;
   quantity: number;
-  color?: string;
-  size?: string;
+  variantId: string;
+  variantTitle: string;
 };
 
 export type Category = {

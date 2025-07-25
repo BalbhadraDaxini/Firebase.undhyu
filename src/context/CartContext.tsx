@@ -7,9 +7,9 @@ import { useToast } from '@/hooks/use-toast';
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (product: Product, quantity: number, color?: string, size?: string) => void;
-  removeFromCart: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  addToCart: (item: Omit<CartItem, 'quantity'> & { quantity?: number }) => void;
+  removeFromCart: (variantId: string) => void;
+  updateQuantity: (variantId: string, quantity: number) => void;
   clearCart: () => void;
   cartCount: number;
   totalPrice: number;
@@ -32,43 +32,34 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const addToCart = (product: Product, quantity: number, color?: string, size?: string) => {
+  const addToCart = (product: Omit<CartItem, 'quantity'> & { quantity?: number }) => {
     setCartItems(prevItems => {
-      const existingItem = prevItems.find(item => 
-        item.id === product.id && item.color === color && item.size === size
-      );
+      const existingItem = prevItems.find(item => item.variantId === product.variantId);
+      const quantity = product.quantity || 1;
+      
       if (existingItem) {
         return prevItems.map(item =>
-          item.id === product.id && item.color === color && item.size === size
+          item.variantId === product.variantId
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
       } else {
-        const newItem: CartItem = {
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          image: product.image,
-          quantity,
-          color,
-          size,
-        };
-        return [...prevItems, newItem];
+        return [...prevItems, { ...product, quantity }];
       }
     });
   };
 
-  const removeFromCart = (productId: string) => {
-    setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
+  const removeFromCart = (variantId: string) => {
+    setCartItems(prevItems => prevItems.filter(item => item.variantId !== variantId));
   };
 
-  const updateQuantity = (productId: string, quantity: number) => {
+  const updateQuantity = (variantId: string, quantity: number) => {
     if (quantity <= 0) {
-      removeFromCart(productId);
+      removeFromCart(variantId);
     } else {
       setCartItems(prevItems =>
         prevItems.map(item =>
-          item.id === productId ? { ...item, quantity } : item
+          item.variantId === variantId ? { ...item, quantity } : item
         )
       );
     }
