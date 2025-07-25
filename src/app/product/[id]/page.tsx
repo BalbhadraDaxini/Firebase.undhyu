@@ -1,7 +1,6 @@
 
-import { getProduct, createCheckout } from '@/lib/shopify';
+import { getProduct } from '@/lib/shopify';
 import { notFound } from 'next/navigation';
-import type { Product as ProductType } from '@/lib/types';
 import ProductPageContent from './ProductPageContent';
 
 export default async function ProductPage({ params }: { params: { id: string } }) {
