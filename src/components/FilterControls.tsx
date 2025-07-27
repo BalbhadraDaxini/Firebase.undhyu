@@ -5,17 +5,10 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useState, useEffect } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
-import { Checkbox } from './ui/checkbox';
-import { Label } from './ui/label';
 import { Slider } from './ui/slider';
-import { Button } from './ui/button';
+import { Label } from './ui/label';
 
-interface FilterControlsProps {
-    availableColors: string[];
-    availableSizes: string[];
-}
-
-export default function FilterControls({ availableColors, availableSizes }: FilterControlsProps) {
+export default function FilterControls() {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -49,23 +42,12 @@ export default function FilterControls({ availableColors, availableSizes }: Filt
         router.push(pathname + '?' + createQueryString('sort', value));
     };
     
-    const handleFilterChange = (type: 'color' | 'size', value: string) => {
-        const currentFilter = searchParams.get(type);
-        const newValue = currentFilter?.toLowerCase() === value.toLowerCase() ? '' : value;
-        router.push(pathname + '?' + createQueryString(type, newValue));
-    }
-    
     const handlePriceChange = (value: number[]) => {
         setPriceRange(value);
     };
 
     const handlePriceCommit = (value: number[]) => {
         router.push(pathname + '?' + createQueryString('price', `${value[0]}-${value[1]}`));
-    }
-    
-    const clearPriceFilter = () => {
-        setPriceRange([0, 500]);
-        router.push(pathname + '?' + createQueryString('price', ''));
     }
 
     return (
@@ -78,13 +60,12 @@ export default function FilterControls({ availableColors, availableSizes }: Filt
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="relevance">Relevance</SelectItem>
-                        <SelectItem value="newest">Newest</SelectItem>
                         <SelectItem value="price-asc">Price: Low to High</SelectItem>
                         <SelectItem value="price-desc">Price: High to Low</SelectItem>
                     </SelectContent>
                 </Select>
             </div>
-            <Accordion type="multiple" defaultValue={['price', 'color', 'size']} className="w-full">
+            <Accordion type="multiple" defaultValue={['price']} className="w-full">
                  <AccordionItem value="price">
                     <AccordionTrigger>Price</AccordionTrigger>
                     <AccordionContent className="space-y-4 pt-4">
@@ -99,36 +80,6 @@ export default function FilterControls({ availableColors, availableSizes }: Filt
                             <span>Rs. {priceRange[0]}</span>
                             <span>Rs. {priceRange[1]}</span>
                         </div>
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="color">
-                    <AccordionTrigger>Color</AccordionTrigger>
-                    <AccordionContent className="space-y-2">
-                        {availableColors.map(color => (
-                            <div key={color} className="flex items-center space-x-2">
-                                <Checkbox
-                                    id={`color-${color}`}
-                                    checked={searchParams.get('color')?.toLowerCase() === color.toLowerCase()}
-                                    onCheckedChange={() => handleFilterChange('color', color)}
-                                />
-                                <Label htmlFor={`color-${color}`} className="font-normal">{color}</Label>
-                            </div>
-                        ))}
-                    </AccordionContent>
-                </AccordionItem>
-                 <AccordionItem value="size">
-                    <AccordionTrigger>Size</AccordionTrigger>
-                    <AccordionContent className="space-y-2">
-                        {availableSizes.map(size => (
-                            <div key={size} className="flex items-center space-x-2">
-                                <Checkbox
-                                    id={`size-${size}`}
-                                    checked={searchParams.get('size')?.toLowerCase() === size.toLowerCase()}
-                                    onCheckedChange={() => handleFilterChange('size', size)}
-                                />
-                                <Label htmlFor={`size-${size}`} className="font-normal">{size}</Label>
-                            </div>
-                        ))}
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
