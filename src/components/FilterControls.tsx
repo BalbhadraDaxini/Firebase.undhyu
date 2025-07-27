@@ -13,7 +13,7 @@ export default function FilterControls() {
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    const [priceRange, setPriceRange] = useState([0, 500]);
+    const [priceRange, setPriceRange] = useState([0, 10000]);
 
     useEffect(() => {
         const priceParam = searchParams.get('price');
@@ -21,7 +21,7 @@ export default function FilterControls() {
             const [min, max] = priceParam.split('-').map(Number);
             setPriceRange([min, max]);
         } else {
-            setPriceRange([0, 500]);
+            setPriceRange([0, 10000]);
         }
     }, [searchParams]);
 
@@ -73,8 +73,8 @@ export default function FilterControls() {
                             value={priceRange}
                             onValueChange={handlePriceChange}
                             onValueCommit={handlePriceCommit}
-                            max={500}
-                            step={10}
+                            max={10000}
+                            step={100}
                         />
                         <div className="flex justify-between text-sm">
                             <span>Rs. {priceRange[0]}</span>
