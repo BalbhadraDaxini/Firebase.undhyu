@@ -73,7 +73,7 @@ export default function Header() {
               href={`#${category.slug}`}
               onClick={(e) => handleLinkClick(e, category.slug)}
               className={cn(
-                "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+                "px-3 py-1.5 text-sm font-medium transition-colors",
                 activeSection === category.slug
                   ? 'bg-foreground text-background'
                   : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
