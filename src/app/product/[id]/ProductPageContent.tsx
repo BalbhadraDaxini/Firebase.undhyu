@@ -114,9 +114,9 @@ export default function ProductPageContent({ product }: { product: ProductType }
                 </div>
             </div>
             
-            <div className="flex flex-col gap-4 md:flex-row">
-              <Button onClick={handleAddToCart} size="lg" className="w-full md:w-auto bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300" disabled={isProcessing}>Add to Cart</Button>
-              <Button onClick={handleBuyNow} size="lg" className="w-full md:w-auto bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300" disabled={isProcessing}>
+            <div className="flex flex-col gap-4">
+              <Button onClick={handleAddToCart} size="lg" className="w-full bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300" disabled={isProcessing}>Add to Cart</Button>
+              <Button onClick={handleBuyNow} size="lg" className="w-full bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300" disabled={isProcessing}>
                 {isProcessing ? 'Processing...' : 'Buy Now'}
               </Button>
             </div>
