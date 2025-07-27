@@ -59,7 +59,7 @@ export default function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center">
           <Link href="/" className="flex items-center gap-2">
-            <span className="font-headline text-2xl font-semibold">
+            <span className="font-headline text-xl font-semibold">
               <span className="text-foreground">Undhyu</span>
               <span className="text-primary">.</span>
             </span>
@@ -73,10 +73,10 @@ export default function Header() {
               href={`#${category.slug}`}
               onClick={(e) => handleLinkClick(e, category.slug)}
               className={cn(
-                "flex h-full items-center px-3 text-sm font-medium transition-colors",
+                "flex h-full items-center border-b-2 px-3 text-sm font-medium transition-colors",
                 activeSection === category.slug
-                  ? 'bg-foreground text-background'
-                  : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
+                  ? 'border-foreground text-foreground'
+                  : 'border-transparent text-muted-foreground hover:text-foreground'
               )}
             >
               {category.name}
@@ -110,7 +110,7 @@ export default function Header() {
             <SheetContent side="left">
                 <div className="flex flex-col gap-4 p-4">
                     <Link href="/" className="flex items-center gap-2 mb-4">
-                        <span className="font-headline text-2xl font-semibold">
+                        <span className="font-headline text-xl font-semibold">
                           <span className="text-foreground">Undhyu</span>
                           <span className="text-primary">.</span>
                         </span>
