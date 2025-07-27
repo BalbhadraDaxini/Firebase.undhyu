@@ -2,10 +2,10 @@
 "use client";
 
 import Link from 'next/link';
-import { ShoppingCart, Menu, ChevronRight } from 'lucide-react';
+import { ShoppingCart, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Sheet, SheetTrigger, SheetContent, SheetClose } from '../ui/sheet';
 import CartSheet from '../CartSheet';
 import { cn } from '@/lib/utils';
@@ -66,20 +66,19 @@ export default function Header() {
           </Link>
         </div>
 
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="hidden items-center gap-1 md:flex">
           {categories.map(category => (
             <a
               key={category.slug}
               href={`#${category.slug}`}
               onClick={(e) => handleLinkClick(e, category.slug)}
               className={cn(
-                "flex items-center gap-1 text-sm font-medium transition-colors",
+                "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
                 activeSection === category.slug
-                  ? 'text-primary'
-                  : 'text-muted-foreground hover:text-foreground'
+                  ? 'bg-foreground text-background'
+                  : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
               )}
             >
-              {activeSection === category.slug && <ChevronRight className="h-4 w-4" />}
               {category.name}
             </a>
           ))}
@@ -123,10 +122,10 @@ export default function Header() {
                                 href={`#${category.slug}`}
                                 onClick={(e) => handleLinkClick(e, category.slug)}
                                 className={cn(
-                                    "text-lg font-medium transition-colors",
+                                    "rounded-md px-3 py-2 text-lg font-medium transition-colors",
                                     activeSection === category.slug 
-                                        ? 'text-primary' 
-                                        : 'text-muted-foreground hover:text-foreground'
+                                        ? 'bg-foreground text-background' 
+                                        : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
                                 )}
                             >
                                 {category.name}
