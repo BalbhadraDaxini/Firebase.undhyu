@@ -66,14 +66,14 @@ export default function Header() {
           </Link>
         </div>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden h-full items-center gap-1 md:flex">
           {categories.map(category => (
             <a
               key={category.slug}
               href={`#${category.slug}`}
               onClick={(e) => handleLinkClick(e, category.slug)}
               className={cn(
-                "px-3 py-1.5 text-sm font-medium transition-colors",
+                "flex h-full items-center px-3 text-sm font-medium transition-colors",
                 activeSection === category.slug
                   ? 'bg-foreground text-background'
                   : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
