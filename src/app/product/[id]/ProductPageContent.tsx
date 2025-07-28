@@ -162,14 +162,8 @@ export default function ProductPageContent({ product }: { product: ProductType }
             </div>
             <p className="ml-2 text-sm text-muted-foreground">(No reviews yet)</p>
           </div>
-          <div 
-              className="mt-6 text-base text-muted-foreground prose"
-              dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
-           />
           
-          <Separator className="my-8" />
-          
-          <div className="space-y-6">
+          <div className="mt-6 space-y-6">
             {product.options.map(option => (
               option.values.length > 1 && (
                 <div key={option.name}>
@@ -210,6 +204,13 @@ export default function ProductPageContent({ product }: { product: ProductType }
               </Button>
             </div>
           </div>
+          
+          <Separator className="my-8" />
+
+          <div 
+              className="text-base text-muted-foreground prose"
+              dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+           />
         </div>
       </div>
     </div>
