@@ -25,7 +25,7 @@ function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export default function Footer() {
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [currentYear, setCurrentYear] = useState<number | null>(null);
 
   useEffect(() => {
     setCurrentYear(new Date().getFullYear());
@@ -33,7 +33,6 @@ export default function Footer() {
 
   const categories = [
     { name: 'New Arrivals', slug: 'new-arrivals' },
-    { name: 'All', slug: 'all' },
     { name: 'Sarees', slug: 'sarees' },
     { name: 'Lehengas', slug: 'lehengas' },
     { name: 'Suits', slug: 'suits' },
@@ -97,7 +96,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {currentYear} Undhyu. All Rights Reserved.</p>
+          <p>&copy; {currentYear ?? new Date().getFullYear()} Undhyu. All Rights Reserved.</p>
         </div>
       </div>
     </footer>
