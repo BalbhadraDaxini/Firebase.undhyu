@@ -8,13 +8,16 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const imageUrl = product.featuredImage?.url || 'https://placehold.co/600x750.png';
+  const imageAlt = product.featuredImage?.altText || product.title;
+
   return (
     <Link href={`/product/${product.handle}`} className="group block">
         <div className="overflow-hidden rounded-md bg-card">
           <div className="relative aspect-[4/5] w-full">
             <Image
-              src={product.featuredImage.url}
-              alt={product.featuredImage.altText || product.title}
+              src={imageUrl}
+              alt={imageAlt}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
               sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
