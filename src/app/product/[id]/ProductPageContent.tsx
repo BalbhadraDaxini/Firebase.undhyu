@@ -152,7 +152,7 @@ export default function ProductPageContent({ product }: { product: ProductType }
         <div>
           <h1 className="text-3xl font-bold tracking-tight font-headline lg:text-4xl">{product.title}</h1>
           <p className="mt-2 text-3xl font-semibold text-muted-foreground">
-            {selectedVariant?.price.currencyCode} {parseFloat(selectedVariant?.price.amount || product.priceRange.minVariantPrice.amount).toFixed(2)}
+            Rs. {parseFloat(selectedVariant?.price.amount || product.priceRange.minVariantPrice.amount).toFixed(2)}
           </p>
           <div className="mt-4 flex items-center">
             <div className="flex items-center">

@@ -46,7 +46,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 {product.title}
             </h3>
             <p className="mt-0.5 text-sm font-semibold text-muted-foreground">
-              {product.priceRange.minVariantPrice.currencyCode} {parseFloat(product.priceRange.minVariantPrice.amount).toFixed(2)}
+              Rs. {parseFloat(product.priceRange.minVariantPrice.amount).toFixed(2)}
             </p>
         </div>
     </Link>
