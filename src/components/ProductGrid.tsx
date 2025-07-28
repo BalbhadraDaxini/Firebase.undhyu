@@ -70,7 +70,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
         <>
             <section id="new-arrivals" className="pt-16 -mt-16">
               <h2 className="text-3xl font-headline font-semibold mb-6">New Arrivals</h2>
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+              <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4">
                 {newArrivals.map(product => (
                   <ProductCard key={product.id} product={product} />
                 ))}
@@ -87,7 +87,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
             
             <section id={allProductsCategory.slug} className="pt-16 -mt-16">
                  <h2 className="text-3xl font-headline font-semibold mb-6">{allProductsCategory.name}</h2>
-                  <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                  <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4">
                     {allProductsCategory.products.map(product => (
                       <ProductCard key={product.id} product={product} />
                     ))}
@@ -98,7 +98,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
               category.products.length > 0 && (
                 <section key={category.slug} id={category.slug} className="pt-16 -mt-16">
                   <h2 className="text-3xl font-headline font-semibold mb-6">{category.name}</h2>
-                  <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                  <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4">
                     {category.products.map(product => (
                       <ProductCard key={product.id} product={product} />
                     ))}
