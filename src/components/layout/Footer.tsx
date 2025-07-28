@@ -13,16 +13,12 @@ function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
     >
-      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+      <path fill="currentColor" d="M19.05 4.94A9.96 9.96 0 0 0 12 2C6.48 2 2 6.48 2 12c0 1.74.45 3.39 1.22 4.86L2 22l5.26-1.38c1.41.71 3 1.12 4.74 1.12h.01c5.52 0 10-4.48 10-10c0-2.76-1.12-5.26-2.95-7.07zm-1.19 10.94c-.28-.14-1.64-.81-1.9-.9s-.45-.14-.64.14s-.72.9-.88 1.08s-.32.2-.59.07s-1.14-.42-2.17-1.34s-1.05-1.55-1.17-1.81s-.01-.35.13-.48s.28-.32.42-.48s.14-.28.21-.46s.03-.35-.04-.5s-.64-1.55-.88-2.12s-.48-.48-.65-.49s-.35-.01-.52-.01s-.45.07-.68.35s-.9 1.08-.9 2.62s.92 3.04 1.05 3.25s1.81 2.76 4.39 3.88s1.75.48 2.35.38s1.08-.44 1.23-.85s.15-1.18.11-1.28s-.14-.15-.42-.29z"/>
     </svg>
   );
 }
+
 
 export default function Footer() {
   const [currentYear, setCurrentYear] = useState<number | null>(null);
@@ -96,7 +92,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {currentYear ?? new Date().getFullYear()} Undhyu. All Rights Reserved.</p>
+           <p>&copy; {currentYear ?? ''} Undhyu. All Rights Reserved.</p>
         </div>
       </div>
     </footer>
