@@ -67,13 +67,17 @@ const PRODUCT_QUERY = gql`
           }
         }
       }
+      options {
+        name
+        values
+      }
       priceRange {
         minVariantPrice {
           amount
           currencyCode
         }
       }
-      variants(first: 5) {
+      variants(first: 25) {
         edges {
           node {
             id
@@ -81,6 +85,10 @@ const PRODUCT_QUERY = gql`
             price {
                 amount
                 currencyCode
+            }
+            selectedOptions {
+              name
+              value
             }
           }
         }

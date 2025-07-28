@@ -5,12 +5,21 @@ export type ShopifyProductVariant = {
     amount: string;
     currencyCode: string;
   };
+  selectedOptions: {
+    name: string;
+    value: string;
+  }[];
 };
 
 export type ProductImage = {
   url: string;
   altText: string;
 };
+
+export type ProductOption = {
+  name: string;
+  values: string[];
+}
 
 export type Product = {
   id: string;
@@ -23,6 +32,7 @@ export type Product = {
       node: ProductImage;
     }[];
   };
+  options: ProductOption[];
   priceRange: {
     minVariantPrice: {
       amount: string;

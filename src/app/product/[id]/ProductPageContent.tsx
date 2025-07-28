@@ -6,16 +6,17 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Star, Minus, Plus } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
-import type { Product as ProductType, ProductImage } from '@/lib/types';
+import type { Product as ProductType, ProductImage, ShopifyProductVariant } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 export default function ProductPageContent({ product }: { product: ProductType }) {
-  const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null);
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
+  const [selectedVariant, setSelectedVariant] = useState<ShopifyProductVariant | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
   
@@ -26,18 +27,33 @@ export default function ProductPageContent({ product }: { product: ProductType }
 
   useEffect(() => {
     if (product?.variants.edges.length) {
-      setSelectedVariantId(product.variants.edges[0].node.id);
+      const defaultOptions: Record<string, string> = {};
+      product.options.forEach(option => {
+        defaultOptions[option.name] = option.values[0];
+      });
+      setSelectedOptions(defaultOptions);
     }
     if (product?.featuredImage) {
       setSelectedImage(product.featuredImage);
     }
   }, [product]);
 
+  useEffect(() => {
+    if (product && Object.keys(selectedOptions).length > 0) {
+      const variant = product.variants.edges.find(edge => {
+        return edge.node.selectedOptions.every(
+          option => selectedOptions[option.name] === option.value
+        );
+      })?.node;
+      setSelectedVariant(variant || null);
+    }
+  }, [selectedOptions, product]);
+
+
   if (!product) {
     return <div>Loading...</div>; // Or a skeleton loader
   }
   
-  const selectedVariant = product.variants.edges.find(edge => edge.node.id === selectedVariantId)?.node;
   const allImages = [product.featuredImage, ...(product.images.edges.map(edge => edge.node))].filter(
     (img, index, self) => img && index === self.findIndex((t) => t.url === img.url)
   );
@@ -77,6 +93,10 @@ export default function ProductPageContent({ product }: { product: ProductType }
     }
   };
 
+  const handleOptionChange = (optionName: string, value: string) => {
+    setSelectedOptions(prev => ({ ...prev, [optionName]: value }));
+  };
+  
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-16">
@@ -134,6 +154,24 @@ export default function ProductPageContent({ product }: { product: ProductType }
           <Separator className="my-8" />
           
           <div className="space-y-6">
+            {product.options.map(option => (
+              <div key={option.name}>
+                <Label className="text-base font-medium">{option.name}</Label>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {option.values.map(value => (
+                    <Button 
+                      key={value}
+                      variant={selectedOptions[option.name] === value ? 'default' : 'outline'}
+                      onClick={() => handleOptionChange(option.name, value)}
+                      className="rounded-full"
+                    >
+                      {value}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            ))}
+
             <div className="flex items-center gap-4">
                 <Label className="text-base font-medium">Quantity</Label>
                 <div className="flex items-center gap-2 rounded-md border">
@@ -148,8 +186,8 @@ export default function ProductPageContent({ product }: { product: ProductType }
             </div>
             
             <div className="flex flex-col gap-4">
-              <Button onClick={handleAddToCart} size="lg" className="w-full bg-white text-black hover:bg-black hover:text-white border-2 border-black font-bold rounded-none transition-colors duration-300" disabled={isProcessing}>Add to Cart</Button>
-              <Button onClick={handleBuyNow} size="lg" className="w-full bg-black text-white hover:bg-white hover:text-black border-2 border-transparent hover:border-black font-bold rounded-none transition-colors duration-300" disabled={isProcessing}>
+              <Button onClick={handleAddToCart} size="lg" className="w-full bg-white text-black hover:bg-black hover:text-white border-2 border-black font-bold rounded-none transition-colors duration-300" disabled={isProcessing || !selectedVariant}>Add to Cart</Button>
+              <Button onClick={handleBuyNow} size="lg" className="w-full bg-black text-white hover:bg-white hover:text-black border-2 border-transparent hover:border-black font-bold rounded-none transition-colors duration-300" disabled={isProcessing || !selectedVariant}>
                 {isProcessing ? 'Processing...' : 'Buy Now'}
               </Button>
             </div>
