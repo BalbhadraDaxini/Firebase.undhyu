@@ -99,7 +99,7 @@ export default function ContactPage() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" size="lg" className="w-full bg-black text-white hover:bg-gray-800 font-bold rounded-none transition-colors duration-300" disabled={isSubmitting}>
+                <Button type="submit" size="lg" className="w-full bg-black text-white hover:bg-white hover:text-black border-2 border-transparent hover:border-black font-bold rounded-none transition-colors duration-300" disabled={isSubmitting}>
                   {isSubmitting ? 'Submitting...' : 'Submit'}
                 </Button>
               </form>

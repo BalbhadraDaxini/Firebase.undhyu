@@ -1,3 +1,4 @@
+
 "use client";
 
 import { SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
@@ -92,7 +93,7 @@ export default function CartSheet({ onOpenChange }: CartSheetProps) {
                     <span>Rs. {totalPrice.toFixed(2)}</span>
                 </div>
                 <p className="text-sm text-muted-foreground">Shipping and taxes calculated at checkout.</p>
-                <Button size="lg" className="w-full bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300" onClick={handleCheckout} disabled={isProcessing}>
+                <Button size="lg" className="w-full bg-black text-white hover:bg-white hover:text-black border-2 border-transparent hover:border-black font-bold rounded-none transition-colors duration-300" onClick={handleCheckout} disabled={isProcessing}>
                     {isProcessing ? 'Processing...' : 'Proceed to Checkout'}
                 </Button>
             </div>
@@ -102,7 +103,7 @@ export default function CartSheet({ onOpenChange }: CartSheetProps) {
         <div className="flex flex-1 flex-col items-center justify-center gap-4 p-6">
           <h3 className="text-lg font-semibold">Your cart is empty</h3>
           <p className="text-center text-muted-foreground">Looks like you haven't added anything to your cart yet.</p>
-          <Button asChild size="lg" className="bg-white text-black hover:bg-black hover:text-white font-bold rounded-none transition-colors duration-300" onClick={() => onOpenChange(false)}>
+          <Button asChild size="lg" className="bg-white text-black hover:bg-black hover:text-white border-2 border-black font-bold rounded-none transition-colors duration-300" onClick={() => onOpenChange(false)}>
             <Link href="/">Start Shopping</Link>
           </Button>
         </div>
