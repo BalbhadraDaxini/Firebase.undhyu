@@ -2,14 +2,21 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Product } from '@/lib/types';
+import { cn } from '@/lib/utils';
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const imageUrl = product.featuredImage?.url || 'https://placehold.co/600x750.png';
-  const imageAlt = product.featuredImage?.altText || product.title;
+  const firstImage = product.featuredImage || product.images.edges[0]?.node;
+  const secondImage = product.images.edges[1]?.node || firstImage;
+
+  const imageUrl = firstImage?.url || 'https://placehold.co/600x750.png';
+  const imageAlt = firstImage?.altText || product.title;
+  
+  const hoverImageUrl = secondImage?.url || imageUrl;
+  const hoverImageAlt = secondImage?.altText || imageAlt;
 
   return (
     <Link href={`/product/${product.handle}`} className="group block">
@@ -19,7 +26,17 @@ export default function ProductCard({ product }: ProductCardProps) {
               src={imageUrl}
               alt={imageAlt}
               fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              className={cn(
+                "object-cover transition-opacity duration-300",
+                "group-hover:opacity-0"
+              )}
+              sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+            />
+            <Image
+              src={hoverImageUrl}
+              alt={hoverImageAlt}
+              fill
+              className="object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
               sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
             />
           </div>
