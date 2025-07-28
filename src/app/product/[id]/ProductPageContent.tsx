@@ -29,7 +29,9 @@ export default function ProductPageContent({ product }: { product: ProductType }
     if (product?.variants.edges.length) {
       const defaultOptions: Record<string, string> = {};
       product.options.forEach(option => {
-        defaultOptions[option.name] = option.values[0];
+        if (option.name !== 'Title') {
+          defaultOptions[option.name] = option.values[0];
+        }
       });
       setSelectedOptions(defaultOptions);
     }
@@ -45,7 +47,15 @@ export default function ProductPageContent({ product }: { product: ProductType }
           option => selectedOptions[option.name] === option.value
         );
       })?.node;
-      setSelectedVariant(variant || null);
+
+      if(variant) {
+        setSelectedVariant(variant);
+      } else {
+        // Fallback to the first variant if no match is found, which can happen if not all options are selected yet.
+        setSelectedVariant(product.variants.edges[0].node);
+      }
+    } else if (product && product.variants.edges.length > 0) {
+      setSelectedVariant(product.variants.edges[0].node)
     }
   }, [selectedOptions, product]);
 
@@ -55,8 +65,9 @@ export default function ProductPageContent({ product }: { product: ProductType }
   }
   
   const allImages = [product.featuredImage, ...(product.images.edges.map(edge => edge.node))].filter(
-    (img, index, self) => img && index === self.findIndex((t) => t.url === img.url)
+    (img, index, self) => img && self.findIndex((t) => t.url === img.url) === index
   );
+  
 
   const handleAddToCart = () => {
     if (product && selectedVariant) {
@@ -115,7 +126,7 @@ export default function ProductPageContent({ product }: { product: ProductType }
             </div>
             <div className="grid grid-cols-5 gap-2">
                 {allImages.map((image, index) => (
-                    <button 
+                    image && <button 
                         key={index} 
                         onClick={() => setSelectedImage(image)} 
                         className={cn(
@@ -155,7 +166,7 @@ export default function ProductPageContent({ product }: { product: ProductType }
           
           <div className="space-y-6">
             {product.options.map(option => (
-              <div key={option.name}>
+              option.name !== 'Title' && <div key={option.name}>
                 <Label className="text-base font-medium">{option.name}</Label>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {option.values.map(value => (
