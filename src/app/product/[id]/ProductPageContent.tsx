@@ -29,9 +29,7 @@ export default function ProductPageContent({ product }: { product: ProductType }
     if (product?.variants.edges.length) {
       const defaultOptions: Record<string, string> = {};
       product.options.forEach(option => {
-        if (option.name !== 'Title') {
-          defaultOptions[option.name] = option.values[0];
-        }
+        defaultOptions[option.name] = option.values[0];
       });
       setSelectedOptions(defaultOptions);
     }
@@ -50,8 +48,12 @@ export default function ProductPageContent({ product }: { product: ProductType }
       
       if(variant) {
         setSelectedVariant(variant);
+        const variantImage = product.images.edges.find(edge => edge.node.altText === variant.title)?.node;
+        if (variantImage) {
+          setSelectedImage(variantImage);
+        }
       } else {
-        // Fallback to the first variant if no match is found, which can happen if not all options are selected yet.
+        // Fallback to the first variant if no match is found
         setSelectedVariant(product.variants.edges[0].node);
       }
     } else if (product && product.variants.edges.length === 1 && product.variants.edges[0].node.title === 'Default Title') {
@@ -160,13 +162,16 @@ export default function ProductPageContent({ product }: { product: ProductType }
             </div>
             <p className="ml-2 text-sm text-muted-foreground">(No reviews yet)</p>
           </div>
-          <p className="mt-6 text-base text-muted-foreground">{product.description}</p>
+          <div 
+              className="mt-6 text-base text-muted-foreground prose"
+              dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+           />
           
           <Separator className="my-8" />
           
           <div className="space-y-6">
             {product.options.map(option => (
-              option.name !== 'Title' && option.values.length > 1 && (
+              option.values.length > 1 && (
                 <div key={option.name}>
                   <Label className="text-base font-medium">{option.name}</Label>
                   <div className="mt-2 flex flex-wrap gap-2">

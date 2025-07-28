@@ -54,7 +54,7 @@ const PRODUCT_QUERY = gql`
       id
       title
       handle
-      description
+      descriptionHtml
       featuredImage {
         url
         altText

@@ -25,7 +25,7 @@ export type Product = {
   id: string;
   handle: string;
   title: string;
-  description: string;
+  descriptionHtml: string;
   featuredImage: ProductImage;
   images: {
     edges: {
