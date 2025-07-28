@@ -3,6 +3,7 @@
 
 import Link from 'next/link';
 import { Instagram } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -24,6 +25,12 @@ function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export default function Footer() {
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
+
   const categories = [
     { name: 'New Arrivals', slug: 'new-arrivals' },
     { name: 'All', slug: 'all' },
@@ -90,7 +97,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Undhyu. All Rights Reserved.</p>
+          <p>&copy; {currentYear} Undhyu. All Rights Reserved.</p>
         </div>
       </div>
     </footer>
