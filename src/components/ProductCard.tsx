@@ -42,10 +42,10 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
         <div className="mt-2 text-center">
-            <h3 className="text-sm font-medium text-foreground">
+            <h3 className="text-sm font-medium uppercase text-foreground">
                 {product.title}
             </h3>
-            <p className="mt-0.5 text-sm font-semibold text-foreground">
+            <p className="mt-0.5 text-sm font-semibold text-muted-foreground">
               {product.priceRange.minVariantPrice.currencyCode} {parseFloat(product.priceRange.minVariantPrice.amount).toFixed(2)}
             </p>
         </div>
