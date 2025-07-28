@@ -78,11 +78,11 @@ export default function Footer() {
           <div>
             <h3 className="font-headline font-semibold">Follow Us</h3>
             <div className="mt-4 flex space-x-4">
-                <a href="https://www.instagram.com/undhyu.com_/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
+                <a href="https://www.instagram.com/undhyu.com_/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-[#E1306C]">
                   <Instagram className="h-6 w-6" />
                   <span className="sr-only">Instagram</span>
                 </a>
-                <a href="https://wa.me/919039037771" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
+                <a href="https://wa.me/919039037771" target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-[#25D366]">
                   <WhatsAppIcon className="h-6 w-6" />
                   <span className="sr-only">WhatsApp</span>
                 </a>
