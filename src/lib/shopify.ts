@@ -12,7 +12,7 @@ const client = new GraphQLClient(endpoint, {
 
 const PRODUCTS_QUERY = gql`
   query getProducts {
-    products(first: 20) {
+    products(first: 100) {
       edges {
         node {
           id
