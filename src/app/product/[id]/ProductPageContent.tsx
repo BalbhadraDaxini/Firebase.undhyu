@@ -47,15 +47,15 @@ export default function ProductPageContent({ product }: { product: ProductType }
           option => selectedOptions[option.name] === option.value
         );
       })?.node;
-
+      
       if(variant) {
         setSelectedVariant(variant);
       } else {
         // Fallback to the first variant if no match is found, which can happen if not all options are selected yet.
         setSelectedVariant(product.variants.edges[0].node);
       }
-    } else if (product && product.variants.edges.length > 0) {
-      setSelectedVariant(product.variants.edges[0].node)
+    } else if (product && product.variants.edges.length === 1 && product.variants.edges[0].node.title === 'Default Title') {
+        setSelectedVariant(product.variants.edges[0].node)
     }
   }, [selectedOptions, product]);
 
@@ -166,21 +166,23 @@ export default function ProductPageContent({ product }: { product: ProductType }
           
           <div className="space-y-6">
             {product.options.map(option => (
-              option.name !== 'Title' && <div key={option.name}>
-                <Label className="text-base font-medium">{option.name}</Label>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {option.values.map(value => (
-                    <Button 
-                      key={value}
-                      variant={selectedOptions[option.name] === value ? 'default' : 'outline'}
-                      onClick={() => handleOptionChange(option.name, value)}
-                      className="rounded-full"
-                    >
-                      {value}
-                    </Button>
-                  ))}
+              option.name !== 'Title' && option.values.length > 1 && (
+                <div key={option.name}>
+                  <Label className="text-base font-medium">{option.name}</Label>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {option.values.map(value => (
+                      <Button 
+                        key={value}
+                        variant={selectedOptions[option.name] === value ? 'default' : 'outline'}
+                        onClick={() => handleOptionChange(option.name, value)}
+                        className="rounded-full"
+                      >
+                        {value}
+                      </Button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )
             ))}
 
             <div className="flex items-center gap-4">
