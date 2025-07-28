@@ -10,7 +10,7 @@ async function HomePageContent() {
   return (
     <>
       <Hero />
-      <div id="product-grid" className="container mx-auto px-4 py-8">
+      <div id="product-grid" className="container mx-auto px-8 py-8">
         <div className="grid grid-cols-1 gap-8">
           <main>
               <ProductGrid products={products} />
