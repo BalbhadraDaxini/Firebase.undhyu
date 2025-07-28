@@ -11,11 +11,13 @@ import { Star, Minus, Plus } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
-import type { Product as ProductType } from '@/lib/types';
+import type { Product as ProductType, ProductImage } from '@/lib/types';
+import { cn } from '@/lib/utils';
 
 export default function ProductPageContent({ product }: { product: ProductType }) {
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
   
   const { addToCart } = useCart();
   const { toast } = useToast();
@@ -26,6 +28,9 @@ export default function ProductPageContent({ product }: { product: ProductType }
     if (product?.variants.edges.length) {
       setSelectedVariantId(product.variants.edges[0].node.id);
     }
+    if (product?.featuredImage) {
+      setSelectedImage(product.featuredImage);
+    }
   }, [product]);
 
   if (!product) {
@@ -33,6 +38,9 @@ export default function ProductPageContent({ product }: { product: ProductType }
   }
   
   const selectedVariant = product.variants.edges.find(edge => edge.node.id === selectedVariantId)?.node;
+  const allImages = [product.featuredImage, ...(product.images.edges.map(edge => edge.node))].filter(
+    (img, index, self) => img && index === self.findIndex((t) => t.url === img.url)
+  );
 
   const handleAddToCart = () => {
     if (product && selectedVariant) {
@@ -72,15 +80,40 @@ export default function ProductPageContent({ product }: { product: ProductType }
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-16">
-        <div className="overflow-hidden rounded-lg">
-          <div className="relative h-[600px] w-full">
-            <Image
-              src={product.featuredImage.url}
-              alt={product.featuredImage.altText || product.title}
-              fill
-              className="object-cover"
-            />
-          </div>
+        <div className="flex flex-col gap-4">
+            <div className="overflow-hidden rounded-lg">
+                <div className="relative h-[600px] w-full">
+                    {selectedImage && (
+                        <Image
+                        src={selectedImage.url}
+                        alt={selectedImage.altText || product.title}
+                        fill
+                        className="object-cover"
+                        />
+                    )}
+                </div>
+            </div>
+            <div className="grid grid-cols-5 gap-2">
+                {allImages.map((image, index) => (
+                    <button 
+                        key={index} 
+                        onClick={() => setSelectedImage(image)} 
+                        className={cn(
+                            "overflow-hidden rounded-md border-2",
+                            selectedImage?.url === image.url ? "border-primary" : "border-transparent"
+                        )}
+                    >
+                        <div className="relative aspect-square w-full">
+                            <Image
+                                src={image.url}
+                                alt={image.altText || `Thumbnail ${index + 1}`}
+                                fill
+                                className="object-cover"
+                            />
+                        </div>
+                    </button>
+                ))}
+            </div>
         </div>
 
         <div>

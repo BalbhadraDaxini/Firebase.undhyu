@@ -7,14 +7,21 @@ export type ShopifyProductVariant = {
   };
 };
 
+export type ProductImage = {
+  url: string;
+  altText: string;
+};
+
 export type Product = {
   id: string;
   handle: string;
   title: string;
   description: string;
-  featuredImage: {
-    url: string;
-    altText: string;
+  featuredImage: ProductImage;
+  images: {
+    edges: {
+      node: ProductImage;
+    }[];
   };
   priceRange: {
     minVariantPrice: {

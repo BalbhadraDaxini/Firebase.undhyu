@@ -59,6 +59,14 @@ const PRODUCT_QUERY = gql`
         url
         altText
       }
+      images(first: 10) {
+        edges {
+          node {
+            url
+            altText
+          }
+        }
+      }
       priceRange {
         minVariantPrice {
           amount
