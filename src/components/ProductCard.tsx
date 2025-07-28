@@ -20,7 +20,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Link href={`/product/${product.handle}`} className="group block">
-        <div className="overflow-hidden rounded-md bg-card">
+        <div className="overflow-hidden bg-card">
           <div className="relative aspect-[4/5] w-full">
             <Image
               src={imageUrl}
@@ -41,7 +41,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             />
           </div>
         </div>
-        <div className="mt-2 text-left">
+        <div className="mt-2 text-center">
             <h3 className="text-sm font-medium text-foreground">
                 {product.title}
             </h3>
