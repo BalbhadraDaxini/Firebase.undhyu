@@ -48,18 +48,18 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="container mx-auto px-4 py-8 sm:py-12">
       <div className="mx-auto max-w-2xl">
         <Card>
           <CardHeader>
-            <CardTitle className="text-center text-3xl font-headline">Contact Us</CardTitle>
+            <CardTitle className="text-center text-2xl sm:text-3xl font-headline">Contact Us</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="mb-8 text-center text-muted-foreground">
+            <p className="mb-6 sm:mb-8 text-center text-muted-foreground text-sm sm:text-base">
               Have a question or feedback? Fill out the form below and we'll get back to you as soon as possible.
             </p>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
                 <FormField
                   control={form.control}
                   name="name"

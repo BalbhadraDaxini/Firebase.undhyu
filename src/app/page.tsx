@@ -4,6 +4,9 @@ import { Suspense } from 'react';
 import ProductGrid from '@/components/ProductGrid';
 import Hero from '@/components/Hero';
 import ProductFilters from '@/components/ProductFilters';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { SlidersHorizontal } from 'lucide-react';
 
 async function HomePageContent() {
   const products = await getProducts({});
@@ -19,6 +22,19 @@ async function HomePageContent() {
             </div>
           </aside>
           <main className="lg:col-span-3">
+              <div className="flex justify-end lg:hidden mb-4">
+                  <Sheet>
+                    <SheetTrigger asChild>
+                      <Button variant="outline">
+                        <SlidersHorizontal className="mr-2 h-4 w-4" />
+                        Filters
+                      </Button>
+                    </SheetTrigger>
+                    <SheetContent>
+                        <ProductFilters />
+                    </SheetContent>
+                  </Sheet>
+              </div>
               <ProductGrid products={products} />
           </main>
         </div>

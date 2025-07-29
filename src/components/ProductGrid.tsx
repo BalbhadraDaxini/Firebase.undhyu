@@ -79,8 +79,8 @@ export default function ProductGrid({ products }: ProductGridProps) {
             {filteredProducts.length > 0 && (
                 <>
                     <section id="new-arrivals" className="pt-16 -mt-16">
-                      <h2 className="text-3xl font-headline font-semibold mb-6">New Arrivals</h2>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                      <h2 className="text-2xl md:text-3xl font-headline font-semibold mb-6">New Arrivals</h2>
+                      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-8">
                         {newArrivals.map(product => (
                           <ProductCard key={product.id} product={product} />
                         ))}
@@ -90,8 +90,8 @@ export default function ProductGrid({ products }: ProductGridProps) {
                     <Separator className="my-12"/>
 
                     <section id={allProductsCategory.slug} className="pt-16 -mt-16">
-                         <h2 className="text-3xl font-headline font-semibold mb-6">{allProductsCategory.name}</h2>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                         <h2 className="text-2xl md:text-3xl font-headline font-semibold mb-6">{allProductsCategory.name}</h2>
+                          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-8">
                             {allProductsCategory.products.map(product => (
                               <ProductCard key={product.id} product={product} />
                             ))}
@@ -101,8 +101,8 @@ export default function ProductGrid({ products }: ProductGridProps) {
                     {productsByCategory.map(category => (
                       category.products.length > 0 && (
                         <section key={category.slug} id={category.slug} className="pt-16 -mt-16">
-                          <h2 className="text-3xl font-headline font-semibold mb-6">{category.name}</h2>
-                           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                          <h2 className="text-2xl md:text-3xl font-headline font-semibold mb-6">{category.name}</h2>
+                           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-8">
                             {category.products.map(product => (
                               <ProductCard key={product.id} product={product} />
                             ))}

@@ -51,9 +51,9 @@ export default function Footer() {
 
   return (
     <footer className="mt-auto border-t bg-card">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-          <div>
+          <div className="mb-8 md:mb-0">
             <h3 className="font-headline font-semibold">Shop</h3>
             <ul className="mt-4 space-y-2 text-sm">
               {categories.map(category => (
@@ -65,7 +65,7 @@ export default function Footer() {
               ))}
             </ul>
           </div>
-          <div>
+          <div className="mb-8 md:mb-0">
             <h3 className="font-headline font-semibold">About Us</h3>
             <ul className="mt-4 space-y-2 text-sm">
               <li><a href="#" className="text-muted-foreground hover:text-foreground">Our Story</a></li>
@@ -73,7 +73,7 @@ export default function Footer() {
               <li><a href="#" className="text-muted-foreground hover:text-foreground">Press</a></li>
             </ul>
           </div>
-          <div>
+          <div className="mb-8 md:mb-0">
             <h3 className="font-headline font-semibold">Support</h3>
             <ul className="mt-4 space-y-2 text-sm">
               <li><Link href="/contact" className="text-muted-foreground hover:text-foreground">Contact Us</Link></li>

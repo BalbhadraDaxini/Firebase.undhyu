@@ -128,11 +128,11 @@ export default function ProductPageContent({ product }: { product: ProductType }
   const decimalPart = ratingValue - integerPart;
 
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="container mx-auto px-4 py-8 md:py-12">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-16">
         <div className="flex flex-col gap-4">
             <div className="overflow-hidden rounded-lg">
-                <div className="relative h-[600px] w-full">
+                <div className="relative h-[450px] sm:h-[600px] w-full">
                     {selectedImage && (
                         <Image
                         src={selectedImage.url}
@@ -167,12 +167,12 @@ export default function ProductPageContent({ product }: { product: ProductType }
         </div>
 
         <div>
-          <h1 className="text-3xl font-bold tracking-tight font-headline lg:text-4xl">{product.title}</h1>
+          <h1 className="text-2xl font-bold tracking-tight font-headline lg:text-4xl">{product.title}</h1>
           <div className="mt-2 flex items-baseline gap-2">
-            <p className="text-3xl font-semibold text-foreground">
+            <p className="text-2xl lg:text-3xl font-semibold text-foreground">
                 <span className="mr-2">Rs. {price}</span>
                  {isOnSale && (
-                    <s className="text-xl font-medium text-destructive">
+                    <s className="text-lg lg:text-xl font-medium text-destructive">
                      Rs. {compareAtPrice}
                     </s>
                 )}
@@ -225,7 +225,7 @@ export default function ProductPageContent({ product }: { product: ProductType }
                 </div>
             </div>
             
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 sm:flex-row">
               <Button onClick={handleAddToCart} size="lg" className="w-full bg-white text-black hover:bg-black hover:text-white border-2 border-black font-bold rounded-none transition-colors duration-300" disabled={isProcessing || !selectedVariant}>Add to Cart</Button>
               <Button onClick={handleBuyNow} size="lg" className="w-full bg-black text-white hover:bg-white hover:text-black border-2 border-transparent hover:border-black font-bold rounded-none transition-colors duration-300" disabled={isProcessing || !selectedVariant}>
                 {isProcessing ? 'Processing...' : 'Buy Now'}

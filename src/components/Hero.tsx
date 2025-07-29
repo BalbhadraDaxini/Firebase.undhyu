@@ -66,7 +66,7 @@ export default function Hero() {
         >
             <CarouselContent className="-ml-0">
                 {heroSlides.map((slide, index) => (
-                    <CarouselItem key={index} className="pl-0 md:basis-1/2 lg:basis-1/3">
+                    <CarouselItem key={index} className="pl-0 sm:basis-1/2 md:basis-1/2 lg:basis-1/3">
                         <div className="relative h-[70vh] min-h-[500px]">
                             <img
                                 src={slide.image}
@@ -82,11 +82,11 @@ export default function Hero() {
             <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-20 hidden text-white md:flex" />
         </Carousel>
         <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute top-3/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-white text-center px-4">
-            <h1 className="font-headline text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">
+        <div className="absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 z-10 text-white text-center px-4 sm:top-3/4">
+            <h1 className="font-headline text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg">
                 Timeless Indian Ethnic Wear
             </h1>
-            <Button asChild size="lg" className="bg-white text-black hover:bg-black hover:text-white border-2 border-white hover:border-black font-bold text-lg px-8 py-6 rounded-none transition-colors duration-300">
+            <Button asChild size="lg" className="bg-white text-black hover:bg-black hover:text-white border-2 border-white hover:border-black font-bold text-lg px-6 py-4 sm:px-8 sm:py-6 rounded-none transition-colors duration-300">
                 <Link href="#product-grid">Shop Now</Link>
             </Button>
         </div>
