@@ -157,13 +157,13 @@ export default function ProductPageContent({ product }: { product: ProductType }
           <h1 className="text-3xl font-bold tracking-tight font-headline lg:text-4xl">{product.title}</h1>
           <div className="mt-2 flex items-baseline gap-2">
             <p className="text-3xl font-semibold text-muted-foreground">
-              <span>Rs. {price}</span>
+                <span className="mr-2">Rs. {price}</span>
+                 {isOnSale && (
+                    <span className="text-xl font-medium text-destructive line-through">
+                    Rs. {compareAtPrice}
+                    </span>
+                )}
             </p>
-            {isOnSale && (
-                <p className="text-xl font-medium text-destructive line-through">
-                  Rs. {compareAtPrice}
-                </p>
-            )}
           </div>
           <div className="mt-4 flex items-center">
             <div className="flex items-center">

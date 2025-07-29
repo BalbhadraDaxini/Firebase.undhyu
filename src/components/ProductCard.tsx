@@ -51,12 +51,12 @@ export default function ProductCard({ product }: ProductCardProps) {
                 {product.title}
             </h3>
             <p className="mt-0.5 text-sm font-semibold text-muted-foreground">
+              <span className="mr-2">Rs. {price}</span>
               {isOnSale && (
-                <span className="mr-2 text-destructive line-through">
+                <span className="text-destructive line-through">
                   Rs. {compareAtPrice}
                 </span>
               )}
-              <span>Rs. {price}</span>
             </p>
         </div>
     </Link>
