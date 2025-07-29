@@ -2,14 +2,13 @@
 "use client";
 
 import Link from 'next/link';
-import { ShoppingCart, Menu, Search } from 'lucide-react';
+import { ShoppingCart, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { useState, useEffect } from 'react';
 import { Sheet, SheetTrigger, SheetContent, SheetClose } from '../ui/sheet';
 import CartSheet from '../CartSheet';
 import { cn } from '@/lib/utils';
-import { Input } from '../ui/input';
 
 export default function Header() {
   const { cartCount } = useCart();
@@ -66,20 +65,22 @@ export default function Header() {
                     </h1>
                 </Link>
             </div>
-             <nav className="hidden h-full items-center justify-center gap-1 md:flex">
+             <nav className="hidden h-full items-center justify-center gap-4 md:flex">
               {categories.map(category => (
                 <a
                   key={category.slug}
                   href={`#${category.slug}`}
                   onClick={(e) => handleLinkClick(e, category.slug)}
                   className={cn(
-                    "flex h-full items-center border-b-2 px-3 py-2 text-sm font-medium transition-colors text-gray-200 hover:text-white",
-                    activeSection === category.slug
-                      ? 'border-amber-500 text-white'
-                      : 'border-transparent'
+                    "relative group flex h-full items-center px-1 py-2 text-sm font-medium tracking-wide text-gray-200 transition-colors hover:text-white",
+                     activeSection === category.slug ? 'text-white' : ''
                   )}
                 >
                   {category.name}
+                  <span className={cn(
+                    "absolute bottom-5 left-0 h-0.5 bg-amber-500 transition-all duration-300 group-hover:w-full",
+                    activeSection === category.slug ? 'w-full' : 'w-0'
+                  )}></span>
                 </a>
               ))}
             </nav>
@@ -110,10 +111,9 @@ export default function Header() {
                 <SheetContent side="left">
                     <div className="flex flex-col gap-4 p-4">
                         <Link href="/" className="flex items-center gap-2 mb-4">
-                            <span className="font-headline text-xl font-semibold">
-                            <span className="text-foreground">Undhyu</span>
-                            <span className="text-primary">.</span>
-                            </span>
+                             <h1 className="text-2xl md:text-3xl font-bold text-black tracking-wide">
+                                Undhyu<span className="text-amber-500 font-bold text-3xl md:text-4xl">.</span>
+                            </h1>
                         </Link>
                         <nav className="flex flex-col gap-3">
                             {categories.map(category => (
