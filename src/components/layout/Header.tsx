@@ -2,19 +2,28 @@
 "use client";
 
 import Link from 'next/link';
-import { ShoppingCart, Menu } from 'lucide-react';
+import { ShoppingCart, Menu, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { useState, useEffect } from 'react';
 import { Sheet, SheetTrigger, SheetContent, SheetClose } from '../ui/sheet';
 import CartSheet from '../CartSheet';
 import { cn } from '@/lib/utils';
+import { Input } from '../ui/input';
 
 export default function Header() {
   const { cartCount } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('new-arrivals');
+
+  const navLinks = [
+    { name: 'Lehengas', href: '#' },
+    { name: 'Kurtis', href: '#' },
+    { name: 'Jewelry', href: '#' },
+    { name: 'Sarees', href: '#' },
+    { name: 'Sale', href: '#' },
+  ];
 
   const categories = [
     { name: 'New Arrivals', slug: 'new-arrivals' },
@@ -56,23 +65,99 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-primary text-primary-foreground">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <div className="flex items-center">
-          <Link href="/" className="flex items-center gap-2">
-            <h1 className="text-2xl md:text-3xl font-bold text-primary-foreground tracking-wide">
-              Undhyu<span className="text-amber-500 font-bold text-3xl md:text-4xl">.</span>
-            </h1>
-          </Link>
-        </div>
+      <div className="container mx-auto px-4">
+        <div className="flex h-20 items-center justify-between">
+            <div className="flex-shrink-0">
+                <Link href="/" className="flex items-center gap-2">
+                    <h1 className="text-2xl md:text-3xl font-bold text-primary-foreground tracking-wide">
+                    Undhyu<span className="text-amber-500 font-bold text-3xl md:text-4xl">.</span>
+                    </h1>
+                </Link>
+            </div>
+            
+            <nav className="hidden md:flex space-x-8">
+                {navLinks.map((link) => (
+                    <a key={link.name} href={link.href} className="text-gray-200 hover:text-white px-1 py-2 text-sm font-medium tracking-wide transition-colors duration-200 relative group">
+                        {link.name}
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 transition-all duration-200 group-hover:w-full"></span>
+                    </a>
+                ))}
+            </nav>
 
-        <nav className="hidden h-full items-center gap-1 md:flex">
+            <div className="hidden md:flex flex-1 max-w-xs mx-6">
+                <form className="w-full">
+                    <div className="relative">
+                        <Input placeholder="Search products..." className="w-full pl-10 pr-4 py-2.5 border-gray-600 rounded-full focus:ring-2 focus:ring-amber-500 focus:border-amber-500 bg-gray-800/50 backdrop-blur-sm text-white placeholder-gray-300 text-sm" type="text" />
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <Search className="h-4 w-4 text-gray-400" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <div className="flex items-center justify-end gap-2 md:gap-4">
+            <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
+                <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="relative text-primary-foreground hover:bg-white/10 hover:text-primary-foreground">
+                    <ShoppingCart className="h-6 w-6" />
+                    {cartCount > 0 && (
+                    <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-primary">
+                        {cartCount}
+                    </span>
+                    )}
+                    <span className="sr-only">Open Cart</span>
+                </Button>
+                </SheetTrigger>
+                <CartSheet onOpenChange={setIsCartOpen} />
+            </Sheet>
+
+            <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+                <SheetTrigger asChild>
+                    <Button variant="ghost" size="icon" className="md:hidden text-primary-foreground hover:bg-white/10 hover:text-primary-foreground">
+                        <Menu className="h-6 w-6" />
+                        <span className="sr-only">Open Menu</span>
+                    </Button>
+                </SheetTrigger>
+                <SheetContent side="left">
+                    <div className="flex flex-col gap-4 p-4">
+                        <Link href="/" className="flex items-center gap-2 mb-4">
+                            <span className="font-headline text-xl font-semibold">
+                            <span className="text-foreground">Undhyu</span>
+                            <span className="text-primary">.</span>
+                            </span>
+                        </Link>
+                        <nav className="flex flex-col gap-3">
+                            {categories.map(category => (
+                            <SheetClose asChild key={category.slug}>
+                                <a
+                                    href={`#${category.slug}`}
+                                    onClick={(e) => handleLinkClick(e, category.slug)}
+                                    className={cn(
+                                        "rounded-md px-3 py-2 text-lg font-medium transition-colors",
+                                        activeSection === category.slug 
+                                            ? 'bg-foreground text-background' 
+                                            : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
+                                    )}
+                                >
+                                    {category.name}
+                                </a>
+                            </SheetClose>
+                            ))}
+                        </nav>
+                    </div>
+                </SheetContent>
+            </Sheet>
+            </div>
+        </div>
+        <nav className="hidden h-full items-center justify-center gap-1 md:flex">
           {categories.map(category => (
             <a
               key={category.slug}
               href={`#${category.slug}`}
               onClick={(e) => handleLinkClick(e, category.slug)}
               className={cn(
-                "flex h-full items-center border-b-2 px-3 text-sm font-medium transition-colors",
+                "flex h-full items-center border-b-2 px-3 py-2 text-sm font-medium transition-colors",
                 activeSection === category.slug
                   ? 'border-primary-foreground text-primary-foreground'
                   : 'border-transparent text-primary-foreground/80 hover:text-primary-foreground'
@@ -82,60 +167,6 @@ export default function Header() {
             </a>
           ))}
         </nav>
-
-        <div className="flex items-center justify-end gap-2 md:gap-4">
-          <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="relative text-primary-foreground hover:bg-white/10 hover:text-primary-foreground">
-                <ShoppingCart className="h-5 w-5" />
-                {cartCount > 0 && (
-                  <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-primary">
-                    {cartCount}
-                  </span>
-                )}
-                 <span className="sr-only">Open Cart</span>
-              </Button>
-            </SheetTrigger>
-            <CartSheet onOpenChange={setIsCartOpen} />
-          </Sheet>
-
-          <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-            <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden text-primary-foreground hover:bg-white/10 hover:text-primary-foreground">
-                    <Menu className="h-5 w-5" />
-                    <span className="sr-only">Open Menu</span>
-                </Button>
-            </SheetTrigger>
-            <SheetContent side="left">
-                <div className="flex flex-col gap-4 p-4">
-                    <Link href="/" className="flex items-center gap-2 mb-4">
-                        <span className="font-headline text-xl font-semibold">
-                          <span className="text-foreground">Undhyu</span>
-                          <span className="text-primary">.</span>
-                        </span>
-                    </Link>
-                    <nav className="flex flex-col gap-3">
-                        {categories.map(category => (
-                          <SheetClose asChild key={category.slug}>
-                            <a
-                                href={`#${category.slug}`}
-                                onClick={(e) => handleLinkClick(e, category.slug)}
-                                className={cn(
-                                    "rounded-md px-3 py-2 text-lg font-medium transition-colors",
-                                    activeSection === category.slug 
-                                        ? 'bg-foreground text-background' 
-                                        : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
-                                )}
-                            >
-                                {category.name}
-                            </a>
-                           </SheetClose>
-                        ))}
-                    </nav>
-                </div>
-            </SheetContent>
-          </Sheet>
-        </div>
       </div>
     </header>
   );
