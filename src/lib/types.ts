@@ -5,6 +5,10 @@ export type ShopifyProductVariant = {
     amount: string;
     currencyCode: string;
   };
+  compareAtPrice: {
+    amount: string;
+    currencyCode: string;
+  } | null;
   selectedOptions: {
     name: string;
     value: string;
@@ -38,6 +42,12 @@ export type Product = {
       amount: string;
       currencyCode: string;
     };
+  };
+   compareAtPriceRange: {
+    minVariantCompareAtPrice: {
+      amount: string;
+      currencyCode: string;
+    } | null;
   };
   variants: {
     edges: {

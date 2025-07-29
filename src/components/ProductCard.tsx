@@ -18,6 +18,11 @@ export default function ProductCard({ product }: ProductCardProps) {
   const hoverImageUrl = secondImage?.url || imageUrl;
   const hoverImageAlt = secondImage?.altText || imageAlt;
 
+  const price = parseFloat(product.priceRange.minVariantPrice.amount).toFixed(2);
+  const compareAtPrice = product.compareAtPriceRange?.minVariantCompareAtPrice ? parseFloat(product.compareAtPriceRange.minVariantCompareAtPrice.amount).toFixed(2) : null;
+  
+  const isOnSale = compareAtPrice && compareAtPrice > price;
+
   return (
     <Link href={`/product/${product.handle}`} className="group block">
         <div className="overflow-hidden bg-card">
@@ -46,7 +51,12 @@ export default function ProductCard({ product }: ProductCardProps) {
                 {product.title}
             </h3>
             <p className="mt-0.5 text-sm font-semibold text-muted-foreground">
-              Rs. {parseFloat(product.priceRange.minVariantPrice.amount).toFixed(2)}
+              {isOnSale && (
+                <span className="mr-2 text-destructive line-through">
+                  Rs. {compareAtPrice}
+                </span>
+              )}
+              <span>Rs. {price}</span>
             </p>
         </div>
     </Link>

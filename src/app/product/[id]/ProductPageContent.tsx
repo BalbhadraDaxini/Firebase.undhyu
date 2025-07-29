@@ -110,6 +110,10 @@ export default function ProductPageContent({ product }: { product: ProductType }
     setSelectedOptions(prev => ({ ...prev, [optionName]: value }));
   };
   
+  const price = parseFloat(selectedVariant?.price.amount || product.priceRange.minVariantPrice.amount).toFixed(2);
+  const compareAtPrice = selectedVariant?.compareAtPrice ? parseFloat(selectedVariant.compareAtPrice.amount).toFixed(2) : null;
+  const isOnSale = compareAtPrice && compareAtPrice > price;
+
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-16">
@@ -151,9 +155,16 @@ export default function ProductPageContent({ product }: { product: ProductType }
 
         <div>
           <h1 className="text-3xl font-bold tracking-tight font-headline lg:text-4xl">{product.title}</h1>
-          <p className="mt-2 text-3xl font-semibold text-muted-foreground">
-            Rs. {parseFloat(selectedVariant?.price.amount || product.priceRange.minVariantPrice.amount).toFixed(2)}
-          </p>
+          <div className="mt-2 flex items-baseline gap-2">
+            <p className="text-3xl font-semibold text-muted-foreground">
+              <span>Rs. {price}</span>
+            </p>
+            {isOnSale && (
+                <p className="text-xl font-medium text-destructive line-through">
+                  Rs. {compareAtPrice}
+                </p>
+            )}
+          </div>
           <div className="mt-4 flex items-center">
             <div className="flex items-center">
               {[...Array(5)].map((_, i) => (

@@ -1,5 +1,5 @@
 import { GraphQLClient, gql } from 'graphql-request';
-import { Product } from './types';
+import { Product, ShopifyProductVariant } from './types';
 
 const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_API_TOKEN!;
 const endpoint = `https://${process.env.SHOPIFY_STORE_DOMAIN}/api/2023-10/graphql.json`;
@@ -37,12 +37,22 @@ const PRODUCTS_QUERY = gql`
               currencyCode
             }
           }
+          compareAtPriceRange {
+             minVariantCompareAtPrice {
+                amount
+                currencyCode
+             }
+          }
           variants(first: 5) {
             edges {
               node {
                 id
                 title
                 price {
+                    amount
+                    currencyCode
+                }
+                compareAtPrice {
                     amount
                     currencyCode
                 }
@@ -85,12 +95,22 @@ const PRODUCT_QUERY = gql`
           currencyCode
         }
       }
+      compareAtPriceRange {
+        minVariantCompareAtPrice {
+            amount
+            currencyCode
+        }
+      }
       variants(first: 25) {
         edges {
           node {
             id
             title
             price {
+                amount
+                currencyCode
+            }
+            compareAtPrice {
                 amount
                 currencyCode
             }
