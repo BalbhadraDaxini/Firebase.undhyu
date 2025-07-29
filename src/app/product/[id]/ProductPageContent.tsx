@@ -156,12 +156,12 @@ export default function ProductPageContent({ product }: { product: ProductType }
         <div>
           <h1 className="text-3xl font-bold tracking-tight font-headline lg:text-4xl">{product.title}</h1>
           <div className="mt-2 flex items-baseline gap-2">
-            <p className="text-3xl font-semibold text-muted-foreground">
+            <p className="text-3xl font-semibold text-foreground">
                 <span className="mr-2">Rs. {price}</span>
                  {isOnSale && (
-                    <span className="text-xl font-medium text-destructive line-through">
-                    Rs. {compareAtPrice}
-                    </span>
+                    <s className="text-xl font-medium text-destructive">
+                     Rs. {compareAtPrice}
+                    </s>
                 )}
             </p>
           </div>
@@ -173,6 +173,15 @@ export default function ProductPageContent({ product }: { product: ProductType }
             </div>
             <p className="ml-2 text-sm text-muted-foreground">(No reviews yet)</p>
           </div>
+
+          <Separator className="my-6" />
+
+           <div
+            className="prose prose-sm mt-4 text-muted-foreground"
+            dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+          />
+
+          <Separator className="my-6" />
           
           <div className="mt-6 space-y-6">
             {product.options.map(option => (
