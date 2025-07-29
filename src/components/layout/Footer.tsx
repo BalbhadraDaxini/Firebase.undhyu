@@ -107,7 +107,7 @@ export default function Footer() {
                   <InstagramIcon className="h-6 w-6" />
                   <span className="sr-only">Instagram</span>
                 </a>
-                <a href="https://wa.me/918879119076" target="_blank" rel="noopener noreferrer" className="group grayscale hover:grayscale-0 transition-all duration-300">
+                <a href="https://wa.me/919039037771" target="_blank" rel="noopener noreferrer" className="group grayscale hover:grayscale-0 transition-all duration-300" aria-label="Chat on WhatsApp">
                   <WhatsAppIcon className="w-6 h-6 text-black transition-colors duration-300 group-hover:text-[#25D366]" />
                   <span className="sr-only">WhatsApp</span>
                 </a>
