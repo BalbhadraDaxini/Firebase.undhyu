@@ -59,7 +59,7 @@ export default function FeaturedCategories() {
               <Image
                 alt="Comfortable traditional kurtis"
                 className="w-full h-48 object-cover rounded-xl"
-                src="https://images.pexels.com/photos/32761637/pexels-photo-32761637.jpeg"
+                src="https://images.pexels.com/photos/28213774/pexels-photo-28213774.jpeg"
                 width={400}
                 height={400}
                 data-ai-hint="designer kurtis"
