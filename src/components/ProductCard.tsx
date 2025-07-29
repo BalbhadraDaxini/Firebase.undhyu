@@ -84,14 +84,13 @@ export default function ProductCard({ product }: ProductCardProps) {
               className="object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
               sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
             />
+             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-11/12 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <Button onClick={handleAddToCart} size="sm" className="w-full bg-white text-black hover:bg-black hover:text-white border-2 border-black font-bold rounded-none">
+                    <ShoppingCart className="mr-2 h-4 w-4" />
+                    Add to Cart
+                </Button>
+            </div>
           </div>
-        </div>
-
-        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-11/12 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <Button onClick={handleAddToCart} size="sm" className="w-full bg-white text-black hover:bg-black hover:text-white border-2 border-black font-bold rounded-none">
-                <ShoppingCart className="mr-2 h-4 w-4" />
-                Add to Cart
-            </Button>
         </div>
 
         <div className="mt-2 text-center">
