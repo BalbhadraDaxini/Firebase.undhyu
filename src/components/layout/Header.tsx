@@ -66,6 +66,23 @@ export default function Header() {
                     </h1>
                 </Link>
             </div>
+             <nav className="hidden h-full items-center justify-center gap-1 md:flex">
+              {categories.map(category => (
+                <a
+                  key={category.slug}
+                  href={`#${category.slug}`}
+                  onClick={(e) => handleLinkClick(e, category.slug)}
+                  className={cn(
+                    "flex h-full items-center border-b-2 px-3 py-2 text-sm font-medium transition-colors",
+                    activeSection === category.slug
+                      ? 'border-primary-foreground text-primary-foreground'
+                      : 'border-transparent text-primary-foreground/80 hover:text-primary-foreground'
+                  )}
+                >
+                  {category.name}
+                </a>
+              ))}
+            </nav>
             
             <div className="flex items-center justify-end gap-2 md:gap-4">
             <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
@@ -121,23 +138,6 @@ export default function Header() {
             </Sheet>
             </div>
         </div>
-        <nav className="hidden h-full items-center justify-center gap-1 md:flex">
-          {categories.map(category => (
-            <a
-              key={category.slug}
-              href={`#${category.slug}`}
-              onClick={(e) => handleLinkClick(e, category.slug)}
-              className={cn(
-                "flex h-full items-center border-b-2 px-3 py-2 text-sm font-medium transition-colors",
-                activeSection === category.slug
-                  ? 'border-primary-foreground text-primary-foreground'
-                  : 'border-transparent text-primary-foreground/80 hover:text-primary-foreground'
-              )}
-            >
-              {category.name}
-            </a>
-          ))}
-        </nav>
       </div>
     </header>
   );
