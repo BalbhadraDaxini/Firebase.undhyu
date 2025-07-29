@@ -17,14 +17,6 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('new-arrivals');
 
-  const navLinks = [
-    { name: 'Lehengas', href: '#' },
-    { name: 'Kurtis', href: '#' },
-    { name: 'Jewelry', href: '#' },
-    { name: 'Sarees', href: '#' },
-    { name: 'Sale', href: '#' },
-  ];
-
   const categories = [
     { name: 'New Arrivals', slug: 'new-arrivals' },
     { name: 'All', slug: 'all' },
@@ -75,15 +67,6 @@ export default function Header() {
                 </Link>
             </div>
             
-            <nav className="hidden md:flex space-x-8">
-                {navLinks.map((link) => (
-                    <a key={link.name} href={link.href} className="text-gray-200 hover:text-white px-1 py-2 text-sm font-medium tracking-wide transition-colors duration-200 relative group">
-                        {link.name}
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 transition-all duration-200 group-hover:w-full"></span>
-                    </a>
-                ))}
-            </nav>
-
             <div className="hidden md:flex flex-1 max-w-xs mx-6">
                 <form className="w-full">
                     <div className="relative">
