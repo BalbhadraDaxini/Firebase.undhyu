@@ -15,7 +15,6 @@ async function HomePageContent() {
   return (
     <>
       <Hero />
-      <FeaturedCategories />
       <div id="product-grid" className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <aside className="hidden lg:block lg:col-span-1">
@@ -41,6 +40,7 @@ async function HomePageContent() {
           </main>
         </div>
       </div>
+      <FeaturedCategories />
     </>
   );
 }
