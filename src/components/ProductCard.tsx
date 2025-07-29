@@ -105,7 +105,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 )}
             </div>
              <div className="mt-1 flex justify-center items-center">
-                <Rating rating={rating} size={16} fill="#FBBF24" stroke="#FBBF24" emptyFill="transparent" emptyStroke="#FBBF24" />
+                <Rating rating={rating} size={16} fill="#f59e0b" stroke="#f59e0b" emptyFill="transparent" emptyStroke="#f59e0b" />
                 {reviewCount > 0 && <p className="ml-1 text-xs text-muted-foreground">({reviewCount})</p>}
             </div>
         </div>

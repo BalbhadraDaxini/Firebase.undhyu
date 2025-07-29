@@ -180,7 +180,7 @@ export default function ProductPageContent({ product }: { product: ProductType }
             </p>
           </div>
           <div className="mt-4 flex items-center">
-            <Rating rating={rating} size={20} fill="#FBBF24" stroke="#FBBF24" emptyFill="transparent" emptyStroke="#FBBF24" />
+            <Rating rating={rating} size={20} fill="#f59e0b" stroke="#f59e0b" emptyFill="transparent" emptyStroke="#f59e0b" />
             {reviewCount > 0 && <p className="ml-2 text-sm text-muted-foreground">({reviewCount} reviews)</p>}
           </div>
 
