@@ -17,62 +17,67 @@ const FacebookIcon = () => (
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-50 border-t border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div className="col-span-1">
-            <a className="flex items-center space-x-2 mb-6" href="/">
-                <h1 className="text-2xl font-bold text-gray-900 tracking-wide">
-                    Undhyu<span className="text-amber-600 font-bold text-3xl">.</span>
+    <footer className="bg-secondary/50 border-t border-border">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          <div className="col-span-1 md:col-span-2 lg:col-span-1">
+            <Link className="flex items-center space-x-2 mb-4" href="/">
+                <h1 className="text-2xl font-bold text-foreground tracking-wide">
+                    Undhyu<span className="text-amber-500 font-bold text-3xl">.</span>
                 </h1>
-            </a>
-            <p className="text-gray-600 font-light leading-relaxed mb-6">
+            </Link>
+            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
               Discover exceptional traditional wear crafted with care and attention to every detail. Experience the elegance of Indian heritage fashion.
             </p>
             <div className="flex space-x-4">
-              <a href="https://www.instagram.com/undhyu.com_/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-600 transition-colors duration-200" title="Follow us on Instagram">
+              <a href="https://www.instagram.com/undhyu.com_/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-pink-600 transition-colors duration-300" title="Follow us on Instagram">
                 <InstagramIcon />
               </a>
-              <a href="https://wa.me/919039037771" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-green-600 transition-colors duration-200" title="Chat with us on WhatsApp">
+              <a href="https://wa.me/919039037771" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-green-600 transition-colors duration-300" title="Chat with us on WhatsApp">
                 <WhatsAppIcon />
               </a>
-              <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors duration-200" title="Follow us on Facebook">
+              <a href="#" className="text-muted-foreground hover:text-blue-600 transition-colors duration-300" title="Follow us on Facebook">
                 <FacebookIcon />
               </a>
             </div>
           </div>
+
           <div className="col-span-1">
-            <h3 className="text-sm font-medium text-gray-900 tracking-wider uppercase mb-6">Shop</h3>
-            <ul className="space-y-4">
-              <li><Link href="/products" className="text-gray-600 hover:text-gray-900 font-light transition-colors duration-200">All Products</Link></li>
-              <li><Link href="/collections" className="text-gray-600 hover:text-gray-900 font-light transition-colors duration-200">Collections</Link></li>
-              <li><Link href="/cart" className="text-gray-600 hover:text-gray-900 font-light transition-colors duration-200">Shopping Cart</Link></li>
+            <h3 className="text-sm font-semibold text-foreground tracking-wider uppercase mb-4">Shop</h3>
+            <ul className="space-y-3">
+              <li><Link href="/products" className="text-sm text-muted-foreground hover:text-foreground transition-colors">All Products</Link></li>
+              <li><Link href="/collections" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Collections</Link></li>
+              <li><Link href="/cart" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Shopping Cart</Link></li>
             </ul>
           </div>
+
           <div className="col-span-1">
-            <h3 className="text-sm font-medium text-gray-900 tracking-wider uppercase mb-6">Support</h3>
-            <ul className="space-y-4">
-              <li><Link href="/about" className="text-gray-600 hover:text-gray-900 font-light transition-colors duration-200">About Us</Link></li>
-              <li><Link href="/contact" className="text-gray-600 hover:text-gray-900 font-light transition-colors duration-200">Contact</Link></li>
+            <h3 className="text-sm font-semibold text-foreground tracking-wider uppercase mb-4">Support</h3>
+            <ul className="space-y-3">
+              <li><Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">About Us</Link></li>
+              <li><Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact</Link></li>
             </ul>
           </div>
-          <div className="col-span-1">
-            <h3 className="text-sm font-medium text-gray-900 tracking-wider uppercase mb-6">Stay Updated</h3>
-            <p className="text-gray-600 font-light mb-4 leading-relaxed">
+          
+          <div className="col-span-1 md:col-span-2 lg:col-span-1">
+            <h3 className="text-sm font-semibold text-foreground tracking-wider uppercase mb-4">Stay Updated</h3>
+            <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
               Subscribe to receive updates on new arrivals and exclusive offers.
             </p>
-            <form className="flex flex-col space-y-3">
-              <input placeholder="Enter your email" required className="px-4 py-3 border border-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-300 focus:border-gray-300 font-light text-sm" type="email" name="email" />
-              <button type="submit" className="bg-gray-900 text-white px-4 py-3 font-light tracking-wide hover:bg-gray-800 transition-colors duration-200 text-sm">Subscribe</button>
+            <form className="flex w-full">
+              <input placeholder="Enter your email" required className="px-4 py-2 bg-background border border-border rounded-l-md focus:outline-none focus:ring-2 focus:ring-ring text-sm w-full" type="email" name="email" />
+              <button type="submit" className="bg-foreground text-background px-4 py-2 rounded-r-md font-medium hover:bg-foreground/80 transition-colors text-sm">Subscribe</button>
             </form>
           </div>
+
         </div>
-        <div className="mt-12 pt-8 border-t border-gray-200">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-500 font-light text-sm">© 2024 Undhyu. All rights reserved.</p>
+        <div className="mt-12 pt-8 border-t border-border">
+          <div className="flex flex-col md:flex-row justify-between items-center text-sm">
+            <p className="text-muted-foreground">© 2024 Undhyu. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-gray-500 hover:text-gray-700 font-light text-sm transition-colors duration-200">Privacy Policy</a>
-              <a href="#" className="text-gray-500 hover:text-gray-700 font-light text-sm transition-colors duration-200">Terms of Service</a>
+              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
+              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
             </div>
           </div>
         </div>
