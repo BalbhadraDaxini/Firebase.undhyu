@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 
 export default function FeaturedCategories() {
@@ -39,7 +40,7 @@ export default function FeaturedCategories() {
               <Image
                 alt="Stunning traditional lehengas"
                 className="w-full h-48 object-cover rounded-xl"
-                src="https://placehold.co/400x400.png"
+                src="https://images.pexels.com/photos/32761637/pexels-photo-32761637.jpeg"
                 width={400}
                 height={400}
                 data-ai-hint="stunning lehengas"
