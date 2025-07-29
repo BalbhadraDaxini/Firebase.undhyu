@@ -13,6 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
 import type { Product as ProductType, ProductImage, ShopifyProductVariant } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import { Rating } from '@/components/ui/rating';
 
 export default function ProductPageContent({ product }: { product: ProductType }) {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
@@ -179,13 +180,7 @@ export default function ProductPageContent({ product }: { product: ProductType }
             </p>
           </div>
           <div className="mt-4 flex items-center">
-            <div className="rating" role="img" aria-label={`${rating.toFixed(2)} out of 5 stars`}>
-                <span 
-                    aria-hidden="true" 
-                    className="rating-star" 
-                    style={{ '--rating': rating, '--star-size': '1.25rem' } as React.CSSProperties}
-                ></span>
-            </div>
+            <Rating rating={rating} size={20} fill="#FBBF24" stroke="#FBBF24" emptyFill="transparent" emptyStroke="#FBBF24" />
             {reviewCount > 0 && <p className="ml-2 text-sm text-muted-foreground">({reviewCount} reviews)</p>}
           </div>
 

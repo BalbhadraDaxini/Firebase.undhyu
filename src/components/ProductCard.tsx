@@ -10,6 +10,7 @@ import { ShoppingCart } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useState } from 'react';
+import { Rating } from './ui/rating';
 
 interface ProductCardProps {
   product: Product;
@@ -59,10 +60,6 @@ export default function ProductCard({ product }: ProductCardProps) {
     })
   }
 
-  const ratingValue = rating;
-  const integerPart = Math.floor(ratingValue);
-  const decimalPart = ratingValue - integerPart;
-
   return (
     <Link href={`/product/${product.handle}`} className="group relative block">
         <div className="overflow-hidden bg-card">
@@ -108,13 +105,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 )}
             </div>
              <div className="mt-1 flex justify-center items-center">
-                 <div className="rating" role="img" aria-label={`${rating.toFixed(2)} out of 5 stars`}>
-                    <span 
-                        aria-hidden="true" 
-                        className="rating-star" 
-                        style={{ '--rating': rating } as React.CSSProperties}
-                    ></span>
-                </div>
+                <Rating rating={rating} size={16} fill="#FBBF24" stroke="#FBBF24" emptyFill="transparent" emptyStroke="#FBBF24" />
                 {reviewCount > 0 && <p className="ml-1 text-xs text-muted-foreground">({reviewCount})</p>}
             </div>
         </div>
