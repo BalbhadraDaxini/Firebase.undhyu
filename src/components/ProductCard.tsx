@@ -112,7 +112,7 @@ export default function ProductCard({ product }: ProductCardProps) {
              <div className="mt-1 flex justify-center items-center">
                 <div className="flex items-center">
                   {rating > 0 && [...Array(5)].map((_, i) => (
-                    <Star key={i} className={`h-4 w-4 ${i < Math.round(rating) ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" />
+                    <Star key={i} className={`h-4 w-4 ${i < Math.round(rating) ? 'text-primary' : 'text-gray-300'}`} fill="currentColor" />
                   ))}
                 </div>
                 {reviewCount > 0 && <p className="ml-1 text-xs text-muted-foreground">({reviewCount})</p>}

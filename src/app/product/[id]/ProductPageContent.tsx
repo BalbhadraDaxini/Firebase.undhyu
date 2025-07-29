@@ -177,7 +177,7 @@ export default function ProductPageContent({ product }: { product: ProductType }
           <div className="mt-4 flex items-center">
             <div className="flex items-center">
                {rating > 0 && [...Array(5)].map((_, i) => (
-                <Star key={i} className={`h-5 w-5 ${i < Math.round(rating) ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" />
+                <Star key={i} className={`h-5 w-5 ${i < Math.round(rating) ? 'text-primary' : 'text-gray-300'}`} fill="currentColor" />
               ))}
             </div>
             {reviewCount > 0 && <p className="ml-2 text-sm text-muted-foreground">({reviewCount} reviews)</p>}
