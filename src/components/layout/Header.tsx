@@ -56,12 +56,12 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-primary text-primary-foreground">
+    <header className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-xl border-b border-gray-700 sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex h-20 items-center justify-between">
             <div className="flex-shrink-0">
                 <Link href="/" className="flex items-center gap-2">
-                    <h1 className="text-2xl md:text-3xl font-bold text-primary-foreground tracking-wide">
+                    <h1 className="text-2xl md:text-3xl font-bold text-white tracking-wide">
                     Undhyu<span className="text-amber-500 font-bold text-3xl md:text-4xl">.</span>
                     </h1>
                 </Link>
@@ -73,10 +73,10 @@ export default function Header() {
                   href={`#${category.slug}`}
                   onClick={(e) => handleLinkClick(e, category.slug)}
                   className={cn(
-                    "flex h-full items-center border-b-2 px-3 py-2 text-sm font-medium transition-colors",
+                    "flex h-full items-center border-b-2 px-3 py-2 text-sm font-medium transition-colors text-gray-200 hover:text-white",
                     activeSection === category.slug
-                      ? 'border-primary-foreground text-primary-foreground'
-                      : 'border-transparent text-primary-foreground/80 hover:text-primary-foreground'
+                      ? 'border-amber-500 text-white'
+                      : 'border-transparent'
                   )}
                 >
                   {category.name}
@@ -87,10 +87,10 @@ export default function Header() {
             <div className="flex items-center justify-end gap-2 md:gap-4">
             <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
                 <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative text-primary-foreground hover:bg-white/10 hover:text-primary-foreground">
+                <Button variant="ghost" size="icon" className="relative text-gray-200 hover:text-white">
                     <ShoppingCart className="h-6 w-6" />
                     {cartCount > 0 && (
-                    <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-primary">
+                    <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-gray-900">
                         {cartCount}
                     </span>
                     )}
@@ -102,7 +102,7 @@ export default function Header() {
 
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
                 <SheetTrigger asChild>
-                    <Button variant="ghost" size="icon" className="md:hidden text-primary-foreground hover:bg-white/10 hover:text-primary-foreground">
+                    <Button variant="ghost" size="icon" className="md:hidden text-gray-200 hover:text-white">
                         <Menu className="h-6 w-6" />
                         <span className="sr-only">Open Menu</span>
                     </Button>
