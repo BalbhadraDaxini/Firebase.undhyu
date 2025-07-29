@@ -28,21 +28,6 @@ function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-
-function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 448 512"
-      fill="currentColor"
-    >
-      <path d="M380.9 97.1C339 10.6 222.7-28.3 132.1 43.4C41.5 115.1 26.3 240.2 94 330.8l-30.9 91.1c-4.2 12.3 8.6 23.3 20.4 17.7l97.8-45.5c91.1 41.5 196.1-4.9 238.1-95.2C420.2 191.9 412 99.8 380.9 97.1zM248 352c-7.5-3.7-44.4-22-51.3-24.5-6.9-2.5-12-3.7-17.1 3.7s-19.6 24.5-24 29.5c-4.4 5-8.9 5.6-16.4 1.9-44.4-22.2-73.5-39.7-102.7-89.2-29.2-49.5-42.3-71.4-42.3-71.4s-1.9-4.4 1.9-8.1c3.7-3.7 8.1-9.5 12.5-14.4 4.4-4.9 8.9-8.1 13.1-12.5 4.2-4.4 3.7-8.1 1.9-12.5-1.9-4.4-24.5-58.4-33.8-81.4-9.3-23-18.4-19.6-26.7-19.6-8.1 0-17.2 1.9-26.7 11.2-9.5 9.3-36.9 36.9-36.9 89.2 0 52.3 37.8 102.7 42.3 109.4 4.4 6.9 73.5 117.8 181.1 160.2 107.6 42.3 107.6 28.1 126.3 26.2 18.8-1.9 58.4-24.5 66.8-48.4 8.4-23.8 8.4-44.4 5.6-48.4-2.8-4.2-10.3-6.9-21.3-11.4z"/>
-    </svg>
-  );
-}
-
-
 export default function Footer() {
   const [currentYear, setCurrentYear] = useState<number | null>(null);
 
@@ -107,8 +92,11 @@ export default function Footer() {
                   <InstagramIcon className="h-6 w-6" />
                   <span className="sr-only">Instagram</span>
                 </a>
-                <a href="https://wa.me/919039037771" target="_blank" rel="noopener noreferrer" className="group grayscale hover:grayscale-0 transition-all duration-300" aria-label="Chat on WhatsApp">
-                  <WhatsAppIcon className="w-6 h-6 text-black transition-colors duration-300 group-hover:text-[#25D366]" />
+                <a href="https://wa.me/919039037771" target="_blank" aria-label="Chat on WhatsApp" className="group inline-block">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                      className="w-6 h-6 text-black group-hover:text-[#25D366] transition-colors duration-300 fill-current">
+                    <path d="M380.9 97.1C339 10.6 222.7-28.3 132.1 43.4C41.5 115.1 26.3 240.2 94 330.8l-30.9 91.1c-4.2 12.3 8.6 23.3 20.4 17.7l97.8-45.5c91.1 41.5 196.1-4.9 238.1-95.2C420.2 191.9 412 99.8 380.9 97.1zM248 352c-7.5-3.7-44.4-22-51.3-24.5-6.9-2.5-12-3.7-17.1 3.7s-19.6 24.5-24 29.5c-4.4 5-8.9 5.6-16.4 1.9-44.4-22.2-73.5-39.7-102.7-89.2-29.2-49.5-42.3-71.4-42.3-71.4s-1.9-4.4 1.9-8.1c3.7-3.7 8.1-9.5 12.5-14.4 4.4-4.9 8.9-8.1 13.1-12.5 4.2-4.4 3.7-8.1 1.9-12.5-1.9-4.4-24.5-58.4-33.8-81.4-9.3-23-18.4-19.6-26.7-19.6-8.1 0-17.2 1.9-26.7 11.2-9.5 9.3-36.9 36.9-36.9 89.2 0 52.3 37.8 102.7 42.3 109.4 4.4 6.9 73.5 117.8 181.1 160.2 107.6 42.3 107.6 28.1 126.3 26.2 18.8-1.9 58.4-24.5 66.8-48.4 8.4-23.8 8.4-44.4 5.6-48.4-2.8-4.2-10.3-6.9-21.3-11.4z"/>
+                  </svg>
                   <span className="sr-only">WhatsApp</span>
                 </a>
             </div>
