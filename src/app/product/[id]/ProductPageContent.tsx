@@ -175,13 +175,6 @@ export default function ProductPageContent({ product }: { product: ProductType }
           </div>
 
           <Separator className="my-6" />
-
-           <div
-            className="prose prose-sm mt-4 text-muted-foreground"
-            dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
-          />
-
-          <Separator className="my-6" />
           
           <div className="mt-6 space-y-6">
             {product.options.map(option => (
@@ -224,6 +217,14 @@ export default function ProductPageContent({ product }: { product: ProductType }
               </Button>
             </div>
           </div>
+          
+           <Separator className="my-6" />
+
+           <div
+            className="prose prose-sm mt-4 text-muted-foreground"
+            dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+          />
+
         </div>
       </div>
     </div>
