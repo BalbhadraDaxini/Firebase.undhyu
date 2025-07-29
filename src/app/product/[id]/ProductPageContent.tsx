@@ -226,9 +226,11 @@ export default function ProductPageContent({ product }: { product: ProductType }
             </div>
             
             <div className="flex flex-col gap-4 sm:flex-row">
-              <Button onClick={handleAddToCart} size="lg" className="w-full bg-white text-black hover:bg-black hover:text-white border-2 border-black font-bold rounded-none transition-colors duration-300" disabled={isProcessing || !selectedVariant}>Add to Cart</Button>
-              <Button onClick={handleBuyNow} size="lg" className="w-full bg-black text-white hover:bg-white hover:text-black border-2 border-transparent hover:border-black font-bold rounded-none transition-colors duration-300" disabled={isProcessing || !selectedVariant}>
-                {isProcessing ? 'Processing...' : 'Buy Now'}
+              <Button onClick={handleAddToCart} size="lg" className="w-full bg-white text-black border-2 border-black font-bold rounded-none btn-slide" disabled={isProcessing || !selectedVariant}>
+                <span>Add to Cart</span>
+              </Button>
+              <Button onClick={handleBuyNow} size="lg" className="w-full bg-black text-white border-2 border-black font-bold rounded-none btn-slide btn-slide-dark" disabled={isProcessing || !selectedVariant}>
+                <span>{isProcessing ? 'Processing...' : 'Buy Now'}</span>
               </Button>
             </div>
           </div>
