@@ -31,6 +31,8 @@ export default function ProductCard({ product }: ProductCardProps) {
   const compareAtPrice = product.compareAtPriceRange?.minVariantPrice ? parseFloat(product.compareAtPriceRange.minVariantPrice.amount).toFixed(2) : null;
   
   const isOnSale = compareAtPrice && parseFloat(compareAtPrice) > parseFloat(price);
+  
+  const salePercentage = isOnSale ? Math.round(((parseFloat(compareAtPrice!) - parseFloat(price)) / parseFloat(compareAtPrice!)) * 100) : 0;
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -60,7 +62,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               alt={imageAlt}
               fill
               className={cn(
-                "object-contain transition-opacity duration-300",
+                "object-cover transition-opacity duration-300",
                 "group-hover:opacity-0"
               )}
               sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
@@ -69,7 +71,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               src={hoverImageUrl}
               alt={hoverImageAlt}
               fill
-              className="object-contain opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              className="object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
               sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
             />
           </div>
@@ -108,3 +110,4 @@ export default function ProductCard({ product }: ProductCardProps) {
     </Link>
   );
 }
+
