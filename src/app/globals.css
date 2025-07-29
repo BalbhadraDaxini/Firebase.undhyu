@@ -90,3 +90,30 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .rating-star {
+    --star-size: 1.25rem;
+    display: inline-block;
+    width: calc(var(--star-size) * 5);
+    height: var(--star-size);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-star'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'/%3E%3C/svg%3E");
+    -webkit-mask-repeat: repeat-x;
+    -webkit-mask-size: var(--star-size);
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-star'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'/%3E%3C/svg%3E");
+    mask-repeat: repeat-x;
+    mask-size: var(--star-size);
+    background-color: hsl(var(--muted-foreground));
+    position: relative;
+  }
+  .rating-star::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: calc(var(--rating) / 5 * 100%);
+    background-color: hsl(var(--primary));
+    z-index: 1;
+  }
+}

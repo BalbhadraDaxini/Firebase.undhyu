@@ -123,6 +123,10 @@ export default function ProductPageContent({ product }: { product: ProductType }
   const compareAtPrice = selectedVariant?.compareAtPrice ? parseFloat(selectedVariant.compareAtPrice.amount).toFixed(2) : (product.compareAtPriceRange?.minVariantPrice ? parseFloat(product.compareAtPriceRange.minVariantPrice.amount).toFixed(2) : null);
   const isOnSale = compareAtPrice && compareAtPrice > price;
 
+  const ratingValue = rating;
+  const integerPart = Math.floor(ratingValue);
+  const decimalPart = ratingValue - integerPart;
+
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-16">
@@ -175,10 +179,12 @@ export default function ProductPageContent({ product }: { product: ProductType }
             </p>
           </div>
           <div className="mt-4 flex items-center">
-            <div className="flex items-center">
-               {rating > 0 && [...Array(5)].map((_, i) => (
-                <Star key={i} className={`h-5 w-5 ${i < Math.round(rating) ? 'text-primary' : 'text-gray-300'}`} fill="currentColor" />
-              ))}
+            <div className="rating" role="img" aria-label={`${rating.toFixed(2)} out of 5 stars`}>
+                <span 
+                    aria-hidden="true" 
+                    className="rating-star" 
+                    style={{ '--rating': rating, '--star-size': '1.25rem' } as React.CSSProperties}
+                ></span>
             </div>
             {reviewCount > 0 && <p className="ml-2 text-sm text-muted-foreground">({reviewCount} reviews)</p>}
           </div>

@@ -6,7 +6,7 @@ import Image from 'next/image';
 import type { Product } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
-import { ShoppingCart, Star } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useState } from 'react';
@@ -22,12 +22,9 @@ export default function ProductCard({ product }: ProductCardProps) {
   const [reviewCount, setReviewCount] = useState(0);
 
   useEffect(() => {
-    // Generate random rating between 3.6 and 4.9
     setRating(Math.random() * (4.9 - 3.6) + 3.6);
-    // Generate random review count between 9 and 38
     setReviewCount(Math.floor(Math.random() * (38 - 9 + 1)) + 9);
   }, []);
-
 
   const firstImage = product.featuredImage || product.images.edges[0]?.node;
   const secondImage = product.images.edges[1]?.node || firstImage;
@@ -43,8 +40,6 @@ export default function ProductCard({ product }: ProductCardProps) {
   
   const isOnSale = compareAtPrice && parseFloat(compareAtPrice) > parseFloat(price);
   
-  const salePercentage = isOnSale ? Math.round(((parseFloat(compareAtPrice!) - parseFloat(price)) / parseFloat(compareAtPrice!)) * 100) : 0;
-
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -63,6 +58,10 @@ export default function ProductCard({ product }: ProductCardProps) {
         description: `${product.title} has been added to your shopping cart.`,
     })
   }
+
+  const ratingValue = rating;
+  const integerPart = Math.floor(ratingValue);
+  const decimalPart = ratingValue - integerPart;
 
   return (
     <Link href={`/product/${product.handle}`} className="group relative block">
@@ -110,10 +109,12 @@ export default function ProductCard({ product }: ProductCardProps) {
                 )}
             </div>
              <div className="mt-1 flex justify-center items-center">
-                <div className="flex items-center">
-                  {rating > 0 && [...Array(5)].map((_, i) => (
-                    <Star key={i} className={`h-4 w-4 ${i < Math.round(rating) ? 'text-primary' : 'text-gray-300'}`} fill="currentColor" />
-                  ))}
+                 <div className="rating" role="img" aria-label={`${rating.toFixed(2)} out of 5 stars`}>
+                    <span 
+                        aria-hidden="true" 
+                        className="rating-star" 
+                        style={{ '--rating': rating } as React.CSSProperties}
+                    ></span>
                 </div>
                 {reviewCount > 0 && <p className="ml-1 text-xs text-muted-foreground">({reviewCount})</p>}
             </div>
