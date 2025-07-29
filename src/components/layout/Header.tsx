@@ -59,10 +59,9 @@ export default function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center">
           <Link href="/" className="flex items-center gap-2">
-            <span className="font-headline text-xl font-semibold">
-              <span className="text-primary-foreground">Undhyu</span>
-              <span className="text-primary-foreground/80">.</span>
-            </span>
+            <h1 className="text-2xl md:text-3xl font-bold text-primary-foreground tracking-wide">
+              Undhyu<span className="text-amber-500 font-bold text-3xl md:text-4xl">.</span>
+            </h1>
           </Link>
         </div>
 
