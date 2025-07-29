@@ -19,11 +19,20 @@ export default function ProductPageContent({ product }: { product: ProductType }
   const [selectedVariant, setSelectedVariant] = useState<ShopifyProductVariant | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
+  const [rating, setRating] = useState(0);
+  const [reviewCount, setReviewCount] = useState(0);
   
   const { addToCart } = useCart();
   const { toast } = useToast();
   const router = useRouter();
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    // Generate random rating between 3.6 and 4.9
+    setRating(Math.random() * (4.9 - 3.6) + 3.6);
+    // Generate random review count between 9 and 38
+    setReviewCount(Math.floor(Math.random() * (38 - 9 + 1)) + 9);
+  }, []);
 
   useEffect(() => {
     if (product?.variants.edges.length) {
@@ -167,11 +176,11 @@ export default function ProductPageContent({ product }: { product: ProductType }
           </div>
           <div className="mt-4 flex items-center">
             <div className="flex items-center">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className={`h-5 w-5 ${i < 4 ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" />
+               {rating > 0 && [...Array(5)].map((_, i) => (
+                <Star key={i} className={`h-5 w-5 ${i < Math.round(rating) ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" />
               ))}
             </div>
-            <p className="ml-2 text-sm text-muted-foreground">(No reviews yet)</p>
+            {reviewCount > 0 && <p className="ml-2 text-sm text-muted-foreground">({reviewCount} reviews)</p>}
           </div>
 
           <Separator className="my-6" />
