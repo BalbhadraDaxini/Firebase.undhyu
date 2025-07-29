@@ -23,10 +23,12 @@ export default function ProductGrid({ products }: ProductGridProps) {
 
     if (price) {
         const [min, max] = price.split('-').map(Number);
-        filteredProducts = filteredProducts.filter(p => {
-            const productPrice = parseFloat(p.priceRange.minVariantPrice.amount);
-            return productPrice >= min && productPrice <= max;
-        });
+        if(!isNaN(min) && !isNaN(max)) {
+            filteredProducts = filteredProducts.filter(p => {
+                const productPrice = parseFloat(p.priceRange.minVariantPrice.amount);
+                return productPrice >= min && productPrice <= max;
+            });
+        }
     }
 
     if (color) {
@@ -67,45 +69,49 @@ export default function ProductGrid({ products }: ProductGridProps) {
     const newArrivals = filteredProducts.slice(0, 8);
 
     return (
-        <>
-            <section id="new-arrivals" className="pt-16 -mt-16">
-              <h2 className="text-3xl font-headline font-semibold mb-6">New Arrivals</h2>
-              <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4">
-                {newArrivals.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-            </section>
-            
-            <Separator className="my-12"/>
-
+        <div className="space-y-12">
             {filteredProducts.length === 0 && (
               <div className="flex h-64 items-center justify-center col-span-full">
                 <p className="text-muted-foreground">No products found matching your criteria.</p>
               </div>
             )}
-            
-            <section id={allProductsCategory.slug} className="pt-16 -mt-16">
-                 <h2 className="text-3xl font-headline font-semibold mb-6">{allProductsCategory.name}</h2>
-                  <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4">
-                    {allProductsCategory.products.map(product => (
-                      <ProductCard key={product.id} product={product} />
+
+            {filteredProducts.length > 0 && (
+                <>
+                    <section id="new-arrivals" className="pt-16 -mt-16">
+                      <h2 className="text-3xl font-headline font-semibold mb-6">New Arrivals</h2>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                        {newArrivals.map(product => (
+                          <ProductCard key={product.id} product={product} />
+                        ))}
+                      </div>
+                    </section>
+                    
+                    <Separator className="my-12"/>
+
+                    <section id={allProductsCategory.slug} className="pt-16 -mt-16">
+                         <h2 className="text-3xl font-headline font-semibold mb-6">{allProductsCategory.name}</h2>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                            {allProductsCategory.products.map(product => (
+                              <ProductCard key={product.id} product={product} />
+                            ))}
+                          </div>
+                    </section>
+                    
+                    {productsByCategory.map(category => (
+                      category.products.length > 0 && (
+                        <section key={category.slug} id={category.slug} className="pt-16 -mt-16">
+                          <h2 className="text-3xl font-headline font-semibold mb-6">{category.name}</h2>
+                           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                            {category.products.map(product => (
+                              <ProductCard key={product.id} product={product} />
+                            ))}
+                          </div>
+                        </section>
+                      )
                     ))}
-                  </div>
-            </section>
-            
-            {productsByCategory.map(category => (
-              category.products.length > 0 && (
-                <section key={category.slug} id={category.slug} className="pt-16 -mt-16">
-                  <h2 className="text-3xl font-headline font-semibold mb-6">{category.name}</h2>
-                  <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4">
-                    {category.products.map(product => (
-                      <ProductCard key={product.id} product={product} />
-                    ))}
-                  </div>
-                </section>
-              )
-            ))}
-        </>
+                </>
+            )}
+        </div>
     )
 }
