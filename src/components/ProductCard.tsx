@@ -66,7 +66,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link href={`/product/${product.handle}`} className="group relative block">
         <div className="overflow-hidden bg-card">
-          <div className="relative h-[400px] w-full">
+          <div className="relative h-[350px] w-full">
             <Image
               src={imageUrl}
               alt={imageAlt}
