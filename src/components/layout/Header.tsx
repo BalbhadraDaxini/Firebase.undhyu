@@ -55,13 +55,13 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background">
+    <header className="sticky top-0 z-50 w-full border-b bg-primary text-primary-foreground">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center">
           <Link href="/" className="flex items-center gap-2">
             <span className="font-headline text-xl font-semibold">
-              <span className="text-foreground">Undhyu</span>
-              <span className="text-primary">.</span>
+              <span className="text-primary-foreground">Undhyu</span>
+              <span className="text-primary-foreground/80">.</span>
             </span>
           </Link>
         </div>
@@ -75,8 +75,8 @@ export default function Header() {
               className={cn(
                 "flex h-full items-center border-b-2 px-3 text-sm font-medium transition-colors",
                 activeSection === category.slug
-                  ? 'border-foreground text-foreground'
-                  : 'border-transparent text-muted-foreground hover:text-foreground'
+                  ? 'border-primary-foreground text-primary-foreground'
+                  : 'border-transparent text-primary-foreground/80 hover:text-primary-foreground'
               )}
             >
               {category.name}
@@ -87,10 +87,10 @@ export default function Header() {
         <div className="flex items-center justify-end gap-2 md:gap-4">
           <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
             <SheetTrigger asChild>
-              <Button variant="outline" size="icon" className="relative">
+              <Button variant="ghost" size="icon" className="relative text-primary-foreground hover:bg-white/10 hover:text-primary-foreground">
                 <ShoppingCart className="h-5 w-5" />
                 {cartCount > 0 && (
-                  <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+                  <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-primary">
                     {cartCount}
                   </span>
                 )}
@@ -102,7 +102,7 @@ export default function Header() {
 
           <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
             <SheetTrigger asChild>
-                <Button variant="outline" size="icon" className="md:hidden">
+                <Button variant="ghost" size="icon" className="md:hidden text-primary-foreground hover:bg-white/10 hover:text-primary-foreground">
                     <Menu className="h-5 w-5" />
                     <span className="sr-only">Open Menu</span>
                 </Button>
