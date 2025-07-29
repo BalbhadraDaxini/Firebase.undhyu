@@ -37,10 +37,9 @@ function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill="#25D366"
-      stroke="none"
+      fill="currentColor"
     >
-      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.67.15-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.52-.075-.149-.67-1.612-.916-2.206-.242-.58-.487-.5-.67-.51-.173-.008-.372-.01-.571-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479s1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.412.248-.694.248-1.29.173-1.412-.075-.123-.272-.198-.57-.347z"/>
     </svg>
   );
 }
@@ -110,8 +109,8 @@ export default function Footer() {
                   <InstagramIcon className="h-6 w-6" />
                   <span className="sr-only">Instagram</span>
                 </a>
-                <a href="https://wa.me/919039037771" target="_blank" rel="noopener noreferrer" className="grayscale hover:grayscale-0 transition-all duration-300">
-                  <WhatsAppIcon className="h-6 w-6" />
+                <a href="https://wa.me/918879119076" target="_blank" rel="noopener noreferrer" className="group">
+                  <WhatsAppIcon className="w-6 h-6 text-black transition-colors duration-300 group-hover:text-[#25D366]" />
                   <span className="sr-only">WhatsApp</span>
                 </a>
             </div>
