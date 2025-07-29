@@ -111,7 +111,7 @@ export default function ProductPageContent({ product }: { product: ProductType }
   };
   
   const price = parseFloat(selectedVariant?.price.amount || product.priceRange.minVariantPrice.amount).toFixed(2);
-  const compareAtPrice = selectedVariant?.compareAtPrice ? parseFloat(selectedVariant.compareAtPrice.amount).toFixed(2) : null;
+  const compareAtPrice = selectedVariant?.compareAtPrice ? parseFloat(selectedVariant.compareAtPrice.amount).toFixed(2) : (product.compareAtPriceRange?.minVariantPrice ? parseFloat(product.compareAtPriceRange.minVariantPrice.amount).toFixed(2) : null);
   const isOnSale = compareAtPrice && compareAtPrice > price;
 
   return (

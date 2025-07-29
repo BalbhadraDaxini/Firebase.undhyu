@@ -19,7 +19,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const hoverImageAlt = secondImage?.altText || imageAlt;
 
   const price = parseFloat(product.priceRange.minVariantPrice.amount).toFixed(2);
-  const compareAtPrice = product.compareAtPriceRange?.minVariantCompareAtPrice ? parseFloat(product.compareAtPriceRange.minVariantCompareAtPrice.amount).toFixed(2) : null;
+  const compareAtPrice = product.compareAtPriceRange?.minVariantPrice ? parseFloat(product.compareAtPriceRange.minVariantPrice.amount).toFixed(2) : null;
   
   const isOnSale = compareAtPrice && compareAtPrice > price;
 

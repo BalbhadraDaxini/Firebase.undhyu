@@ -44,7 +44,7 @@ export type Product = {
     };
   };
    compareAtPriceRange: {
-    minVariantCompareAtPrice: {
+    minVariantPrice: {
       amount: string;
       currencyCode: string;
     } | null;

@@ -38,10 +38,10 @@ const PRODUCTS_QUERY = gql`
             }
           }
           compareAtPriceRange {
-             minVariantCompareAtPrice {
-                amount
-                currencyCode
-             }
+            minVariantPrice {
+              amount
+              currencyCode
+            }
           }
           variants(first: 5) {
             edges {
@@ -96,7 +96,7 @@ const PRODUCT_QUERY = gql`
         }
       }
       compareAtPriceRange {
-        minVariantCompareAtPrice {
+        minVariantPrice {
             amount
             currencyCode
         }
