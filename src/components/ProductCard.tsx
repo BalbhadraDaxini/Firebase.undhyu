@@ -90,11 +90,11 @@ export default function ProductCard({ product }: ProductCardProps) {
             </Button>
         </div>
 
-        <div className="mt-4 text-center">
+        <div className="mt-2 text-center">
             <h3 className="text-sm font-medium uppercase text-foreground">
                 {product.title}
             </h3>
-            <div className="mt-2 flex items-center justify-center gap-2">
+            <div className="mt-1 flex items-center justify-center gap-2">
                 <p className="text-md font-semibold text-foreground">
                   Rs. {price}
                 </p>
@@ -104,7 +104,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                     </p>
                 )}
             </div>
-             <div className="mt-2 flex justify-center items-center">
+             <div className="mt-1 flex justify-center items-center">
                 <div className="flex items-center">
                 {[...Array(5)].map((_, i) => (
                     <Star key={i} className={`h-4 w-4 ${i < 4 ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" />
@@ -116,4 +116,3 @@ export default function ProductCard({ product }: ProductCardProps) {
     </Link>
   );
 }
-
