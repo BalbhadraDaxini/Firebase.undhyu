@@ -215,13 +215,6 @@ export default function ProductPageContent({ product }: { product: ProductType }
               </Button>
             </div>
           </div>
-          
-          <Separator className="my-8" />
-
-          <div 
-              className="text-base text-muted-foreground prose"
-              dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
-           />
         </div>
       </div>
     </div>

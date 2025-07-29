@@ -32,8 +32,6 @@ export default function ProductCard({ product }: ProductCardProps) {
   
   const isOnSale = compareAtPrice && parseFloat(compareAtPrice) > parseFloat(price);
 
-  const salePercentage = isOnSale ? Math.round(((parseFloat(compareAtPrice!) - parseFloat(price)) / parseFloat(compareAtPrice!)) * 100) : 0;
-
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -76,12 +74,6 @@ export default function ProductCard({ product }: ProductCardProps) {
             />
           </div>
         </div>
-
-        {isOnSale && (
-            <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-md">
-                {salePercentage}% OFF
-            </div>
-        )}
 
         <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-11/12 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <Button onClick={handleAddToCart} size="sm" className="w-full bg-white text-black hover:bg-black hover:text-white border-2 border-black font-bold rounded-none">
