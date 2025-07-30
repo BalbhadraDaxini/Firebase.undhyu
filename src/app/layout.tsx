@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import './globals.css';
 import { cn } from '@/lib/utils';
@@ -6,6 +7,7 @@ import { CartProvider } from '@/context/CartContext';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Playfair_Display, Lato } from 'next/font/google';
+import { getCollections } from '@/lib/shopify';
 
 const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
@@ -25,17 +27,18 @@ export const metadata: Metadata = {
   description: 'A modern e-commerce storefront for your Shopify products.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const collections = await getCollections();
   return (
     <html lang="en">
       <body className={cn('min-h-screen bg-background font-body antialiased', playfairDisplay.variable, lato.variable)} suppressHydrationWarning>
         <CartProvider>
           <div className="relative flex min-h-screen flex-col">
-            <Header />
+            <Header collections={collections} />
             <main className="flex-1">{children}</main>
             <Footer />
           </div>

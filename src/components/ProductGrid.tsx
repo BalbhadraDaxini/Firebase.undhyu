@@ -5,31 +5,14 @@ import { useSearchParams } from 'next/navigation';
 import type { Product, Collection } from '@/lib/types';
 import ProductCard from './ProductCard';
 import { Separator } from './ui/separator';
-import { useEffect, useState } from 'react';
 
 interface ProductGridProps {
     products: Product[];
+    collections: Collection[];
 }
 
-export default function ProductGrid({ products }: ProductGridProps) {
+export default function ProductGrid({ products, collections }: ProductGridProps) {
     const searchParams = useSearchParams();
-    const [collections, setCollections] = useState<Collection[]>([]);
-
-    useEffect(() => {
-        const fetchCollections = async () => {
-            try {
-                const response = await fetch('/api/collections');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch collections');
-                }
-                const data: Collection[] = await response.json();
-                setCollections(data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchCollections();
-    }, []);
 
     let filteredProducts: Product[] = [...products];
 

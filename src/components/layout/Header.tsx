@@ -5,39 +5,21 @@ import Link from 'next/link';
 import { ShoppingCart, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Sheet, SheetTrigger, SheetContent, SheetClose } from '../ui/sheet';
 import CartSheet from '../CartSheet';
 import { Collection } from '@/lib/types';
 
-export default function Header() {
+export default function Header({ collections }: { collections: Collection[] }) {
   const { cartCount } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [collections, setCollections] = useState<Collection[]>([]);
 
-  useEffect(() => {
-    const fetchCollections = async () => {
-      try {
-        const response = await fetch('/api/collections');
-        if (!response.ok) {
-          throw new Error('Failed to fetch collections');
-        }
-        const data: Collection[] = await response.json();
-        
-        data.sort((a, b) => {
-          if (a.title.toLowerCase() === 'garba special') return -1;
-          if (b.title.toLowerCase() === 'garba special') return 1;
-          return 0;
-        });
-        
-        setCollections(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchCollections();
-  }, []);
+  const sortedCollections = [...collections].sort((a, b) => {
+    if (a.title.toLowerCase() === 'garba special') return -1;
+    if (b.title.toLowerCase() === 'garba special') return 1;
+    return 0;
+  });
 
   return (
     <header className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-xl border-b border-gray-700 sticky top-0 z-50">
@@ -51,7 +33,7 @@ export default function Header() {
                 </Link>
             </div>
              <nav className="hidden h-full items-center justify-center gap-6 md:flex">
-               {collections.map(collection => (
+               {sortedCollections.map(collection => (
                   <Link key={collection.id} href={`/#${collection.handle}`} className="relative group flex h-full items-center px-1 py-2 text-sm font-medium tracking-wide text-gray-200 transition-colors hover:text-white outline-none">
                     {collection.title}
                      <span className="absolute bottom-5 left-0 h-0.5 bg-amber-500 transition-all duration-300 group-hover:w-full w-0"></span>
@@ -90,7 +72,7 @@ export default function Header() {
                             </h1>
                         </Link>
                         <nav className="flex flex-col gap-3">
-                           {collections.map(collection => (
+                           {sortedCollections.map(collection => (
                             <SheetClose asChild key={collection.id}>
                               <Link href={`/#${collection.handle}`} className="block rounded-md px-3 py-2 text-lg font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground">
                                 {collection.title}
