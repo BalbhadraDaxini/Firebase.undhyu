@@ -1,4 +1,5 @@
 
+import { Suspense } from 'react';
 import { getProducts, getCollections } from '@/lib/shopify';
 import ProductGrid from '@/components/ProductGrid';
 import Hero from '@/components/Hero';
@@ -15,7 +16,9 @@ export default async function Home() {
       <div id="product-grid" className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 gap-8">
           <main>
-            <ProductGrid products={products} collections={collections} />
+            <Suspense fallback={<div className="h-64 flex items-center justify-center"><p>Loading products...</p></div>}>
+              <ProductGrid products={products} collections={collections} />
+            </Suspense>
           </main>
         </div>
       </div>
