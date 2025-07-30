@@ -74,25 +74,13 @@ export default function Header() {
                     </h1>
                 </Link>
             </div>
-             <nav className="hidden h-full items-center justify-center gap-4 md:flex">
-               {collections.length > 0 && (
-                <DropdownMenu>
-                  <DropdownMenuTrigger className="relative group flex h-full items-center px-1 py-2 text-sm font-medium tracking-wide text-gray-200 transition-colors hover:text-white outline-none">
-                    Collections
-                    <ChevronDown className="ml-1 h-4 w-4" />
+             <nav className="hidden h-full items-center justify-center gap-6 md:flex">
+               {collections.map(collection => (
+                  <Link key={collection.id} href={`/collections/${collection.handle}`} className="relative group flex h-full items-center px-1 py-2 text-sm font-medium tracking-wide text-gray-200 transition-colors hover:text-white outline-none">
+                    {collection.title}
                      <span className="absolute bottom-5 left-0 h-0.5 bg-amber-500 transition-all duration-300 group-hover:w-full w-0"></span>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-gray-800 border-gray-700 text-white">
-                    {collections.map(collection => (
-                      <DropdownMenuItem key={collection.id} asChild>
-                        <Link href={`/collections/${collection.handle}`} className="hover:bg-gray-700">
-                          {collection.title}
-                        </Link>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
+                  </Link>
+                ))}
             </nav>
             
             <div className="flex items-center justify-end gap-2 md:gap-4">
@@ -126,17 +114,13 @@ export default function Header() {
                             </h1>
                         </Link>
                         <nav className="flex flex-col gap-3">
-                             {collections.length > 0 && (
-                               <MobileNavLink name="Collections">
-                                  {collections.map(collection => (
-                                    <SheetClose asChild key={collection.id}>
-                                      <Link href={`/collections/${collection.handle}`} className="block rounded-md px-3 py-2 text-lg font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground">
-                                        {collection.title}
-                                      </Link>
-                                    </SheetClose>
-                                  ))}
-                               </MobileNavLink>
-                             )}
+                           {collections.map(collection => (
+                            <SheetClose asChild key={collection.id}>
+                              <Link href={`/collections/${collection.handle}`} className="block rounded-md px-3 py-2 text-lg font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground">
+                                {collection.title}
+                              </Link>
+                            </SheetClose>
+                          ))}
                         </nav>
                     </div>
                 </SheetContent>
