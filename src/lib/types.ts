@@ -71,3 +71,9 @@ export type Category = {
   name: string;
   slug: string;
 };
+
+export type Collection = {
+  id: string;
+  title: string;
+  handle: string;
+};

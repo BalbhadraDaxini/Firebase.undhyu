@@ -1,5 +1,5 @@
 import { GraphQLClient, gql } from 'graphql-request';
-import { Product, ShopifyProductVariant } from './types';
+import { Product, ShopifyProductVariant, Collection } from './types';
 
 const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_API_TOKEN!;
 const endpoint = `https://${process.env.SHOPIFY_STORE_DOMAIN}/api/2023-10/graphql.json`;
@@ -126,6 +126,20 @@ const PRODUCT_QUERY = gql`
   }
 `;
 
+const COLLECTIONS_QUERY = gql`
+  query getCollections {
+    collections(first: 20) {
+      edges {
+        node {
+          id
+          title
+          handle
+        }
+      }
+    }
+  }
+`;
+
 const CART_CREATE_MUTATION = gql`
   mutation cartCreate($input: CartInput!) {
     cartCreate(input: $input) {
@@ -154,6 +168,13 @@ export async function getProducts(options: {}): Promise<Product[]> {
 export async function getProduct(handle: string): Promise<Product | null> {
   const { product } = await client.request<{ product: Product | null }>(PRODUCT_QUERY, { handle });
   return product;
+}
+
+export async function getCollections(): Promise<Collection[]> {
+  const { collections } = await client.request<{ collections: { edges: { node: Collection }[] } }>(
+    COLLECTIONS_QUERY
+  );
+  return collections.edges.map(edge => edge.node);
 }
 
 export async function createCheckout(lineItems: { variantId: string; quantity: number }[]): Promise<string | null> {
