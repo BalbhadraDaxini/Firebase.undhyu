@@ -4,20 +4,10 @@ import ProductGrid from '@/components/ProductGrid';
 import Hero from '@/components/Hero';
 import FeaturedCategories from '@/components/FeaturedCategories';
 import type { Product } from '@/lib/types';
-import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
-export const getServerSideProps: GetServerSideProps<{
-  products: Product[];
-}> = async () => {
+export default async function Home() {
   const products = await getProducts({});
-  return {
-    props: {
-      products,
-    },
-  };
-};
 
-function HomePageContent({ products }: { products: Product[] }) {
   return (
     <>
       <Hero />
@@ -30,13 +20,5 @@ function HomePageContent({ products }: { products: Product[] }) {
       </div>
       <FeaturedCategories />
     </>
-  );
-}
-
-export default function Home({
-  products,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  return (
-    <HomePageContent products={products} />
   );
 }
