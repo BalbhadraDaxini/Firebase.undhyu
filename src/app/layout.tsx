@@ -8,6 +8,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Playfair_Display, Lato } from 'next/font/google';
 import { getCollections } from '@/lib/shopify';
+import type { Collection } from '@/lib/types';
 
 const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
@@ -32,7 +33,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const collections = await getCollections();
+  let collections: Collection[] = [];
+  try {
+    collections = await getCollections();
+  } catch (error) {
+    console.error('Failed to fetch collections for layout:', error);
+    // Gracefully handle the error, collections will be an empty array
+  }
+  
   return (
     <html lang="en">
       <body className={cn('min-h-screen bg-background font-body antialiased', playfairDisplay.variable, lato.variable)} suppressHydrationWarning>
