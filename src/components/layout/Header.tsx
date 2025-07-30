@@ -2,20 +2,13 @@
 "use client";
 
 import Link from 'next/link';
-import { ShoppingCart, Menu, ChevronDown } from 'lucide-react';
+import { ShoppingCart, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { useState, useEffect } from 'react';
 import { Sheet, SheetTrigger, SheetContent, SheetClose } from '../ui/sheet';
 import CartSheet from '../CartSheet';
-import { cn } from '@/lib/utils';
 import { Collection } from '@/lib/types';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
 export default function Header() {
   const { cartCount } = useCart();
@@ -30,7 +23,14 @@ export default function Header() {
         if (!response.ok) {
           throw new Error('Failed to fetch collections');
         }
-        const data = await response.json();
+        const data: Collection[] = await response.json();
+        
+        data.sort((a, b) => {
+          if (a.title.toLowerCase() === 'garba special') return -1;
+          if (b.title.toLowerCase() === 'garba special') return 1;
+          return 0;
+        });
+        
         setCollections(data);
       } catch (error) {
         console.error(error);
@@ -38,30 +38,6 @@ export default function Header() {
     };
     fetchCollections();
   }, []);
-
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, slug: string) => {
-    e.preventDefault();
-    const element = document.getElementById(slug);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMenuOpen(false); 
-    }
-  };
-  
-  const MobileNavLink = ({ name, children }: { slug?: string, name: string, isDropdown?: boolean, children?: React.ReactNode }) => {
-      return (
-        <div>
-          <button className="flex w-full items-center justify-between rounded-md px-3 py-2 text-lg font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground">
-            {name}
-            <ChevronDown className="h-5 w-5" />
-          </button>
-          <div className="pl-4">
-            {children}
-          </div>
-        </div>
-      )
-  };
-
 
   return (
     <header className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-xl border-b border-gray-700 sticky top-0 z-50">
