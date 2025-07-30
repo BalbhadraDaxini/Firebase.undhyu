@@ -1,13 +1,23 @@
 
 import { getProducts } from '@/lib/shopify';
-import { Suspense } from 'react';
 import ProductGrid from '@/components/ProductGrid';
 import Hero from '@/components/Hero';
 import FeaturedCategories from '@/components/FeaturedCategories';
+import type { Product } from '@/lib/types';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
-async function HomePageContent() {
+export const getServerSideProps: GetServerSideProps<{
+  products: Product[];
+}> = async () => {
   const products = await getProducts({});
-  
+  return {
+    props: {
+      products,
+    },
+  };
+};
+
+function HomePageContent({ products }: { products: Product[] }) {
   return (
     <>
       <Hero />
@@ -23,11 +33,10 @@ async function HomePageContent() {
   );
 }
 
-
-export default function Home() {
+export default function Home({
+  products,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <HomePageContent />
-    </Suspense>
+    <HomePageContent products={products} />
   );
 }
