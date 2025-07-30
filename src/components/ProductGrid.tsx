@@ -2,9 +2,10 @@
 "use client";
 
 import { useSearchParams } from 'next/navigation';
-import type { Product, Category } from '@/lib/types';
+import type { Product, Collection } from '@/lib/types';
 import ProductCard from './ProductCard';
 import { Separator } from './ui/separator';
+import { useEffect, useState } from 'react';
 
 interface ProductGridProps {
     products: Product[];
@@ -12,6 +13,23 @@ interface ProductGridProps {
 
 export default function ProductGrid({ products }: ProductGridProps) {
     const searchParams = useSearchParams();
+    const [collections, setCollections] = useState<Collection[]>([]);
+
+    useEffect(() => {
+        const fetchCollections = async () => {
+            try {
+                const response = await fetch('/api/collections');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch collections');
+                }
+                const data: Collection[] = await response.json();
+                setCollections(data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchCollections();
+    }, []);
 
     let filteredProducts: Product[] = [...products];
 
@@ -19,7 +37,6 @@ export default function ProductGrid({ products }: ProductGridProps) {
     const price = searchParams.get('price');
     const color = searchParams.get('color');
     const size = searchParams.get('size');
-    const categoryFilter = searchParams.get('category');
 
     if (price) {
         const [min, max] = price.split('-').map(Number);
@@ -43,26 +60,16 @@ export default function ProductGrid({ products }: ProductGridProps) {
         filteredProducts.sort((a, b) => parseFloat(a.priceRange.minVariantPrice.amount) - parseFloat(b.priceRange.minVariantPrice.amount));
     } else if (sort === 'price-desc') {
         filteredProducts.sort((a, b) => parseFloat(b.priceRange.minVariantPrice.amount) - parseFloat(a.priceRange.minVariantPrice.amount));
-    } else {
-        // Default sort is handled by Shopify (newest)
     }
 
-    const categories: Category[] = [
-        { name: 'Sarees', slug: 'sarees' },
-        { name: 'Lehengas', slug: 'lehengas' },
-        { name: 'Suits', slug: 'suits' },
-        { name: 'Gowns', slug: 'gowns' },
-        { name: 'Kurtis', slug: 'kurtis' },
-    ];
-  
-    const productsByCategory = categories.map(category => ({
-        ...category,
-        products: filteredProducts.filter(p => p.tags.includes(category.name))
+    const productsByCategory = collections.map(collection => ({
+        ...collection,
+        products: filteredProducts.filter(p => p.tags.some(tag => tag.toLowerCase() === collection.title.toLowerCase()))
     }));
 
     const allProductsCategory = {
-        name: 'All',
-        slug: 'all',
+        name: 'All Products',
+        handle: 'all-products',
         products: filteredProducts
     }
   
@@ -89,7 +96,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
                     
                     <Separator className="my-12"/>
 
-                    <section id={allProductsCategory.slug} className="pt-16 -mt-16">
+                    <section id={allProductsCategory.handle} className="pt-16 -mt-16">
                          <h2 className="text-2xl md:text-3xl font-headline font-semibold mb-6">{allProductsCategory.name}</h2>
                           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-8">
                             {allProductsCategory.products.map(product => (
@@ -100,14 +107,17 @@ export default function ProductGrid({ products }: ProductGridProps) {
                     
                     {productsByCategory.map(category => (
                       category.products.length > 0 && (
-                        <section key={category.slug} id={category.slug} className="pt-16 -mt-16">
-                          <h2 className="text-2xl md:text-3xl font-headline font-semibold mb-6">{category.name}</h2>
-                           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-8">
-                            {category.products.map(product => (
-                              <ProductCard key={product.id} product={product} />
-                            ))}
-                          </div>
-                        </section>
+                        <div key={category.handle}>
+                          <Separator className="my-12"/>
+                          <section id={category.handle} className="pt-16 -mt-16">
+                            <h2 className="text-2xl md:text-3xl font-headline font-semibold mb-6">{category.title}</h2>
+                            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-8">
+                              {category.products.map(product => (
+                                <ProductCard key={product.id} product={product} />
+                              ))}
+                            </div>
+                          </section>
+                        </div>
                       )
                     ))}
                 </>

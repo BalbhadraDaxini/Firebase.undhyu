@@ -52,7 +52,7 @@ export default function Header() {
             </div>
              <nav className="hidden h-full items-center justify-center gap-6 md:flex">
                {collections.map(collection => (
-                  <Link key={collection.id} href={`/collections/${collection.handle}`} className="relative group flex h-full items-center px-1 py-2 text-sm font-medium tracking-wide text-gray-200 transition-colors hover:text-white outline-none">
+                  <Link key={collection.id} href={`/#${collection.handle}`} className="relative group flex h-full items-center px-1 py-2 text-sm font-medium tracking-wide text-gray-200 transition-colors hover:text-white outline-none">
                     {collection.title}
                      <span className="absolute bottom-5 left-0 h-0.5 bg-amber-500 transition-all duration-300 group-hover:w-full w-0"></span>
                   </Link>
@@ -92,7 +92,7 @@ export default function Header() {
                         <nav className="flex flex-col gap-3">
                            {collections.map(collection => (
                             <SheetClose asChild key={collection.id}>
-                              <Link href={`/collections/${collection.handle}`} className="block rounded-md px-3 py-2 text-lg font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground">
+                              <Link href={`/#${collection.handle}`} className="block rounded-md px-3 py-2 text-lg font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground">
                                 {collection.title}
                               </Link>
                             </SheetClose>
