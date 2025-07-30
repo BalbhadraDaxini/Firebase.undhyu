@@ -64,7 +64,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
 
     const productsByCategory = collections.map(collection => ({
         ...collection,
-        products: filteredProducts.filter(p => p.tags.some(tag => tag.toLowerCase() === collection.title.toLowerCase()))
+        products: filteredProducts.filter(p => p.tags.some(tag => tag.toLowerCase() === collection.handle.toLowerCase()))
     }));
 
     const allProductsCategory = {
@@ -87,7 +87,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
                 <>
                     <section id="new-arrivals" className="pt-16 -mt-16">
                       <h2 className="text-2xl md:text-3xl font-headline font-semibold mb-6">New Arrivals</h2>
-                      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-8">
+                      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 md:gap-8">
                         {newArrivals.map(product => (
                           <ProductCard key={product.id} product={product} />
                         ))}
@@ -98,7 +98,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
 
                     <section id={allProductsCategory.handle} className="pt-16 -mt-16">
                          <h2 className="text-2xl md:text-3xl font-headline font-semibold mb-6">{allProductsCategory.name}</h2>
-                          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-8">
+                          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 md:gap-8">
                             {allProductsCategory.products.map(product => (
                               <ProductCard key={product.id} product={product} />
                             ))}
@@ -111,7 +111,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
                           <Separator className="my-12"/>
                           <section id={category.handle} className="pt-16 -mt-16">
                             <h2 className="text-2xl md:text-3xl font-headline font-semibold mb-6">{category.title}</h2>
-                            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-8">
+                            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 md:gap-8">
                               {category.products.map(product => (
                                 <ProductCard key={product.id} product={product} />
                               ))}
