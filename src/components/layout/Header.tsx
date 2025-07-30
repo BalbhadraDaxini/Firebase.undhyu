@@ -21,7 +21,6 @@ export default function Header() {
   const { cartCount } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('new-arrivals');
   const [collections, setCollections] = useState<Collection[]>([]);
 
   useEffect(() => {
@@ -40,63 +39,16 @@ export default function Header() {
     fetchCollections();
   }, []);
 
-  const categories = [
-    { name: 'New Arrivals', slug: 'new-arrivals' },
-    { name: 'All', slug: 'all' },
-    { name: 'Sarees', slug: 'sarees' },
-    { name: 'Lehengas', slug: 'lehengas' },
-    { name: 'Suits', slug: 'suits' },
-    { name: 'Gowns', slug: 'gowns' },
-    { name: 'Kurtis', slug: 'kurtis' },
-  ];
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: '-20% 0px -80% 0px', threshold: 0 }
-    );
-
-    const sections = document.querySelectorAll('section[id]');
-    sections.forEach((section) => observer.observe(section));
-
-    return () => sections.forEach((section) => observer.unobserve(section));
-  }, []);
-
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, slug: string) => {
     e.preventDefault();
     const element = document.getElementById(slug);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
-      setActiveSection(slug);
       setIsMenuOpen(false); 
     }
   };
-
-  const NavLink = ({ slug, name }: { slug: string, name: string }) => (
-    <a
-      href={`#${slug}`}
-      onClick={(e) => handleLinkClick(e, slug)}
-      className={cn(
-        "relative group flex h-full items-center px-1 py-2 text-sm font-medium tracking-wide text-gray-200 transition-colors hover:text-white",
-          activeSection === slug ? 'text-white' : ''
-      )}
-    >
-      {name}
-      <span className={cn(
-        "absolute bottom-5 left-0 h-0.5 bg-amber-500 transition-all duration-300 group-hover:w-full",
-        activeSection === slug ? 'w-full' : 'w-0'
-      )}></span>
-    </a>
-  );
   
-  const MobileNavLink = ({ slug, name, isDropdown = false, children }: { slug?: string, name: string, isDropdown?: boolean, children?: React.ReactNode }) => {
-    if (isDropdown) {
+  const MobileNavLink = ({ name, children }: { slug?: string, name: string, isDropdown?: boolean, children?: React.ReactNode }) => {
       return (
         <div>
           <button className="flex w-full items-center justify-between rounded-md px-3 py-2 text-lg font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground">
@@ -108,24 +60,6 @@ export default function Header() {
           </div>
         </div>
       )
-    }
-
-    return (
-      <SheetClose asChild>
-        <a
-          href={`#${slug}`}
-          onClick={(e) => slug && handleLinkClick(e, slug)}
-          className={cn(
-              "block rounded-md px-3 py-2 text-lg font-medium transition-colors",
-              activeSection === slug 
-                  ? 'bg-foreground text-background' 
-                  : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
-          )}
-        >
-          {name}
-        </a>
-      </SheetClose>
-    )
   };
 
 
@@ -141,9 +75,6 @@ export default function Header() {
                 </Link>
             </div>
              <nav className="hidden h-full items-center justify-center gap-4 md:flex">
-              {categories.map(category => (
-                <NavLink key={category.slug} slug={category.slug} name={category.name} />
-              ))}
                {collections.length > 0 && (
                 <DropdownMenu>
                   <DropdownMenuTrigger className="relative group flex h-full items-center px-1 py-2 text-sm font-medium tracking-wide text-gray-200 transition-colors hover:text-white outline-none">
@@ -195,11 +126,8 @@ export default function Header() {
                             </h1>
                         </Link>
                         <nav className="flex flex-col gap-3">
-                            {categories.map(category => (
-                              <MobileNavLink key={category.slug} slug={category.slug} name={category.name} />
-                            ))}
                              {collections.length > 0 && (
-                               <MobileNavLink name="Collections" isDropdown>
+                               <MobileNavLink name="Collections">
                                   {collections.map(collection => (
                                     <SheetClose asChild key={collection.id}>
                                       <Link href={`/collections/${collection.handle}`} className="block rounded-md px-3 py-2 text-lg font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground">
