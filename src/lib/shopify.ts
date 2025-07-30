@@ -1,14 +1,20 @@
+
 import { GraphQLClient, gql } from 'graphql-request';
 import { Product, ShopifyProductVariant, Collection } from './types';
 
-const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_API_TOKEN!;
+const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_API_TOKEN;
 const endpoint = `https://${process.env.SHOPIFY_STORE_DOMAIN}/api/2023-10/graphql.json`;
 
-const client = new GraphQLClient(endpoint, {
-  headers: {
-    'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
-  },
-});
+let client: GraphQLClient;
+
+if (storefrontAccessToken && process.env.SHOPIFY_STORE_DOMAIN) {
+    client = new GraphQLClient(endpoint, {
+        headers: {
+            'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
+        },
+    });
+}
+
 
 const PRODUCTS_QUERY = gql`
   query getProducts {
@@ -156,6 +162,10 @@ const CART_CREATE_MUTATION = gql`
 `;
 
 export async function getProducts(options: {}): Promise<Product[]> {
+  if (!client) {
+    console.warn('Shopify client not initialized. Missing environment variables.');
+    return [];
+  }
   // Use Next.js revalidation to fetch fresh product data every hour
   const { products } = await client.request<{ products: { edges: { node: Product }[] } }>(
     PRODUCTS_QUERY, 
@@ -166,11 +176,19 @@ export async function getProducts(options: {}): Promise<Product[]> {
 }
 
 export async function getProduct(handle: string): Promise<Product | null> {
+  if (!client) {
+    console.warn('Shopify client not initialized. Missing environment variables.');
+    return null;
+  }
   const { product } = await client.request<{ product: Product | null }>(PRODUCT_QUERY, { handle });
   return product;
 }
 
 export async function getCollections(): Promise<Collection[]> {
+  if (!client) {
+    console.warn('Shopify client not initialized. Missing environment variables.');
+    return [];
+  }
   const { collections } = await client.request<{ collections: { edges: { node: Collection }[] } }>(
     COLLECTIONS_QUERY
   );
@@ -178,6 +196,10 @@ export async function getCollections(): Promise<Collection[]> {
 }
 
 export async function createCheckout(lineItems: { variantId: string; quantity: number }[]): Promise<string | null> {
+  if (!client) {
+    console.warn('Shopify client not initialized. Missing environment variables.');
+    return null;
+  }
   const input = {
     lines: lineItems.map(item => ({
         merchandiseId: item.variantId,
