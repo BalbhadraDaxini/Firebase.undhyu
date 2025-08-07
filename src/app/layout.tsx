@@ -24,6 +24,7 @@ const lato = Lato({
 
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://undhyu.com'),
   title: 'Undhyu - Designer Sarees, Lehengas & Kurtis for Every Indian Woman',
   description: 'Shop stylish sarees, lehengas, and kurtis for women aged 18 to 60. Undhyu offers premium Indian ethnic wear across Tier 1, 2 & 3 cities.',
   keywords: ['Undhyu', 'sarees online', 'lehengas online', 'kurtis online', 'Indian ethnic wear', 'women ethnic fashion', 'traditional wear for women', 'affordable sarees', 'festive kurtis', 'bridal lehengas'],
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://undhyu.com/og-image.jpg', // Replace with your actual OG image URL
+        url: '/og-image.jpg', // Replaced with a relative path
         width: 1200,
         height: 630,
         alt: 'Undhyu Ethnic Wear Collection',
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Undhyu - Shop Ethnic Wear for Women',
     description: 'Sarees, Lehengas, and Kurtis for Indian women aged 18 to 60.',
-    images: ['https://undhyu.com/twitter-image.jpg'], // Replace with your actual Twitter image URL
+    images: ['/twitter-image.jpg'], // Replaced with a relative path
   },
 };
 
