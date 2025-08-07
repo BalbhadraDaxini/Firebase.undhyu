@@ -10,16 +10,16 @@ import { Sheet, SheetTrigger, SheetContent, SheetClose } from '../ui/sheet';
 import CartSheet from '../CartSheet';
 import { Collection } from '@/lib/types';
 
+const navItems = [
+  { title: 'Sarees', handle: 'sarees' },
+  { title: 'Lehengas', handle: 'lehengas' },
+  { title: 'Kurtis', handle: 'kurtis' },
+];
+
 export default function Header({ collections }: { collections: Collection[] }) {
   const { cartCount } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const sortedCollections = [...collections].sort((a, b) => {
-    if (a.title.toLowerCase() === 'garba special') return -1;
-    if (b.title.toLowerCase() === 'garba special') return 1;
-    return 0;
-  });
 
   return (
     <header className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-xl border-b border-gray-700 sticky top-0 z-50">
@@ -33,9 +33,9 @@ export default function Header({ collections }: { collections: Collection[] }) {
                 </Link>
             </div>
              <nav className="hidden h-full items-center justify-center gap-6 md:flex">
-               {sortedCollections.map(collection => (
-                  <Link key={collection.id} href={`/#${collection.handle}`} className="relative group flex h-full items-center px-1 py-2 text-sm font-medium tracking-wide text-gray-200 transition-colors hover:text-white outline-none">
-                    {collection.title}
+               {navItems.map(item => (
+                  <Link key={item.handle} href={`/#${item.handle}`} className="relative group flex h-full items-center px-1 py-2 text-sm font-medium tracking-wide text-gray-200 transition-colors hover:text-white outline-none">
+                    {item.title}
                      <span className="absolute bottom-5 left-0 h-0.5 bg-amber-500 transition-all duration-300 group-hover:w-full w-0"></span>
                   </Link>
                 ))}
@@ -72,10 +72,10 @@ export default function Header({ collections }: { collections: Collection[] }) {
                             </h1>
                         </Link>
                         <nav className="flex flex-col gap-3">
-                           {sortedCollections.map(collection => (
-                            <SheetClose asChild key={collection.id}>
-                              <Link href={`/#${collection.handle}`} className="block rounded-md px-3 py-2 text-lg font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground">
-                                {collection.title}
+                           {navItems.map(item => (
+                            <SheetClose asChild key={item.handle}>
+                              <Link href={`/#${item.handle}`} className="block rounded-md px-3 py-2 text-lg font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground">
+                                {item.title}
                               </Link>
                             </SheetClose>
                           ))}
