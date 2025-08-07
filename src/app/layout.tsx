@@ -24,8 +24,35 @@ const lato = Lato({
 
 
 export const metadata: Metadata = {
-  title: 'Undhyu',
-  description: 'A modern e-commerce storefront for your Shopify products.',
+  title: 'Undhyu - Designer Sarees, Lehengas & Kurtis for Every Indian Woman',
+  description: 'Shop stylish sarees, lehengas, and kurtis for women aged 18 to 60. Undhyu offers premium Indian ethnic wear across Tier 1, 2 & 3 cities.',
+  keywords: ['Undhyu', 'sarees online', 'lehengas online', 'kurtis online', 'Indian ethnic wear', 'women ethnic fashion', 'traditional wear for women', 'affordable sarees', 'festive kurtis', 'bridal lehengas'],
+  authors: [{ name: 'Undhyu' }],
+  robots: {
+    index: true,
+    follow: true,
+  },
+  viewport: 'width=device-width, initial-scale=1.0',
+  openGraph: {
+    title: 'Undhyu - Stylish Ethnic Wear for Indian Women',
+    description: "Explore Undhyu's exclusive collection of sarees, lehengas, and kurtis designed for women in every Indian city.",
+    url: 'https://undhyu.com',
+    type: 'website',
+    images: [
+      {
+        url: 'https://undhyu.com/og-image.jpg', // Replace with your actual OG image URL
+        width: 1200,
+        height: 630,
+        alt: 'Undhyu Ethnic Wear Collection',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Undhyu - Shop Ethnic Wear for Women',
+    description: 'Sarees, Lehengas, and Kurtis for Indian women aged 18 to 60.',
+    images: ['https://undhyu.com/twitter-image.jpg'], // Replace with your actual Twitter image URL
+  },
 };
 
 export default async function RootLayout({
@@ -43,6 +70,35 @@ export default async function RootLayout({
   
   return (
     <html lang="en">
+       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Undhyu",
+            "url": "https://undhyu.com",
+            "logo": "https://undhyu.com/logo.png",
+            "sameAs": [
+              "https://www.instagram.com/undhyu.com_"
+            ]
+          }) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Undhyu",
+            "url": "https://undhyu.com",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://undhyu.com/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          }) }}
+        />
+      </head>
       <body className={cn('min-h-screen bg-background font-body antialiased', playfairDisplay.variable, lato.variable)} suppressHydrationWarning>
         <CartProvider>
           <div className="relative flex min-h-screen flex-col">
