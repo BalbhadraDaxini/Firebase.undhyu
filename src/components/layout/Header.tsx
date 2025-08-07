@@ -34,7 +34,7 @@ export default function Header({ collections }: { collections: Collection[] }) {
             </div>
              <nav className="hidden h-full items-center justify-center gap-6 md:flex">
                {navItems.map(item => (
-                  <Link key={item.handle} href={`/#${item.handle}`} className="relative group flex h-full items-center px-1 py-2 text-sm font-medium tracking-wide text-gray-200 transition-colors hover:text-white outline-none">
+                  <Link key={item.handle} href={`/collections/${item.handle}`} className="relative group flex h-full items-center px-1 py-2 text-sm font-medium tracking-wide text-gray-200 transition-colors hover:text-white outline-none">
                     {item.title}
                      <span className="absolute bottom-5 left-0 h-0.5 bg-amber-500 transition-all duration-300 group-hover:w-full w-0"></span>
                   </Link>
@@ -74,7 +74,7 @@ export default function Header({ collections }: { collections: Collection[] }) {
                         <nav className="flex flex-col gap-3">
                            {navItems.map(item => (
                             <SheetClose asChild key={item.handle}>
-                              <Link href={`/#${item.handle}`} className="block rounded-md px-3 py-2 text-lg font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground">
+                              <Link href={`/collections/${item.handle}`} className="block rounded-md px-3 py-2 text-lg font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground">
                                 {item.title}
                               </Link>
                             </SheetClose>

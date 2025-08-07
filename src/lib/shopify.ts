@@ -146,6 +146,65 @@ const COLLECTIONS_QUERY = gql`
   }
 `;
 
+const COLLECTION_PRODUCTS_QUERY = gql`
+  query getCollectionProducts($handle: String!, $first: Int!) {
+    collection(handle: $handle) {
+      title
+      products(first: $first) {
+        edges {
+          node {
+            id
+            title
+            handle
+            featuredImage {
+              url
+              altText
+            }
+            images(first: 2) {
+                edges {
+                    node {
+                        url
+                        altText
+                    }
+                }
+            }
+            priceRange {
+              minVariantPrice {
+                amount
+                currencyCode
+              }
+            }
+            compareAtPriceRange {
+                minVariantPrice {
+                    amount
+                    currencyCode
+                }
+            }
+            variants(first: 5) {
+              edges {
+                node {
+                  id
+                  title
+                  price {
+                      amount
+                      currencyCode
+                  }
+                  compareAtPrice {
+                      amount
+                      currencyCode
+                  }
+                }
+              }
+            }
+            tags
+          }
+        }
+      }
+    }
+  }
+`;
+
+
 const CART_CREATE_MUTATION = gql`
   mutation cartCreate($input: CartInput!) {
     cartCreate(input: $input) {
@@ -194,6 +253,27 @@ export async function getCollections(): Promise<Collection[]> {
   );
   return collections.edges.map(edge => edge.node);
 }
+
+export async function getCollectionProducts({ collection, first = 100 }: { collection: string, first?: number }): Promise<{title: string, products: Product[]}> {
+    if (!client) {
+        console.warn('Shopify client not initialized. Missing environment variables.');
+        return { title: '', products: [] };
+    }
+    const response = await client.request<{ collection: { title: string, products: { edges: { node: Product }[] } } | null }>(
+        COLLECTION_PRODUCTS_QUERY,
+        { handle: collection, first }
+    );
+    
+    if (!response.collection) {
+        return { title: 'Collection not found', products: [] };
+    }
+
+    return {
+        title: response.collection.title,
+        products: response.collection.products.edges.map(edge => edge.node)
+    };
+}
+
 
 export async function createCheckout(lineItems: { variantId: string; quantity: number }[]): Promise<string | null> {
   if (!client) {
