@@ -80,7 +80,7 @@ export default function ProductGrid({ products, collections }: ProductGridProps)
                     <Separator className="my-12"/>
 
                     <section id={allProductsCategory.handle} className="pt-16 -mt-16">
-                         <h2 className="text-2xl md:text-3xl font-headline font-semibold mb-6">{allProductsCategory.name}</h2>
+                         <h2 className="text-2xl md:text-3xl font-headline font-semibold mb-6">Our Collection</h2>
                           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 md:gap-8">
                             {allProductsCategory.products.map(product => (
                               <ProductCard key={product.id} product={product} />
