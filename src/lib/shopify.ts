@@ -5,7 +5,7 @@ import { Product, ShopifyProductVariant, Collection } from './types';
 const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_API_TOKEN;
 const endpoint = `https://${process.env.SHOPIFY_STORE_DOMAIN}/api/2023-10/graphql.json`;
 
-let client: GraphQLClient;
+let client: GraphQLClient | null = null;
 
 if (storefrontAccessToken && process.env.SHOPIFY_STORE_DOMAIN) {
     client = new GraphQLClient(endpoint, {
@@ -13,8 +13,9 @@ if (storefrontAccessToken && process.env.SHOPIFY_STORE_DOMAIN) {
             'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
         },
     });
+} else {
+    console.warn('Shopify client not initialized. Missing environment variables SHOPIFY_STORE_DOMAIN or SHOPIFY_STOREFRONT_API_TOKEN.');
 }
-
 
 const PRODUCTS_QUERY = gql`
   query getProducts {
@@ -205,14 +206,14 @@ const COLLECTION_PRODUCTS_QUERY = gql`
 `;
 
 
-const CART_CREATE_MUTATION = gql`
-  mutation cartCreate($input: CartInput!) {
-    cartCreate(input: $input) {
-      cart {
+const CHECKOUT_CREATE_MUTATION = gql`
+  mutation checkoutCreate($input: CheckoutCreateInput!) {
+    checkoutCreate(input: $input) {
+      checkout {
         id
-        checkoutUrl
+        webUrl
       }
-      userErrors {
+      checkoutUserErrors {
         field
         message
       }
@@ -222,7 +223,6 @@ const CART_CREATE_MUTATION = gql`
 
 export async function getProducts(options: {}): Promise<Product[]> {
   if (!client) {
-    console.warn('Shopify client not initialized. Missing environment variables.');
     return [];
   }
   // Use Next.js revalidation to fetch fresh product data every hour
@@ -236,7 +236,6 @@ export async function getProducts(options: {}): Promise<Product[]> {
 
 export async function getProduct(handle: string): Promise<Product | null> {
   if (!client) {
-    console.warn('Shopify client not initialized. Missing environment variables.');
     return null;
   }
   const { product } = await client.request<{ product: Product | null }>(PRODUCT_QUERY, { handle });
@@ -245,7 +244,6 @@ export async function getProduct(handle: string): Promise<Product | null> {
 
 export async function getCollections(): Promise<Collection[]> {
   if (!client) {
-    console.warn('Shopify client not initialized. Missing environment variables.');
     return [];
   }
   const { collections } = await client.request<{ collections: { edges: { node: Collection }[] } }>(
@@ -256,7 +254,6 @@ export async function getCollections(): Promise<Collection[]> {
 
 export async function getCollectionProducts({ collection, first = 100 }: { collection: string, first?: number }): Promise<{title: string, products: Product[]}> {
     if (!client) {
-        console.warn('Shopify client not initialized. Missing environment variables.');
         return { title: '', products: [] };
     }
     const response = await client.request<{ collection: { title: string, products: { edges: { node: Product }[] } } | null }>(
@@ -277,30 +274,29 @@ export async function getCollectionProducts({ collection, first = 100 }: { colle
 
 export async function createCheckout(lineItems: { variantId: string; quantity: number }[]): Promise<string | null> {
   if (!client) {
-    console.warn('Shopify client not initialized. Missing environment variables.');
     return null;
   }
   const input = {
-    lines: lineItems.map(item => ({
-        merchandiseId: item.variantId,
+    lineItems: lineItems.map(item => ({
+        variantId: item.variantId,
         quantity: item.quantity,
     })),
   };
 
   try {
-    const { cartCreate } = await client.request<{
-      cartCreate: {
-        cart: { checkoutUrl: string } | null,
-        userErrors: { message: string }[]
+    const { checkoutCreate } = await client.request<{
+      checkoutCreate: {
+        checkout: { webUrl: string } | null,
+        checkoutUserErrors: { message: string }[]
       }
-    }>(CART_CREATE_MUTATION, { input });
+    }>(CHECKOUT_CREATE_MUTATION, { input });
 
-    if (cartCreate.userErrors.length > 0) {
-      console.error('Cart creation errors:', cartCreate.userErrors);
-      throw new Error(cartCreate.userErrors.map(e => e.message).join('\n'));
+    if (checkoutCreate.checkoutUserErrors.length > 0) {
+      console.error('Checkout creation errors:', checkoutCreate.checkoutUserErrors);
+      throw new Error(checkoutCreate.checkoutUserErrors.map(e => e.message).join('\n'));
     }
 
-    return cartCreate.cart?.checkoutUrl ?? null;
+    return checkoutCreate.checkout?.webUrl ?? null;
   } catch (error) {
     console.error('Error creating checkout:', error);
     return null;
