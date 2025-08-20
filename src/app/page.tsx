@@ -18,7 +18,11 @@ export default async function Home() {
     collections = await getCollections();
   } catch (e: any) {
     console.error("Failed to fetch Shopify data for homepage:", e.message);
-    error = "We're having trouble connecting to our products. Please check back later.";
+    if (e.message.includes('401')) {
+      error = "Connection to Shopify failed. Please check your API credentials in the Vercel environment variables.";
+    } else {
+      error = "We're having trouble connecting to our products. Please check back later.";
+    }
   }
 
 

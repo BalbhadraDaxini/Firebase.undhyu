@@ -13,7 +13,14 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const { title } = await getCollectionProducts({ collection: params.handle });
+  let title = 'Collection';
+  try {
+    const collectionData = await getCollectionProducts({ collection: params.handle });
+    title = collectionData.title;
+  } catch (error) {
+    console.error(`Failed to fetch metadata for collection ${params.handle}:`, error);
+    return { title: 'Collection not found' };
+  }
  
   if (!title || title === 'Collection not found') {
     return {
@@ -52,7 +59,15 @@ export async function generateMetadata(
 }
  
 export default async function CollectionPage({ params }: Props) {
-  const { title, products } = await getCollectionProducts({ collection: params.handle });
+  let collectionData;
+  try {
+    collectionData = await getCollectionProducts({ collection: params.handle });
+  } catch (error) {
+    console.error(`Failed to fetch collection products for ${params.handle}:`, error);
+    notFound();
+  }
+
+  const { title, products } = collectionData;
 
   if (!products || products.length === 0) {
     notFound();

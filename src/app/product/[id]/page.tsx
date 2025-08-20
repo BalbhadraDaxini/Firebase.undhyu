@@ -12,7 +12,13 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const product = await getProduct(params.id);
+  let product;
+  try {
+    product = await getProduct(params.id);
+  } catch (error) {
+    console.error('Failed to fetch product for metadata:', error);
+    return { title: 'Product not found' };
+  }
  
   if (!product) {
     return {
@@ -64,7 +70,13 @@ export async function generateMetadata(
 }
 
 export default async function ProductPage({ params }: Props) {
-  const product = await getProduct(params.id);
+  let product;
+  try {
+    product = await getProduct(params.id);
+  } catch (error) {
+    console.error(`Failed to fetch product ${params.id}:`, error);
+    notFound();
+  }
 
   if (!product) {
     notFound();
