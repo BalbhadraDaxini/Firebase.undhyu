@@ -1,5 +1,5 @@
 
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
@@ -33,7 +33,6 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  viewport: 'width=device-width, initial-scale=1.0',
   openGraph: {
     title: 'Undhyu - Stylish Ethnic Wear for Indian Women',
     description: "Explore Undhyu's exclusive collection of sarees, lehengas, and kurtis designed for women in every Indian city.",
@@ -55,6 +54,11 @@ export const metadata: Metadata = {
     images: ['/twitter-image.jpg'], // Replaced with a relative path
   },
 };
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1.0,
+}
 
 export default async function RootLayout({
   children,
