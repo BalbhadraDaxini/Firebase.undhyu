@@ -1,6 +1,6 @@
 
 import { GraphQLClient, gql } from 'graphql-request';
-import { Product, ShopifyProductVariant, Collection } from './types';
+import type { Product, ShopifyProductVariant, Collection } from './types';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -10,9 +10,7 @@ const endpoint = `https://${process.env.SHOPIFY_STORE_DOMAIN}/api/2023-10/graphq
 
 let client: GraphQLClient | null = null;
 
-console.log(`Shopify domain from env: ${process.env.SHOPIFY_STORE_DOMAIN}`);
 if (storefrontAccessToken && process.env.SHOPIFY_STORE_DOMAIN) {
-    console.log('Shopify client initialized with token.');
     client = new GraphQLClient(endpoint, {
         headers: {
             'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
@@ -228,58 +226,77 @@ const CHECKOUT_CREATE_MUTATION = gql`
 
 export async function getProducts(options: {}): Promise<Product[]> {
   if (!client) {
-    return [];
+    throw new Error('Shopify client is not initialized. Check your environment variables.');
   }
-  // Use Next.js revalidation to fetch fresh product data every hour
-  const { products } = await client.request<{ products: { edges: { node: Product }[] } }>(
-    PRODUCTS_QUERY, 
-    {},
-    { next: { revalidate: 3600 } }
-  );
-  return products.edges.map(edge => edge.node);
+  try {
+    const { products } = await client.request<{ products: { edges: { node: Product }[] } }>(
+      PRODUCTS_QUERY, 
+      {},
+      { next: { revalidate: 3600 } }
+    );
+    return products.edges.map(edge => edge.node);
+  } catch (error) {
+    console.error('Failed to fetch products from Shopify:', error);
+    throw error;
+  }
 }
 
 export async function getProduct(handle: string): Promise<Product | null> {
   if (!client) {
-    return null;
+    throw new Error('Shopify client is not initialized. Check your environment variables.');
   }
-  const { product } = await client.request<{ product: Product | null }>(PRODUCT_QUERY, { handle });
-  return product;
+  try {
+    const { product } = await client.request<{ product: Product | null }>(PRODUCT_QUERY, { handle });
+    return product;
+  } catch (error) {
+    console.error(`Failed to fetch product ${handle} from Shopify:`, error);
+    throw error;
+  }
 }
 
 export async function getCollections(): Promise<Collection[]> {
   if (!client) {
-    return [];
+    throw new Error('Shopify client is not initialized. Check your environment variables.');
   }
-  const { collections } = await client.request<{ collections: { edges: { node: Collection }[] } }>(
-    COLLECTIONS_QUERY
-  );
-  return collections.edges.map(edge => edge.node);
+  try {
+    const { collections } = await client.request<{ collections: { edges: { node: Collection }[] } }>(
+      COLLECTIONS_QUERY
+    );
+    return collections.edges.map(edge => edge.node);
+  } catch (error) {
+    console.error('Failed to fetch collections from Shopify:', error);
+    throw error;
+  }
 }
 
 export async function getCollectionProducts({ collection, first = 100 }: { collection: string, first?: number }): Promise<{title: string, products: Product[]}> {
     if (!client) {
-        return { title: '', products: [] };
+      throw new Error('Shopify client is not initialized. Check your environment variables.');
     }
-    const response = await client.request<{ collection: { title: string, products: { edges: { node: Product }[] } } | null }>(
-        COLLECTION_PRODUCTS_QUERY,
-        { handle: collection, first }
-    );
-    
-    if (!response.collection) {
-        return { title: 'Collection not found', products: [] };
-    }
+    try {
+        const response = await client.request<{ collection: { title: string, products: { edges: { node: Product }[] } } | null }>(
+            COLLECTION_PRODUCTS_QUERY,
+            { handle: collection, first }
+        );
+        
+        if (!response.collection) {
+            return { title: 'Collection not found', products: [] };
+        }
 
-    return {
-        title: response.collection.title,
-        products: response.collection.products.edges.map(edge => edge.node)
-    };
+        return {
+            title: response.collection.title,
+            products: response.collection.products.edges.map(edge => edge.node)
+        };
+    } catch(error) {
+        console.error(`Failed to fetch collection products for ${collection}:`, error);
+        throw error;
+    }
 }
 
 
 export async function createCheckout(lineItems: { variantId: string; quantity: number }[]): Promise<string | null> {
   if (!client) {
-    return null;
+    throw new Error('Shopify client is not initialized. Check your environment variables.');
   }
   const input = {
     lineItems: lineItems.map(item => ({
