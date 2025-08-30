@@ -14,13 +14,18 @@ export default async function Home() {
   let error: string | null = null;
 
   try {
+    // These calls are wrapped in a try...catch to prevent the entire page from crashing
+    // if the Shopify API fails. This is crucial for debugging credential issues.
     products = await getProducts({});
     collections = await getCollections();
   } catch (e: any) {
     console.error("Failed to fetch Shopify data for homepage:", e.message);
     if (e.message.includes('401')) {
-      error = "Connection to Shopify failed. Please check your API credentials in the Vercel environment variables.";
-    } else {
+      error = "Connection to Shopify failed due to a 401 Unauthorized error. Please check your SHOPIFY_STORE_DOMAIN and SHOPIFY_STOREFRONT_API_TOKEN environment variables. They must be set correctly for the application to fetch product data.";
+    } else if (e.message.includes('not initialized')) {
+      error = "The Shopify client is not initialized. Please ensure SHOPIFY_STORE_DOMAIN and SHOPIFY_STOREFRONT_API_TOKEN are set in your environment variables."
+    }
+    else {
       error = "We're having trouble connecting to our products. Please check back later.";
     }
   }
@@ -33,7 +38,7 @@ export default async function Home() {
         {error ? (
            <Alert variant="destructive" className="my-8">
              <AlertCircle className="h-4 w-4" />
-             <AlertTitle>Connection Error</AlertTitle>
+             <AlertTitle>Shopify Connection Error</AlertTitle>
              <AlertDescription>{error}</AlertDescription>
            </Alert>
         ) : (
