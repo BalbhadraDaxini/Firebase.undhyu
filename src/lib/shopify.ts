@@ -1,6 +1,9 @@
 
 import { GraphQLClient, gql } from 'graphql-request';
 import type { Product, ShopifyProductVariant, Collection } from './types';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.local' });
 
 const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_API_TOKEN;
 const endpoint = `https://://${process.env.SHOPIFY_STORE_DOMAIN}/api/2023-10/graphql.json`;
