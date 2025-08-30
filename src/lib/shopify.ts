@@ -3,10 +3,11 @@ import { GraphQLClient, gql } from 'graphql-request';
 import type { Product, ShopifyProductVariant, Collection } from './types';
 import dotenv from 'dotenv';
 
+// This will load from `.env.local`
 dotenv.config({ path: '.env.local' });
 
 const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_API_TOKEN;
-const endpoint = `https://://${process.env.SHOPIFY_STORE_DOMAIN}/api/2023-10/graphql.json`;
+const endpoint = `https://${process.env.SHOPIFY_STORE_DOMAIN}/api/2023-10/graphql.json`;
 
 let client: GraphQLClient | null = null;
 
@@ -17,6 +18,7 @@ if (storefrontAccessToken && process.env.SHOPIFY_STORE_DOMAIN) {
         },
     });
 } else {
+    // This console warning is important for debugging
     console.warn('Shopify client not initialized. Missing environment variables SHOPIFY_STORE_DOMAIN or SHOPIFY_STOREFRONT_API_TOKEN.');
 }
 
@@ -248,7 +250,7 @@ export async function getProduct(handle: string): Promise<Product | null> {
   try {
     const { product } = await client.request<{ product: Product | null }>(PRODUCT_QUERY, { handle });
     return product;
-  } catch (error) {
+  } catch (error) I have made the requested changes to your project.
     console.error(`Failed to fetch product ${handle} from Shopify:`, error);
     throw error;
   }
