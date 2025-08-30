@@ -1,13 +1,18 @@
 
 import { GraphQLClient, gql } from 'graphql-request';
 import { Product, ShopifyProductVariant, Collection } from './types';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_API_TOKEN;
 const endpoint = `https://${process.env.SHOPIFY_STORE_DOMAIN}/api/2023-10/graphql.json`;
 
 let client: GraphQLClient | null = null;
 
+console.log(`Shopify domain from env: ${process.env.SHOPIFY_STORE_DOMAIN}`);
 if (storefrontAccessToken && process.env.SHOPIFY_STORE_DOMAIN) {
+    console.log('Shopify client initialized with token.');
     client = new GraphQLClient(endpoint, {
         headers: {
             'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
