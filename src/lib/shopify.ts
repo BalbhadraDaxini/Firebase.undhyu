@@ -250,7 +250,7 @@ export async function getProduct(handle: string): Promise<Product | null> {
   try {
     const { product } = await client.request<{ product: Product | null }>(PRODUCT_QUERY, { handle });
     return product;
-  } catch (error) I have made the requested changes to your project.
+  } catch (error) {
     console.error(`Failed to fetch product ${handle} from Shopify:`, error);
     throw error;
   }
